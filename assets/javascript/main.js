@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function() {
       // ================== Typing Animation ==================
       const typedSpan = document.querySelector('.typed-inline');
       const caretSpan = document.querySelector('.typed-caret');
