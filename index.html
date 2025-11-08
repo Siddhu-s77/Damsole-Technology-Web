@@ -95,50 +95,7 @@
             <div class="hero-features">
               <div class="feature-item">
                 <div class="feature-icon">
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                      <clipPath id="globeClip">
-                        <circle cx="16" cy="16" r="14"/>
-                      </clipPath>
-                    </defs>
-                    <!-- Outer circle - light background (oceans) -->
-                    <circle cx="16" cy="16" r="14" fill="rgba(0, 30, 142, 0.1)"/>
-                    
-                    <!-- Grid Lines - Equator (horizontal center line) -->
-                    <line x1="2" y1="16" x2="30" y2="16" stroke="rgba(0, 30, 142, 0.5)" stroke-width="0.8" clip-path="url(#globeClip)"/>
-                    
-                    <!-- Grid Lines - Meridians (vertical curved lines) -->
-                    <path d="M 16 2 Q 14 8 16 16 Q 18 24 16 30" stroke="rgba(0, 30, 142, 0.5)" stroke-width="0.8" fill="none" clip-path="url(#globeClip)"/>
-                    <path d="M 10 2 Q 8 8 10 16 Q 12 24 10 30" stroke="rgba(0, 30, 142, 0.5)" stroke-width="0.8" fill="none" clip-path="url(#globeClip)"/>
-                    <path d="M 22 2 Q 24 8 22 16 Q 20 24 22 30" stroke="rgba(0, 30, 142, 0.5)" stroke-width="0.8" fill="none" clip-path="url(#globeClip)"/>
-                    
-                    <!-- Grid Lines - Parallels (horizontal curved lines) -->
-                    <path d="M 4 10 Q 16 9 28 10" stroke="rgba(0, 30, 142, 0.5)" stroke-width="0.8" fill="none" clip-path="url(#globeClip)"/>
-                    <path d="M 4 22 Q 16 23 28 22" stroke="rgba(0, 30, 142, 0.5)" stroke-width="0.8" fill="none" clip-path="url(#globeClip)"/>
-                    
-                    <!-- Continents - North America (upper left) -->
-                    <path d="M 5 5 Q 6 7 7 9 Q 8 11 7 13 Q 6 11 5 9 Q 4 7 5 5 Z" fill="#001E8E" clip-path="url(#globeClip)"/>
-                    <path d="M 7 7 Q 8 9 9 11 Q 10 13 9 15 Q 8 13 7 11 Q 6 9 7 7 Z" fill="#001E8E" clip-path="url(#globeClip)"/>
-                    <path d="M 6 8 Q 7 10 8 12 Q 7 10 6 8 Z" fill="#001E8E" clip-path="url(#globeClip)"/>
-                    
-                    <!-- Continents - South America (left side, below North America) -->
-                    <path d="M 6 18 Q 7 20 8 22 Q 9 24 8 26 Q 7 24 6 22 Q 5 20 6 18 Z" fill="#001E8E" clip-path="url(#globeClip)"/>
-                    <path d="M 7 20 Q 8 22 9 24 Q 10 25 9 26 Q 8 24 7 22 Z" fill="#001E8E" clip-path="url(#globeClip)"/>
-                    <path d="M 8 22 Q 9 23 10 24 Q 9 23 8 22 Z" fill="#001E8E" clip-path="url(#globeClip)"/>
-                    
-                    <!-- Continents - Africa (right side, large vertical shape) -->
-                    <path d="M 20 9 Q 21 11 22 13 Q 23 15 22 17 Q 23 19 22 21 Q 23 23 22 25 Q 21 23 20 21 Q 19 19 20 17 Q 19 15 20 13 Q 19 11 20 9 Z" fill="#001E8E" clip-path="url(#globeClip)"/>
-                    <path d="M 22 11 Q 23 13 24 15 Q 25 17 24 19 Q 25 21 24 23 Q 23 21 22 19 Q 21 17 22 15 Q 21 13 22 11 Z" fill="#001E8E" clip-path="url(#globeClip)"/>
-                    
-                    <!-- Continents - Europe (above Africa, right side) -->
-                    <path d="M 20 5 Q 21 7 22 9 Q 23 11 22 9 Q 21 7 20 5 Z" fill="#001E8E" clip-path="url(#globeClip)"/>
-                    <path d="M 22 6 Q 23 8 24 10 Q 23 8 22 6 Z" fill="#001E8E" clip-path="url(#globeClip)"/>
-                    <path d="M 21 7 Q 22 8 23 9 Q 22 8 21 7 Z" fill="#001E8E" clip-path="url(#globeClip)"/>
-                    
-                    <!-- Additional continent details - Asia/Eurasia -->
-                    <path d="M 13 7 Q 14 9 15 11 Q 16 13 15 11 Q 14 9 13 7 Z" fill="#001E8E" clip-path="url(#globeClip)"/>
-                    <path d="M 15 8 Q 16 10 17 12 Q 16 10 15 8 Z" fill="#001E8E" clip-path="url(#globeClip)"/>
-                  </svg>
+                  <i class="fas fa-globe text-3xl text-navy mb-3" style="color: #001E8E; font-size: 1.5rem;"></i>
                 </div>
                 <div class="feature-text">
                   <strong>24/7 Support</strong>
@@ -206,16 +163,16 @@
 
               <!-- visitor stat floating card -->
               <div class="visitor-card">
-                <div class="vis-left">
-                  <div class="vis-number">5K+</div>
-                  <div class="vis-text">Total visitors per month</div>
+                <div class="vis-top-line">
+                  <div class="vis-number">10K+</div>
+                  <div class="vis-avatars">
+                    <img class="avatar" id="avatar1" alt="Visitor" />
+                    <img class="avatar" id="avatar2" alt="Visitor" />
+                    <img class="avatar" id="avatar3" alt="Visitor" />
+                    <img class="avatar" id="avatar4" alt="Visitor" />
+                  </div>
                 </div>
-                <div class="vis-avatars">
-                  <span class="avatar a1"></span>
-                  <span class="avatar a2"></span>
-                  <span class="avatar a3"></span>
-                  <span class="avatar a4"></span>
-                </div>
+                <div class="vis-text">Total visitors per month</div>
               </div>
 
               <!-- decorative strokes (small) -->
@@ -239,12 +196,13 @@
           <div class="col-md-9">
             <div class="carousel-logos-slider">
               <div class="carousel-track">
-                <img src="https://themes.stackbros.in/mizzle-nextjs/assets/02-CNrQxMCQ.svg" alt="Logoipsum" class="carousel-logo">
-                <img src="https://themes.stackbros.in/mizzle-nextjs/assets/03-U4-LnlIf.svg" alt="PinPoint" class="carousel-logo">
-                <img src="https://themes.stackbros.in/mizzle-nextjs/assets/04-DIif0UuJ.svg" alt="logoipsum" class="carousel-logo">
-                <img src="https://themes.stackbros.in/mizzle-nextjs/assets/05-DXnxcGDU.svg" alt="Sitemark" class="carousel-logo">
-                <img src="https://themes.stackbros.in/mizzle-nextjs/assets/01-B53qfMjw.svg" alt="Greenish" class="carousel-logo">
-                <img src="https://themes.stackbros.in/mizzle-nextjs/assets/01-B53qfMjw.svg" alt="Greenish" class="carousel-logo">
+                <img src="/assets/images/company-1.png" alt="Company Logo" class="carousel-logo">
+                <img src="/assets/images/company-2.png" alt="Company Logo" class="carousel-logo">
+                <img src="/assets/images/company-3.png" alt="Company Logo" class="carousel-logo">
+                <img src="/assets/images/company-4.png" alt="Company Logo" class="carousel-logo">
+                <img src="/assets/images/company-5.png" alt="Company Logo" class="carousel-logo">
+                <img src="/assets/images/company-6.png" alt="Company Logo" class="carousel-logo">
+                <img src="/assets/images/company-7.png" alt="Company Logo" class="carousel-logo">
               </div>
             </div>
           </div>
@@ -903,7 +861,7 @@
                     <span class="contact-icon"><i class="far fa-clock"></i></span>
                     <div class="contact-text">
                       <h6>Time:</h6>
-                      <p>9.30am to 6.30pm<br>(Sunday close)</p>
+                      <p>9.30am to 6.30pm</p>
                     </div>
                   </div>
                 </div>
@@ -916,6 +874,10 @@
                     </div>
                   </div>
                 </div>
+              </div>
+              <!-- Sunday close text at bottom right -->
+              <div class="text-end mt-3">
+                <p style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem; margin: 0;">(Sunday close)</p>
               </div>
             </div>
           </div>

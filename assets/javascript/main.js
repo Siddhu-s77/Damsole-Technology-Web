@@ -46,4 +46,53 @@
           carouselTrack.appendChild(clone);
         });
       }
+
+      // ================== Random Visitor Avatars ==================
+      function getRandomAvatars() {
+        const avatarIds = ['avatar1', 'avatar2', 'avatar3', 'avatar4'];
+        const usedImageIds = new Set();
+        
+        avatarIds.forEach(avatarId => {
+          const avatarElement = document.getElementById(avatarId);
+          if (avatarElement) {
+            let randomId;
+            let imageUrl;
+            let attempts = 0;
+            
+            // Ensure unique image ID (no duplicates)
+            do {
+              const gender = Math.random() > 0.5 ? 'men' : 'women';
+              randomId = Math.floor(Math.random() * 100);
+              const imageKey = `${gender}-${randomId}`;
+              
+              if (!usedImageIds.has(imageKey)) {
+                usedImageIds.add(imageKey);
+                // Add timestamp to prevent caching and ensure fresh image on refresh
+                const uniqueId = Date.now() + Math.floor(Math.random() * 10000);
+                imageUrl = `https://randomuser.me/api/portraits/${gender}/${randomId}.jpg?${uniqueId}`;
+                break;
+              }
+              attempts++;
+            } while (attempts < 50); // Prevent infinite loop
+            
+            // Fallback if we can't find unique image
+            if (!imageUrl) {
+              const gender = Math.random() > 0.5 ? 'men' : 'women';
+              randomId = Math.floor(Math.random() * 100);
+              const uniqueId = Date.now() + Math.floor(Math.random() * 10000);
+              imageUrl = `https://randomuser.me/api/portraits/${gender}/${randomId}.jpg?${uniqueId}`;
+            }
+            
+            avatarElement.src = imageUrl;
+            avatarElement.onerror = function() {
+              // Fallback if image fails to load
+              const fallbackId = Math.floor(Math.random() * 70) + 1;
+              this.src = `https://i.pravatar.cc/150?img=${fallbackId}`;
+            };
+          }
+        });
+      }
+
+      // Load random avatars on page load
+      getRandomAvatars();
     });

@@ -321,6 +321,7 @@
         width: 100%;
         max-width: 500px;
         margin: 0 auto;
+        overflow: visible;
     }
 
     /* Trustpilot mini card positioned at top-right of image area */
@@ -364,44 +365,52 @@
     /* visitor stat floating card */
     .visitor-card {
         position: absolute;
-        bottom: 18px;
-        left: 22px;
+        bottom: -30px;
+        left: -40px;
         background: #111214;
         color: #fff;
         padding: 14px 16px;
         border-radius: 10px;
         box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
         display: flex;
-        gap: 14px;
-        align-items: center;
+        flex-direction: column;
+        gap: 8px;
         z-index: 18;
         min-width: 210px;
+    }
+
+    .vis-top-line {
+        display: flex;
+        align-items: center;
+        gap: 12px;
     }
 
     @media (max-width: 576px) {
         .visitor-card {
             min-width: 180px;
             padding: 10px 12px;
-            left: 10px;
-            bottom: 10px;
+            left: -20px;
+            bottom: -20px;
         }
     }
 
     .visitor-card .vis-number {
         font-weight: 800;
         font-size: 1.05rem;
-        margin-bottom: 4px;
+        margin: 0;
+        white-space: nowrap;
     }
 
     .visitor-card .vis-text {
         font-size: 0.85rem;
         color: rgba(255, 255, 255, 0.8);
+        margin: 0;
     }
 
     .vis-avatars {
         display: flex;
-        gap: 6px;
         align-items: center;
+        margin-left: -8px;
     }
 
     .avatar {
@@ -410,22 +419,14 @@
         border-radius: 50%;
         display: inline-block;
         border: 2px solid rgba(255, 255, 255, 0.12);
+        object-fit: cover;
+        background: #e5e7eb;
+        margin-left: -8px;
+        position: relative;
     }
 
-    .avatar.a1 {
-        background: #f97316
-    }
-
-    .avatar.a2 {
-        background: #60a5fa
-    }
-
-    .avatar.a3 {
-        background: #34d399
-    }
-
-    .avatar.a4 {
-        background: #f472b6
+    .avatar:first-child {
+        margin-left: 0;
     }
 
     /* small decorative strokes to match reference */
@@ -1703,5 +1704,250 @@
         .footer-subscribe-btn {
             width: 140px;
             align-self: flex-start;
+        }
+    }
+
+    /* ========== iPad Mini Responsive Styles (768px - 1024px) ========== */
+    @media (min-width: 768px) and (max-width: 1024px) {
+        /* Hero Section Adjustments */
+        .hero-section {
+            padding: 60px 0 40px;
+            margin-top: 70px;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            margin: 20px 0;
+        }
+
+        .main-image-container {
+            max-width: 450px;
+            margin-top: 30px;
+        }
+
+        .main-img {
+            width: 100%;
+            height: auto;
+        }
+
+        /* Visitor Card Adjustments */
+        .visitor-card {
+            bottom: -25px;
+            left: -35px;
+            padding: 12px 14px;
+            min-width: 200px;
+        }
+
+        .vis-number {
+            font-size: 1rem;
+        }
+
+        .vis-text {
+            font-size: 0.8rem;
+        }
+
+        .avatar {
+            width: 28px;
+            height: 28px;
+        }
+
+        /* About Section */
+        .about-feature-section {
+            padding: 60px 0;
+        }
+
+        .about-feature-images-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            width: 100%;
+        }
+
+        /* First image */
+        .about-img-main {
+            grid-column: 1;
+            grid-row: 1;
+        }
+
+        /* Second image from side-stats container */
+        .about-img-side-stats {
+            grid-column: 2;
+            grid-row: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .about-img-side {
+            order: 1;
+            width: 100%;
+        }
+
+        /* Stats below both images */
+        .about-feature-stats {
+            grid-column: 1 / -1;
+            grid-row: 2;
+            order: 2;
+            width: 100%;
+            justify-content: center;
+            margin: 20px 0 0 0;
+            flex-direction: row;
+            gap: 18px;
+        }
+
+        .about-img {
+            height: 250px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .about-feature-title {
+            font-size: 2rem;
+        }
+
+        .about-feature-desc {
+            font-size: 1rem;
+        }
+
+        /* Services Section */
+        .services-section {
+            padding: 60px 0;
+        }
+
+        .service-card {
+            min-height: 180px;
+        }
+
+        .service-card h4 {
+            font-size: 1.3rem;
+        }
+
+        .service-card p {
+            font-size: 0.95rem;
+        }
+
+        /* Pricing Section */
+        .pricing-section {
+            padding: 50px 0 60px;
+        }
+
+        .pricing-title {
+            font-size: 2rem;
+        }
+
+        .price-amount {
+            font-size: 3rem;
+        }
+
+        /* Review Section */
+        .review-section {
+            padding: 60px 0;
+        }
+
+        .review-section-header h2 {
+            font-size: 2rem;
+        }
+
+        .review-card {
+            padding: 24px;
+        }
+
+        .review-image-wrapper {
+            height: 350px;
+        }
+
+        /* Footer Top Box */
+        .footer-top-box {
+            padding: 45px 60px;
+        }
+
+        .footer-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .footer-subscribe {
+            margin-top: 20px;
+        }
+
+        .footer-email-input {
+            padding: 12px 18px;
+            font-size: 0.95rem;
+        }
+
+        .footer-subscribe-btn {
+            padding: 12px 24px;
+            font-size: 0.95rem;
+        }
+
+        /* Contact Items */
+        .footer-contact-item {
+            padding: 8px 0;
+            gap: 12px;
+        }
+
+        .contact-icon {
+            font-size: 1.1rem;
+        }
+
+        .contact-text h6 {
+            font-size: 0.85rem;
+        }
+
+        .contact-text p {
+            font-size: 0.9rem;
+        }
+
+        /* Companies Carousel */
+        .carousel-heading {
+            margin-bottom: 20px;
+        }
+
+        .carousel-logo {
+            height: 28px;
+            min-width: 70px;
+            max-width: 90px;
+        }
+
+        /* Trustpilot Card */
+        .trustpilot-card {
+            padding: 10px 14px;
+            top: -15px;
+        }
+
+        .tp-rating {
+            font-size: 0.85rem;
+        }
+
+        .tp-reviews {
+            font-size: 0.75rem;
+        }
+    }
+
+    /* iPad Mini Landscape Orientation */
+    @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+        .hero-section {
+            padding: 70px 0 50px;
+        }
+
+        .hero-title {
+            font-size: 2.8rem;
+        }
+
+        .main-image-container {
+            max-width: 480px;
+        }
+
+        .footer-top-box {
+            padding: 50px 65px;
+        }
+
+        .about-img {
+            height: 300px;
         }
     }
