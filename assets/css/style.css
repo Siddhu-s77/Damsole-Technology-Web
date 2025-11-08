@@ -1165,12 +1165,169 @@
     }
 
     @media (max-width: 991px) {
-
         /* remove the separator on smaller screens to avoid layout issues */
         .price-features {
             border-left: none;
             padding-left: 0;
             margin-left: 0;
+        }
+
+        .pricing-section {
+            padding: 50px 0 60px;
+        }
+
+        .price-left {
+            margin-top: 20px;
+        }
+
+        .price-right {
+            padding: 24px;
+            min-height: auto;
+        }
+    }
+
+    /* Mobile responsive (576px and below) */
+    @media (max-width: 576px) {
+        .pricing-section {
+            padding: 40px 0 50px;
+        }
+
+        .pricing-title {
+            font-size: 1.75rem;
+            margin: 10px 0 20px;
+        }
+
+        .price-left {
+            margin-top: 15px;
+        }
+
+        .price-left-inner {
+            text-align: center;
+        }
+
+        .price-badge {
+            margin: 0 auto 12px;
+        }
+
+        .price-figure {
+            justify-content: center;
+        }
+
+        .price-amount {
+            font-size: 2.5rem;
+        }
+
+        .price-desc {
+            text-align: center;
+            font-size: 0.95rem;
+        }
+
+        .price-features {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .price-features h4 {
+            font-size: 1.1rem;
+            margin-bottom: 16px;
+        }
+
+        .features-list {
+            text-align: left;
+            max-width: 300px;
+            margin: 0 auto 16px;
+        }
+
+        .price-right {
+            padding: 20px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .plan-title {
+            font-size: 1.5rem;
+        }
+
+        .btn-trial,
+        .btn-contact {
+            width: 100%;
+            max-width: 300px;
+        }
+    }
+
+    /* Tablet responsive (577px - 767px) */
+    @media (min-width: 577px) and (max-width: 767px) {
+        .pricing-section {
+            padding: 45px 0 55px;
+        }
+
+        .pricing-title {
+            font-size: 1.9rem;
+            margin: 8px 0 22px;
+        }
+
+        .price-left {
+            margin-top: 18px;
+        }
+
+        .price-left-inner {
+            text-align: center;
+        }
+
+        .price-badge {
+            margin: 0 auto 10px;
+        }
+
+        .price-figure {
+            justify-content: center;
+        }
+
+        .price-amount {
+            font-size: 2.8rem;
+        }
+
+        .price-desc {
+            text-align: center;
+            font-size: 0.95rem;
+        }
+
+        .price-features {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .price-features h4 {
+            font-size: 1.15rem;
+            margin-bottom: 18px;
+        }
+
+        .features-list {
+            text-align: left;
+            max-width: 400px;
+            margin: 0 auto 18px;
+        }
+
+        .price-right {
+            padding: 24px;
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .plan-title {
+            font-size: 1.55rem;
+        }
+
+        .btn-trial,
+        .btn-contact {
+            width: 100%;
+            max-width: 350px;
+        }
+
+        .pricing-section img {
+            height: auto;
+            max-height: 300px;
+            width: 100%;
+            object-fit: contain;
         }
     }
 
@@ -1838,10 +1995,88 @@
 
         .pricing-title {
             font-size: 2rem;
+            margin: 10px 0 24px;
+        }
+
+        /* Pricing layout adjustments */
+        .pricing-section .row {
+            align-items: flex-start;
+        }
+
+        .pricing-section .col-lg-4 {
+            margin-bottom: 30px;
+        }
+
+        /* Left price card */
+        .price-left {
+            margin-top: 20px;
+        }
+
+        .price-left-inner {
+            text-align: center;
+        }
+
+        .price-badge {
+            margin: 0 auto 12px;
+        }
+
+        .price-figure {
+            justify-content: center;
         }
 
         .price-amount {
             font-size: 3rem;
+        }
+
+        .price-desc {
+            text-align: center;
+            font-size: 0.95rem;
+        }
+
+        /* Features section */
+        .price-features {
+            text-align: center;
+            padding: 0;
+        }
+
+        .price-features h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .features-list {
+            text-align: left;
+            max-width: 100%;
+            margin: 0 auto 20px;
+        }
+
+        .btn-trial {
+            width: 100%;
+            max-width: 100%;
+        }
+
+        /* Right enterprise card */
+        .price-right {
+            padding: 28px;
+            text-align: center;
+            min-height: auto;
+        }
+
+        .plan-title {
+            font-size: 1.6rem;
+        }
+
+        .btn-contact {
+            width: 100%;
+            max-width: 100%;
+        }
+
+        /* Image adjustments */
+        .pricing-section img {
+            height: auto;
+            max-height: 280px;
+            width: 100%;
+            object-fit: contain;
         }
 
         /* Review Section */
