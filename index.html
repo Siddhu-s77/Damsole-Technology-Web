@@ -29,40 +29,30 @@
         
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav mx-auto">
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#demos" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Demos
-              </a>
-              <ul class="dropdown-menu">
-                <!-- Add dropdown items here -->
-              </ul>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#pages" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Pages
-              </a>
-              <ul class="dropdown-menu">
-                <!-- Add dropdown items here -->
-              </ul>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#portfolio" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Portfolio
-              </a>
-              <ul class="dropdown-menu">
-                <!-- Add dropdown items here -->
-              </ul>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#megamenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Megamenu
-              </a>
-              <ul class="dropdown-menu">
-                <!-- Add dropdown items here -->
-              </ul>
+            <li class="nav-item">
+              <a class="nav-link" href="#home" id="home">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#contact">Contact us</a>
+              <a class="nav-link" href="#about-us" id="about-us">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#service" id="service">Service</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#portfolios" id="portfolios">Portfolio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#pricing" id="pricing">Pricing</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#more" id="more" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                More
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#blogs" id="blogs">Blogs</a></li>
+                <li><a class="dropdown-item" href="#contact-us" id="contact-us">Contact Us</a></li>
+                <li><a class="dropdown-item" href="#case-study" id="case-study">Case Study</a></li>
+              </ul>
             </li>
           </ul>
           
@@ -77,7 +67,7 @@
 
   <main>
     <!-- Hero Section -->
-    <section class="hero-section">
+    <section id="home" class="hero-section">
       <div class="container">
         <div class="row align-items-center">
           <div class="col-lg-6 mb-5 mb-lg-0">
@@ -188,7 +178,7 @@
 
     
     <!-- About/Feature Section -->
-    <section class="about-feature-section">
+    <section id="about-us" class="about-feature-section">
       <div class="container">
         <div class="row align-items-center">
           <div class="col-lg-7 mb-5 mb-lg-0">
@@ -235,7 +225,7 @@
     </section>
 
     <!-- Services Section -->
-    <section class="services-section">
+    <section id="service" class="services-section">
       <div class="container">
         <div class="section-header text-center">
           <div class="section-badge">
@@ -379,7 +369,7 @@
     </section>
 
     <!-- Pricing / Payment Section -->
-    <section class="pricing-section">
+    <section id="pricing" class="pricing-section">
       <div class="container">
         <div class="text-center mb-5">
           <div class="badge-small">💵 Transparent pricing packages</div>
@@ -436,7 +426,7 @@
     </section>
 
    <!-- Review Section -->
-<section class="review-section">
+<section id="portfolios" class="review-section">
   <div class="container">
     <div class="row">
       <div class="col-lg-7">
@@ -804,9 +794,8 @@
   </div>
 </section>
 
-
   <!-- Footer -->
-  <footer class="site-footer">
+  <footer id="contact-us" class="site-footer">
     <div class="footer-top">
       <div class="container">
         <!-- boxed blue card that sits above the footer -->
