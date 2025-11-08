@@ -4,7 +4,7 @@
       const caretSpan = document.querySelector('.typed-caret');
 
       if (typedSpan && caretSpan) {
-        const words = ['Web Dev', 'UI/UX Design', 'Web Design'];
+        const words = ['Web Dev', 'UI/UX Design', 'Digital Marketing'];
         const typingDelay = 100;
         const erasingDelay = 50;
         const newTextDelay = 1800;

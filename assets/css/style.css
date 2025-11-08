@@ -1329,7 +1329,7 @@
         background-color: #001E8E;
         max-width: 1200px;
         margin: 0 auto;
-        padding: 40px 60px;
+        padding: 60px 80px;
         border-radius: 12px;
         box-shadow: 0 18px 40px rgba(0,0,0,0.18);
         display: block;
@@ -1347,55 +1347,73 @@
 
     .footer-subscribe {
         display: flex;
-        gap: 10px;
+        gap: 12px;
+        margin-top: 20px;
     }
 
     .footer-email-input {
         flex: 1;
-        padding: 12px 20px;
+        padding: 14px 20px;
         border: none;
-        border-radius: 6px;
+        border-radius: 8px;
         font-size: 1rem;
+        background-color: #fff;
+        color: #333;
+    }
+
+    .footer-email-input::placeholder {
+        color: #999;
     }
 
     .footer-subscribe-btn {
-        padding: 12px 24px;
+        padding: 14px 28px;
         background-color: #111;
         color: #fff;
         border: none;
-        border-radius: 6px;
+        border-radius: 8px;
         font-weight: 600;
         cursor: pointer;
+        white-space: nowrap;
+        transition: background-color 0.3s ease;
+    }
+
+    .footer-subscribe-btn:hover {
+        background-color: #333;
     }
 
     .footer-contact-item {
         display: flex;
-        align-items: center;
-        gap: 15px;
-        margin-bottom: 20px;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 0;
+        padding: 8px 0;
     }
 
     .contact-icon {
-        width: 40px;
-        height: 40px;
-        background-color: rgba(255, 255, 255, 0.1);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        display: inline-block;
         font-size: 1.2rem;
+        color: #fff;
+        flex-shrink: 0;
+        margin-right: 5px;
+    }
+
+    .contact-text {
+        line-height: 1.6;
     }
 
     .contact-text h6 {
-        margin: 0;
+        margin: 0 0 8px 0;
         font-size: 0.9rem;
-        color: rgba(255, 255, 255, 0.8);
+        color: rgba(255, 255, 255, 0.9);
+        font-weight: 600;
     }
 
     .contact-text p {
         margin: 0;
         font-size: 1rem;
         font-weight: 500;
+        color: #fff;
+        line-height: 1.5;
     }
 
     .footer-main {
