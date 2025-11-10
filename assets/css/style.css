@@ -1083,6 +1083,7 @@
         margin: 0 0 16px 0;
         display: grid;
         gap: 12px;
+        max-width: 280px;
     }
 
     .features-list li {
@@ -1122,6 +1123,10 @@
         padding: 28px;
         border-radius: 8px;
         text-align: left;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 280px;
     }
 
     .plan-tag {
@@ -1150,12 +1155,20 @@
         text-align: center;
         font-weight: 700;
         text-decoration: none;
-        margin-bottom: 12px;
+        margin-top: auto;
     }
 
     .plan-note {
         color: rgba(255, 255, 255, 0.9);
-        margin: 0;
+        margin: 0 0 20px 0;
+        line-height: 1.5;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        min-height: 4.5em;
     }
 
     /* Desktop layout refinements for pricing: separator and larger right card */
@@ -1168,11 +1181,18 @@
             margin-left: 12px;
         }
 
+        .features-list {
+            max-width: 280px;
+        }
+
         /* visually enlarge the right card (taller + more padding) without changing grid */
         .price-right {
             padding: 36px 44px;
             min-height: 360px;
             border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         /* vertically center left price content to match reference */
@@ -1267,6 +1287,10 @@
             padding: 20px;
             text-align: center;
             margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 220px;
         }
 
         .plan-title {
@@ -1336,6 +1360,10 @@
             padding: 24px;
             text-align: center;
             margin-top: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 240px;
         }
 
         .plan-title {
@@ -2084,7 +2112,10 @@
         .price-right {
             padding: 28px;
             text-align: center;
-            min-height: auto;
+            min-height: 260px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .plan-title {
