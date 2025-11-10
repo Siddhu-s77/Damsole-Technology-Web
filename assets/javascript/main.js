@@ -95,4 +95,60 @@
 
       // Load random avatars on page load
       getRandomAvatars();
+
+      // ================== Smooth Scroll Navigation ==================
+      // Handle all navlink clicks for smooth scrolling
+      function initSmoothScroll() {
+        const navLinks = document.querySelectorAll('.nav-link[href^="#"], .dropdown-item[href^="#"]');
+        const siteHeader = document.querySelector('.site-header');
+        
+        // Calculate header height dynamically
+        function getHeaderHeight() {
+          return siteHeader ? siteHeader.offsetHeight : 80;
+        }
+
+        navLinks.forEach(link => {
+          link.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            
+            // Only handle anchor links (starting with # and not just #)
+            if (href && href.startsWith('#') && href.length > 1) {
+              const targetId = href.substring(1);
+              const targetSection = document.getElementById(targetId);
+              
+              if (targetSection) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                // Calculate the position with offset for fixed header
+                const headerHeight = getHeaderHeight();
+                const targetPosition = targetSection.offsetTop - headerHeight;
+                
+                // Smooth scroll to the target section
+                window.scrollTo({
+                  top: Math.max(0, targetPosition),
+                  behavior: 'smooth'
+                });
+
+                // Close mobile menu if open (Bootstrap collapse)
+                const navbarCollapse = document.querySelector('.navbar-collapse');
+                if (navbarCollapse && navbarCollapse.classList.contains('show')) {
+                  const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
+                  if (bsCollapse) {
+                    bsCollapse.hide();
+                  } else {
+                    const newCollapse = new bootstrap.Collapse(navbarCollapse, {
+                      toggle: false
+                    });
+                    newCollapse.hide();
+                  }
+                }
+              }
+            }
+          });
+        });
+      }
+
+      // Initialize smooth scroll
+      initSmoothScroll();
     });
