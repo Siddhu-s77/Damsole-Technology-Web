@@ -301,7 +301,7 @@ php -S localhost:8000
 - **Counter Animation**: Animated number counters in statistics section
 - **Carousel Functionality**: Bootstrap carousel for reviews and logos
 - **Mobile Menu**: Auto-close on link click
-
+ 
 ### CSS Features
 - **Responsive Design**: Mobile-first approach with breakpoints
 - **Custom Animations**: Hover effects, transitions, transforms
