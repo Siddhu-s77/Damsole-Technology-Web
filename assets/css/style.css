@@ -895,10 +895,14 @@
         transition: all 0.25s ease;
         padding-left: 6px;
         margin-top: 8px;
+        box-shadow: none;
+        text-shadow: none;
     }
 
     .know-more-btn:hover {
         transform: translateX(6px);
+        box-shadow: none;
+        text-shadow: none;
     }
 
     .know-more-btn i {
