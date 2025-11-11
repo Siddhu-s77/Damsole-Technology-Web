@@ -133,9 +133,96 @@
         background: var(--btn-primary-bg);
         border-color: var(--btn-primary-bg);
         color: #fff;
+        position: relative;
+        overflow: hidden;
+        z-index: 0;
+        transition: all 0.3s cubic-bezier(0.02, 0.01, 0.47, 1);
     }
 
-    .btn:hover {
+    .btn-primary-custom span {
+        position: relative;
+        z-index: 1;
+    }
+
+    .btn-primary-custom:hover {
+        animation: sh0 0.5s ease-in-out both;
+        border-color: #001E8E;
+        background: #fff;
+    }
+
+    .btn-primary-custom:hover span {
+        animation: storm 0.7s ease-in-out both;
+        animation-delay: 0.06s;
+        color: #001E8E;
+    }
+
+    @keyframes sh0 {
+        0% {
+            transform: rotate(0deg) translate3d(0, 0, 0);
+        }
+        25% {
+            transform: rotate(7deg) translate3d(0, 0, 0);
+        }
+        50% {
+            transform: rotate(-7deg) translate3d(0, 0, 0);
+        }
+        75% {
+            transform: rotate(1deg) translate3d(0, 0, 0);
+        }
+        100% {
+            transform: rotate(0deg) translate3d(0, 0, 0);
+        }
+    }
+
+    @keyframes storm {
+        0% {
+            transform: translate3d(0, 0, 0) translateZ(0);
+        }
+        25% {
+            transform: translate3d(4px, 0, 0) translateZ(0);
+        }
+        50% {
+            transform: translate3d(-3px, 0, 0) translateZ(0);
+        }
+        75% {
+            transform: translate3d(2px, 0, 0) translateZ(0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0) translateZ(0);
+        }
+    }
+
+    .btn-primary-custom::before,
+    .btn-primary-custom::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: #001E8E;
+        opacity: 0;
+        transition: transform 0.15s cubic-bezier(0.02, 0.01, 0.47, 1), opacity 0.15s cubic-bezier(0.02, 0.01, 0.47, 1);
+        z-index: -1;
+        transform: translate(100%, -25%) translate3d(0, 0, 0);
+    }
+
+    .btn-primary-custom:hover::before,
+    .btn-primary-custom:hover::after {
+        opacity: 0.2;
+        transition: transform 0.2s cubic-bezier(0.02, 0.01, 0.47, 1), opacity 0.2s cubic-bezier(0.02, 0.01, 0.47, 1);
+    }
+
+    .btn-primary-custom:hover::before {
+        transform: translate3d(50%, 0, 0) scale(0.9);
+    }
+
+    .btn-primary-custom:hover::after {
+        transform: translate(50%, 0) scale(1.1);
+    }
+
+    .btn:hover:not(.btn-primary-custom) {
         transform: translateY(-1px);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
@@ -898,7 +985,7 @@
         box-shadow: none;
         text-shadow: none;
     }
-
+       
     .know-more-btn:hover {
         transform: translateX(6px);
         box-shadow: none;
@@ -1650,40 +1737,131 @@
         line-height: 1.3;
     }
 
-    .footer-subscribe {
+    .footer-subscribe.input-wrapper {
+        width: fit-content;
+        height: 45px;
+        border-radius: 20px;
+        padding: 5px;
+        box-sizing: content-box;
         display: flex;
-        gap: 12px;
+        align-items: center;
+        background-color: #000000;
         margin-top: 25px;
+        gap: 0;
+        border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .footer-email-input {
+    .footer-subscribe .icon {
+        width: 30px;
+        fill: rgb(255, 255, 255);
+        margin-left: 8px;
+        transition: all 0.3s;
+    }
+
+    .footer-email-input.input {
+        max-width: 170px;
+        min-width: 150px;
+        height: 100%;
+        border: none;
+        outline: none;
+        padding-left: 15px;
+        padding-right: 10px;
+        background-color: transparent;
+        color: white;
+        font-size: 1em;
         flex: 1;
-        padding: 14px 20px;
-        border: none;
-        border-radius: 8px;
-        font-size: 1rem;
-        background-color: #fff;
-        color: #333;
+        width: auto;
     }
 
-    .footer-email-input::placeholder {
-        color: #999;
+    .footer-email-input.input::placeholder {
+        color: rgba(255, 255, 255, 0.7);
     }
 
-    .footer-subscribe-btn {
-        padding: 14px 28px;
-        background-color: #111;
-        color: #fff;
+    .footer-email-input.input:-webkit-autofill {
+        -webkit-box-shadow: 0 0 0px 1000px transparent inset;
+        -webkit-text-fill-color: #ffffff;
+    }
+
+    .footer-subscribe-btn.Subscribe-btn {
+        height: 100%;
+        width: 95px;
         border: none;
-        border-radius: 8px;
-        font-weight: 600;
+        border-radius: 15px;
+        color: rgb(0, 0, 0);
         cursor: pointer;
+        background-color: #ffffff;
+        font-weight: 500;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        transition: all 0.3s;
         white-space: nowrap;
-        transition: background-color 0.3s ease;
+        padding: 0 10px;
     }
 
-    .footer-subscribe-btn:hover {
-        background-color: #333;
+    .footer-subscribe-btn .arrow {
+        position: absolute;
+        margin-right: 150px;
+        transition: all 0.3s;
+        fill: #000;
+    }
+
+    .footer-subscribe-btn .subscribe-text {
+        transition: opacity 0.3s ease, width 0.3s ease;
+        display: inline-block;
+    }
+
+    .footer-subscribe.input-wrapper:active .icon {
+        transform: scale(1.3);
+    }
+
+    .footer-subscribe-btn.Subscribe-btn:hover {
+        color: #000000;
+        background-color: #ffffff;
+    }
+
+    .footer-subscribe-btn.Subscribe-btn:hover .subscribe-text {
+        opacity: 0;
+        width: 0;
+        overflow: hidden;
+        transition: opacity 0.3s ease, width 0.3s ease;
+    }
+
+    .footer-subscribe-btn.Subscribe-btn:hover .arrow {
+        margin-right: 0;
+        animation: jello-vertical 0.9s both;
+        transform-origin: right;
+        fill: #000000;
+    }
+
+    @keyframes jello-vertical {
+        0% {
+            transform: scale3d(1, 1, 1);
+        }
+        30% {
+            transform: scale3d(0.75, 1.25, 1);
+        }
+        40% {
+            transform: scale3d(1.25, 0.75, 1);
+        }
+        50% {
+            transform: scale3d(0.85, 1.15, 1);
+        }
+        65% {
+            transform: scale3d(1.05, 0.95, 1);
+        }
+        75% {
+            transform: scale3d(0.95, 1.05, 1);
+        }
+        100% {
+            transform: scale3d(1, 1, 1);
+        }
+    }
+
+    .footer-subscribe-btn.Subscribe-btn:active {
+        transform: scale(0.9);
     }
 
     .footer-contact-item {
@@ -1856,15 +2034,37 @@
         .footer-top-box {
             padding: 28px 22px;
         }
+
+        .footer-email-input.input {
+            max-width: 200px;
+            min-width: 180px;
+            font-size: 0.95em;
+        }
     }
 
     @media (max-width: 767px) {
-        .footer-subscribe {
-            flex-direction: column;
+        .footer-subscribe.input-wrapper {
+            flex-direction: row;
+            height: 45px;
+            padding: 5px;
+            width: 100%;
         }
 
-        .footer-subscribe-btn {
-            width: 100%;
+        .footer-subscribe-btn.Subscribe-btn {
+            width: auto;
+            min-width: 95px;
+            height: 100%;
+            flex-shrink: 0;
+        }
+
+        .footer-email-input.input {
+            max-width: none;
+            width: auto;
+            min-width: 120px;
+            flex: 1;
+            padding: 0 15px;
+            font-size: 0.95em;
+            height: 100%;
         }
 
         .footer-bottom {
@@ -1909,18 +2109,29 @@
             border-radius: 10px;
         }
 
-        .footer-subscribe {
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .footer-email-input {
+        .footer-subscribe.input-wrapper {
+            flex-direction: row;
+            gap: 0;
+            height: 45px;
+            padding: 5px;
             width: 100%;
         }
 
-        .footer-subscribe-btn {
-            width: 140px;
-            align-self: flex-start;
+        .footer-email-input.input {
+            width: auto;
+            max-width: none;
+            min-width: 100px;
+            flex: 1;
+            padding: 0 12px;
+            font-size: 0.9em;
+            height: 100%;
+        }
+
+        .footer-subscribe-btn.Subscribe-btn {
+            width: auto;
+            min-width: 90px;
+            height: 100%;
+            flex-shrink: 0;
         }
     }
 
@@ -2169,18 +2380,30 @@
             margin-bottom: 20px;
         }
 
-        .footer-subscribe {
+        .footer-subscribe.input-wrapper {
             margin-top: 20px;
+            height: 40px;
+            width: 100%;
+            flex-direction: row;
         }
 
-        .footer-email-input {
-            padding: 12px 18px;
-            font-size: 0.95rem;
+        .footer-email-input.input {
+            padding: 0 12px;
+            font-size: 0.9rem;
+            max-width: none;
+            min-width: 150px;
+            width: auto;
+            flex: 1;
+            height: 100%;
         }
 
-        .footer-subscribe-btn {
-            padding: 12px 24px;
-            font-size: 0.95rem;
+        .footer-subscribe-btn.Subscribe-btn {
+            width: auto;
+            min-width: 90px;
+            font-size: 0.9rem;
+            padding: 0 8px;
+            height: 100%;
+            flex-shrink: 0;
         }
 
         /* Contact Items */

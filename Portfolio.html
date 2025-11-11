@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portfolio - Damsole Technologies | Services & Projects</title>
+  <link rel="icon" type="image/x-icon" href="assets/images/Damsole_Technology_Logo.png">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+  <!-- font awesome link -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- custom css -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <style>
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    .portfolio-hero {
+      background: linear-gradient(-45deg, #001E8E, #0033cc, #0055ff, #001E8E);
+      background-size: 400% 400%;
+      animation: gradient 15s ease infinite;
+      color: white;
+      padding: 140px 0 100px;
+      margin-top: 70px;
+      position: relative;
+      overflow: hidden;
+    }
+    .portfolio-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
+      opacity: 0.3;
+    }
+    .portfolio-hero .container {
+      position: relative;
+      z-index: 1;
+    }
+    .portfolio-hero h1 {
+      animation: fadeInUp 0.8s ease;
+      text-shadow: 2px 2px 20px rgba(0,0,0,0.3);
+    }
+    .portfolio-hero p {
+      animation: fadeInUp 1s ease;
+    }
+    .portfolio-hero .btn {
+      animation: fadeInUp 1.2s ease;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .portfolio-hero .btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+    .portfolio-hero .btn:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+    .portfolio-hero .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .service-detail-section {
+      padding: 100px 0;
+      background: var(--bg);
+      position: relative;
+    }
+    .service-detail-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 50%, rgba(0, 30, 142, 0.03) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 80%, rgba(0, 51, 204, 0.03) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .service-detail-section:nth-child(even) {
+      background: var(--surface);
+    }
+    .service-detail-card {
+      background: var(--surface);
+      border-radius: 24px;
+      padding: 50px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      margin-bottom: 50px;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border: 1px solid rgba(0, 30, 142, 0.1);
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      animation: fadeInUp 0.6s ease forwards;
+    }
+    .service-detail-card:nth-child(1) { animation-delay: 0.1s; }
+    .service-detail-card:nth-child(2) { animation-delay: 0.2s; }
+    .service-detail-card:nth-child(3) { animation-delay: 0.3s; }
+    .service-detail-card:nth-child(4) { animation-delay: 0.4s; }
+    .service-detail-card:nth-child(5) { animation-delay: 0.5s; }
+    .service-detail-card:nth-child(6) { animation-delay: 0.6s; }
+    .service-detail-card:nth-child(7) { animation-delay: 0.7s; }
+    .service-detail-card:nth-child(8) { animation-delay: 0.8s; }
+    .service-detail-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 30, 142, 0.1), transparent);
+      transition: left 0.5s;
+    }
+    .service-detail-card:hover::before {
+      left: 100%;
+    }
+    .service-detail-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 20px 60px rgba(0, 30, 142, 0.2);
+      border-color: rgba(0, 30, 142, 0.3);
+    }
+    .service-detail-icon {
+      width: 100px;
+      height: 100px;
+      background: linear-gradient(135deg, #001E8E 0%, #0033cc 100%);
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 30px;
+      position: relative;
+      transition: all 0.4s ease;
+      box-shadow: 0 10px 30px rgba(0, 30, 142, 0.3);
+    }
+    .service-detail-icon::after {
+      content: '';
+      position: absolute;
+      inset: -5px;
+      border-radius: 24px;
+      padding: 5px;
+      background: linear-gradient(135deg, #001E8E, #0033cc);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .service-detail-card:hover .service-detail-icon {
+      transform: rotate(5deg) scale(1.1);
+      animation: pulse 2s infinite;
+    }
+    .service-detail-card:hover .service-detail-icon::after {
+      opacity: 1;
+    }
+    .service-detail-icon i {
+      font-size: 3rem;
+      color: white;
+      transition: transform 0.4s ease;
+    }
+    .service-detail-card:hover .service-detail-icon i {
+      transform: scale(1.2);
+    }
+    .service-detail-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+    .service-detail-description {
+      font-size: 1.1rem;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 30px;
+    }
+    .service-features {
+      list-style: none;
+      padding: 0;
+      margin: 30px 0;
+    }
+    .service-features li {
+      padding: 15px 0;
+      font-size: 1rem;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      transition: all 0.3s ease;
+      border-radius: 8px;
+      padding-left: 10px;
+      margin-left: -10px;
+    }
+    .service-features li:hover {
+      background: rgba(0, 30, 142, 0.05);
+      padding-left: 20px;
+      transform: translateX(5px);
+    }
+    .service-features li i {
+      color: #001E8E;
+      margin-right: 15px;
+      font-size: 1.3rem;
+      transition: all 0.3s ease;
+    }
+    .service-features li:hover i {
+      transform: scale(1.3) rotate(360deg);
+      color: #0033cc;
+    }
+    .projects-section {
+      padding: 100px 0;
+      background: var(--bg);
+      position: relative;
+    }
+    .project-card {
+      background: var(--surface);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      margin-bottom: 30px;
+      height: 100%;
+      border: 1px solid rgba(0, 30, 142, 0.1);
+      opacity: 0;
+      animation: fadeInUp 0.6s ease forwards;
+    }
+    .project-card:nth-child(1) { animation-delay: 0.1s; }
+    .project-card:nth-child(2) { animation-delay: 0.2s; }
+    .project-card:nth-child(3) { animation-delay: 0.3s; }
+    .project-card:nth-child(4) { animation-delay: 0.4s; }
+    .project-card:nth-child(5) { animation-delay: 0.5s; }
+    .project-card:nth-child(6) { animation-delay: 0.6s; }
+    .project-card:nth-child(7) { animation-delay: 0.7s; }
+    .project-card:nth-child(8) { animation-delay: 0.8s; }
+    .project-card:nth-child(9) { animation-delay: 0.9s; }
+    .project-card:hover {
+      transform: translateY(-15px) scale(1.03);
+      box-shadow: 0 25px 60px rgba(0, 30, 142, 0.25);
+      border-color: rgba(0, 30, 142, 0.3);
+    }
+    .project-image {
+      width: 100%;
+      height: 280px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 4rem;
+      overflow: hidden;
+      transition: all 0.4s ease;
+    }
+    .project-card:nth-child(1) .project-image {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    .project-card:nth-child(2) .project-image {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    }
+    .project-card:nth-child(3) .project-image {
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    }
+    .project-card:nth-child(4) .project-image {
+      background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+    }
+    .project-card:nth-child(5) .project-image {
+      background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+    }
+    .project-card:nth-child(6) .project-image {
+      background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+    }
+    .project-card:nth-child(7) .project-image {
+      background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+    }
+    .project-card:nth-child(8) .project-image {
+      background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+    }
+    .project-card:nth-child(9) .project-image {
+      background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+    }
+    .project-image::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.2);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .project-card:hover .project-image::before {
+      opacity: 1;
+    }
+    .project-image i {
+      position: relative;
+      z-index: 1;
+      transition: all 0.4s ease;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+    }
+    .project-card:hover .project-image i {
+      transform: scale(1.3) rotate(10deg);
+      animation: float 2s ease-in-out infinite;
+    }
+    .project-content {
+      padding: 30px;
+    }
+    .project-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 15px;
+    }
+    .project-description {
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .project-tag {
+      background: rgba(0, 30, 142, 0.1);
+      color: #001E8E;
+      padding: 8px 16px;
+      border-radius: 25px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: 1px solid transparent;
+    }
+    .project-tag:hover {
+      background: #001E8E;
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 30, 142, 0.3);
+    }
+    .section-header {
+      text-align: center;
+      margin-bottom: 80px;
+      opacity: 0;
+      animation: fadeInUp 0.8s ease forwards;
+    }
+    .section-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, rgba(0, 30, 142, 0.1) 0%, rgba(0, 51, 204, 0.1) 100%);
+      color: #001E8E;
+      padding: 12px 28px;
+      border-radius: 50px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 25px;
+      border: 2px solid rgba(0, 30, 142, 0.2);
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 30, 142, 0.1);
+    }
+    .section-badge:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 30, 142, 0.2);
+      border-color: rgba(0, 30, 142, 0.4);
+    }
+    .section-title {
+      font-size: 3.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #001E8E 0%, #0033cc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 25px;
+      line-height: 1.2;
+      text-shadow: 0 2px 10px rgba(0, 30, 142, 0.1);
+    }
+    .section-subtitle {
+      font-size: 1.2rem;
+      color: var(--muted);
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #001E8E 0%, #0033cc 100%);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 8px 25px rgba(0, 30, 142, 0.4);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      border: 3px solid rgba(255, 255, 255, 0.2);
+    }
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+      animation: fadeIn 0.5s ease;
+    }
+    .back-to-top:hover {
+      background: linear-gradient(135deg, #0033cc 0%, #0055ff 100%);
+      transform: translateY(-8px) scale(1.1);
+      box-shadow: 0 12px 35px rgba(0, 30, 142, 0.5);
+    }
+    .back-to-top i {
+      transition: transform 0.3s ease;
+    }
+    .back-to-top:hover i {
+      transform: translateY(-3px);
+    }
+    @media (max-width: 768px) {
+      .service-detail-title {
+        font-size: 2rem;
+      }
+      .section-title {
+        font-size: 2rem;
+      }
+      .service-detail-card {
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">
+          <img class="logo" src="/assets/images/Damsole_Technology_Logo.png" alt="Damsole Technologies">
+        </a>
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav mx-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html#home">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/about.html">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="index.html#service">Service</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="/portfolio.html">Portfolio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="index.html#pricing">Pricing</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/ContactUs.html">Contact Us</a>
+            </li>
+          </ul>
+          
+          <div class="d-flex align-items-center">
+            <button class="btn btn-ghost me-2 d-none d-md-inline-block"><i class="fa-regular fa-user" style="color: #001e8e;"></i> Sign up</button>
+            <button class="btn btn-primary-custom"><span>LET'S TALK</span></button>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Portfolio Hero Section -->
+    <section class="portfolio-hero">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-6 text-center text-lg-start">
+            <h1 class="display-3 fw-bold mb-4">Our Services & Portfolio</h1>
+            <p class="lead mb-4">Discover our comprehensive range of digital services and explore our successful projects that have transformed businesses worldwide.</p>
+            <div class="d-flex justify-content-center justify-content-lg-start gap-4 flex-wrap">
+              <a href="#services" class="btn btn-light btn-lg px-5 py-3" style="font-weight: 600; border-radius: 50px; box-shadow: 0 8px 25px rgba(0,0,0,0.3); position: relative; overflow: hidden;">
+                <span style="position: relative; z-index: 1;">View Services <i class="fas fa-arrow-down ms-2"></i></span>
+              </a>
+              <a href="#projects" class="btn btn-outline-light btn-lg px-5 py-3" style="font-weight: 600; border-radius: 50px; border-width: 2px;">
+                View Projects <i class="fas fa-briefcase ms-2"></i>
+              </a>
+            </div>
+          </div>
+          <div class="col-lg-6 text-center mt-5 mt-lg-0">
+            <img src="/assets/images/Business Development.png" alt="Business Development" class="img-fluid" style="max-height: 500px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.3);">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Detail Section -->
+    <section id="services" class="service-detail-section">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-badge">🚀 Our Comprehensive Services</div>
+          <h2 class="section-title">What We Offer</h2>
+          <p class="section-subtitle">We provide end-to-end digital solutions to help your business thrive in the digital landscape.</p>
+        </div>
+
+        <!-- Digital Marketing -->
+        <div id="digital-marketing" class="service-detail-card">
+          <div class="row align-items-center">
+            <div class="col-lg-2">
+              <div class="service-detail-icon">
+                <i class="fas fa-chart-line"></i>
+              </div>
+            </div>
+            <div class="col-lg-10">
+              <h2 class="service-detail-title">Digital Marketing</h2>
+              <p class="service-detail-description">
+                Growing brands online through strategic digital channels and marketing campaigns. We help businesses reach their target audience, increase brand visibility, and drive conversions through data-driven marketing strategies.
+              </p>
+              <ul class="service-features">
+                <li><i class="fas fa-check-circle"></i> Search Engine Optimization (SEO) to improve organic rankings</li>
+                <li><i class="fas fa-check-circle"></i> Pay-Per-Click (PPC) advertising campaigns</li>
+                <li><i class="fas fa-check-circle"></i> Social Media Marketing across all major platforms</li>
+                <li><i class="fas fa-check-circle"></i> Content Marketing and strategy development</li>
+                <li><i class="fas fa-check-circle"></i> Email Marketing campaigns and automation</li>
+                <li><i class="fas fa-check-circle"></i> Analytics and performance tracking</li>
+                <li><i class="fas fa-check-circle"></i> Conversion rate optimization</li>
+                <li><i class="fas fa-check-circle"></i> Brand reputation management</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product Design -->
+        <div id="product-design" class="service-detail-card">
+          <div class="row align-items-center">
+            <div class="col-lg-2">
+              <div class="service-detail-icon">
+                <i class="fas fa-pencil-ruler"></i>
+              </div>
+            </div>
+            <div class="col-lg-10">
+              <h2 class="service-detail-title">Product Design</h2>
+              <p class="service-detail-description">
+                Creating innovative products that users love and businesses need for success. We combine user-centered design principles with cutting-edge technology to deliver products that are both functional and delightful.
+              </p>
+              <ul class="service-features">
+                <li><i class="fas fa-check-circle"></i> User Experience (UX) Research and Analysis</li>
+                <li><i class="fas fa-check-circle"></i> User Interface (UI) Design and Prototyping</li>
+                <li><i class="fas fa-check-circle"></i> Wireframing and Information Architecture</li>
+                <li><i class="fas fa-check-circle"></i> Interactive Prototypes and Mockups</li>
+                <li><i class="fas fa-check-circle"></i> Design Systems and Style Guides</li>
+                <li><i class="fas fa-check-circle"></i> Usability Testing and User Feedback</li>
+                <li><i class="fas fa-check-circle"></i> Mobile and Responsive Design</li>
+                <li><i class="fas fa-check-circle"></i> Design-to-Development Handoff</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Web Design -->
+        <div id="web-design" class="service-detail-card">
+          <div class="row align-items-center">
+            <div class="col-lg-2">
+              <div class="service-detail-icon">
+                <i class="fas fa-laptop-code"></i>
+              </div>
+            </div>
+            <div class="col-lg-10">
+              <h2 class="service-detail-title">Web Design</h2>
+              <p class="service-detail-description">
+                Designing beautiful websites that are visually appealing and user-friendly. We create responsive, modern websites that provide exceptional user experiences and drive business results.
+              </p>
+              <ul class="service-features">
+                <li><i class="fas fa-check-circle"></i> Custom Website Design and Development</li>
+                <li><i class="fas fa-check-circle"></i> Responsive and Mobile-First Design</li>
+                <li><i class="fas fa-check-circle"></i> E-Commerce Website Development</li>
+                <li><i class="fas fa-check-circle"></i> WordPress and CMS Development</li>
+                <li><i class="fas fa-check-circle"></i> Landing Page Design and Optimization</li>
+                <li><i class="fas fa-check-circle"></i> Website Redesign and Modernization</li>
+                <li><i class="fas fa-check-circle"></i> Performance Optimization and Speed Enhancement</li>
+                <li><i class="fas fa-check-circle"></i> Website Maintenance and Support</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Software Development -->
+        <div id="software-development" class="service-detail-card">
+          <div class="row align-items-center">
+            <div class="col-lg-2">
+              <div class="service-detail-icon">
+                <i class="fas fa-mobile-alt"></i>
+              </div>
+            </div>
+            <div class="col-lg-10">
+              <h2 class="service-detail-title">Software Development</h2>
+              <p class="service-detail-description">
+                Creating powerful software solutions that are both efficient and enjoyable. We develop custom software applications tailored to your business needs, from web applications to mobile apps.
+              </p>
+              <ul class="service-features">
+                <li><i class="fas fa-check-circle"></i> Custom Web Application Development</li>
+                <li><i class="fas fa-check-circle"></i> Mobile App Development (iOS & Android)</li>
+                <li><i class="fas fa-check-circle"></i> Enterprise Software Solutions</li>
+                <li><i class="fas fa-check-circle"></i> API Development and Integration</li>
+                <li><i class="fas fa-check-circle"></i> Cloud-Based Solutions and Migration</li>
+                <li><i class="fas fa-check-circle"></i> Database Design and Management</li>
+                <li><i class="fas fa-check-circle"></i> Software Testing and Quality Assurance</li>
+                <li><i class="fas fa-check-circle"></i> DevOps and CI/CD Pipeline Setup</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Business Strategy -->
+        <div id="business-strategy" class="service-detail-card">
+          <div class="row align-items-center">
+            <div class="col-lg-2">
+              <div class="service-detail-icon">
+                <i class="fas fa-chess-board"></i>
+              </div>
+            </div>
+            <div class="col-lg-10">
+              <h2 class="service-detail-title">Business Strategy</h2>
+              <p class="service-detail-description">
+                Developing strategic plans and executing them to achieve business goals effectively. We help businesses navigate digital transformation and create sustainable growth strategies.
+              </p>
+              <ul class="service-features">
+                <li><i class="fas fa-check-circle"></i> Digital Transformation Consulting</li>
+                <li><i class="fas fa-check-circle"></i> Business Process Optimization</li>
+                <li><i class="fas fa-check-circle"></i> Market Analysis and Competitive Research</li>
+                <li><i class="fas fa-check-circle"></i> Strategic Planning and Roadmap Development</li>
+                <li><i class="fas fa-check-circle"></i> Technology Stack Recommendations</li>
+                <li><i class="fas fa-check-circle"></i> ROI Analysis and Business Metrics</li>
+                <li><i class="fas fa-check-circle"></i> Change Management and Implementation</li>
+                <li><i class="fas fa-check-circle"></i> Ongoing Strategic Support and Advisory</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Research -->
+        <div id="research" class="service-detail-card">
+          <div class="row align-items-center">
+            <div class="col-lg-2">
+              <div class="service-detail-icon">
+                <i class="fas fa-search"></i>
+              </div>
+            </div>
+            <div class="col-lg-10">
+              <h2 class="service-detail-title">Research</h2>
+              <p class="service-detail-description">
+                Gathering and analyzing valuable data to inform strategic decision-making processes. Our research services provide actionable insights to drive your business forward.
+              </p>
+              <ul class="service-features">
+                <li><i class="fas fa-check-circle"></i> Market Research and Analysis</li>
+                <li><i class="fas fa-check-circle"></i> User Research and Persona Development</li>
+                <li><i class="fas fa-check-circle"></i> Competitive Analysis and Benchmarking</li>
+                <li><i class="fas fa-check-circle"></i> Data Analytics and Business Intelligence</li>
+                <li><i class="fas fa-check-circle"></i> Customer Surveys and Feedback Analysis</li>
+                <li><i class="fas fa-check-circle"></i> Industry Trend Analysis</li>
+                <li><i class="fas fa-check-circle"></i> A/B Testing and Experimentation</li>
+                <li><i class="fas fa-check-circle"></i> Custom Research Reports and Insights</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chatbot Development -->
+        <div id="chatbot-development" class="service-detail-card">
+          <div class="row align-items-center">
+            <div class="col-lg-2">
+              <div class="service-detail-icon">
+                <i class="fas fa-code"></i>
+              </div>
+            </div>
+            <div class="col-lg-10">
+              <h2 class="service-detail-title">Chatbot Development</h2>
+              <p class="service-detail-description">
+                Building intelligent chatbots that are unique, memorable, and meaningful for users. We create AI-powered chatbots that enhance customer experience and automate business processes.
+              </p>
+              <ul class="service-features">
+                <li><i class="fas fa-check-circle"></i> AI-Powered Conversational Chatbots</li>
+                <li><i class="fas fa-check-circle"></i> Natural Language Processing (NLP) Integration</li>
+                <li><i class="fas fa-check-circle"></i> Multi-Channel Bot Deployment (Web, Mobile, Social)</li>
+                <li><i class="fas fa-check-circle"></i> Custom Bot Training and Learning Systems</li>
+                <li><i class="fas fa-check-circle"></i> Integration with CRM and Business Systems</li>
+                <li><i class="fas fa-check-circle"></i> 24/7 Customer Support Automation</li>
+                <li><i class="fas fa-check-circle"></i> Analytics and Performance Monitoring</li>
+                <li><i class="fas fa-check-circle"></i> Voice Bot Development and Integration</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Brand Design Logo -->
+        <div id="brand-design-logo" class="service-detail-card">
+          <div class="row align-items-center">
+            <div class="col-lg-2">
+              <div class="service-detail-icon">
+                <i class="fas fa-palette"></i>
+              </div>
+            </div>
+            <div class="col-lg-10">
+              <h2 class="service-detail-title">Brand Design & Logo</h2>
+              <p class="service-detail-description">
+                Creating distinctive logos that are unique, memorable, and meaningful for brands. We develop comprehensive brand identities that resonate with your target audience and stand out in the market.
+              </p>
+              <ul class="service-features">
+                <li><i class="fas fa-check-circle"></i> Logo Design and Brand Identity Creation</li>
+                <li><i class="fas fa-check-circle"></i> Brand Guidelines and Style Guides</li>
+                <li><i class="fas fa-check-circle"></i> Color Palette and Typography Selection</li>
+                <li><i class="fas fa-check-circle"></i> Business Card and Stationery Design</li>
+                <li><i class="fas fa-check-circle"></i> Packaging Design and Branding</li>
+                <li><i class="fas fa-check-circle"></i> Social Media Branding and Templates</li>
+                <li><i class="fas fa-check-circle"></i> Brand Strategy and Positioning</li>
+                <li><i class="fas fa-check-circle"></i> Rebranding and Brand Refresh Services</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects-section">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-badge">💼 Our Success Stories</div>
+          <h2 class="section-title">Featured Projects</h2>
+          <p class="section-subtitle">Explore our portfolio of successful projects that have transformed businesses and delighted users.</p>
+        </div>
+
+        <div class="row">
+          <!-- Project 1 -->
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="project-card">
+              <div class="project-image">
+                <i class="fas fa-shopping-cart"></i>
+              </div>
+              <div class="project-content">
+                <h3 class="project-title">E-Commerce Platform</h3>
+                <p class="project-description">
+                  Developed a comprehensive e-commerce platform with advanced features including inventory management, payment gateway integration, and real-time analytics.
+                </p>
+                <div class="project-tags">
+                  <span class="project-tag">Web Development</span>
+                  <span class="project-tag">E-Commerce</span>
+                  <span class="project-tag">Payment Integration</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 2 -->
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="project-card">
+              <div class="project-image">
+                <i class="fas fa-mobile-alt"></i>
+              </div>
+              <div class="project-content">
+                <h3 class="project-title">Mobile Banking App</h3>
+                <p class="project-description">
+                  Created a secure and user-friendly mobile banking application with biometric authentication, transaction management, and real-time notifications.
+                </p>
+                <div class="project-tags">
+                  <span class="project-tag">Mobile App</span>
+                  <span class="project-tag">FinTech</span>
+                  <span class="project-tag">Security</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 3 -->
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="project-card">
+              <div class="project-image">
+                <i class="fas fa-chart-line"></i>
+              </div>
+              <div class="project-content">
+                <h3 class="project-title">Digital Marketing Campaign</h3>
+                <p class="project-description">
+                  Executed a comprehensive digital marketing strategy that increased client's online presence by 300% and generated significant ROI through targeted campaigns.
+                </p>
+                <div class="project-tags">
+                  <span class="project-tag">Digital Marketing</span>
+                  <span class="project-tag">SEO</span>
+                  <span class="project-tag">Social Media</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 4 -->
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="project-card">
+              <div class="project-image">
+                <i class="fas fa-robot"></i>
+              </div>
+              <div class="project-content">
+                <h3 class="project-title">AI Customer Support Chatbot</h3>
+                <p class="project-description">
+                  Built an intelligent chatbot using NLP and machine learning that handles 80% of customer queries automatically, reducing response time by 90%.
+                </p>
+                <div class="project-tags">
+                  <span class="project-tag">Chatbot</span>
+                  <span class="project-tag">AI/ML</span>
+                  <span class="project-tag">Automation</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 5 -->
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="project-card">
+              <div class="project-image">
+                <i class="fas fa-briefcase"></i>
+              </div>
+              <div class="project-content">
+                <h3 class="project-title">Corporate Website Redesign</h3>
+                <p class="project-description">
+                  Redesigned a corporate website with modern UI/UX, improved performance, and enhanced user experience, resulting in 50% increase in engagement.
+                </p>
+                <div class="project-tags">
+                  <span class="project-tag">Web Design</span>
+                  <span class="project-tag">UI/UX</span>
+                  <span class="project-tag">Redesign</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 6 -->
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="project-card">
+              <div class="project-image">
+                <i class="fas fa-palette"></i>
+              </div>
+              <div class="project-content">
+                <h3 class="project-title">Brand Identity Design</h3>
+                <p class="project-description">
+                  Created a complete brand identity including logo, color scheme, typography, and brand guidelines for a startup, establishing a strong market presence.
+                </p>
+                <div class="project-tags">
+                  <span class="project-tag">Branding</span>
+                  <span class="project-tag">Logo Design</span>
+                  <span class="project-tag">Identity</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 7 -->
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="project-card">
+              <div class="project-image">
+                <i class="fas fa-cogs"></i>
+              </div>
+              <div class="project-content">
+                <h3 class="project-title">Enterprise Management System</h3>
+                <p class="project-description">
+                  Developed a custom enterprise management system with modules for HR, finance, inventory, and customer relationship management, streamlining operations.
+                </p>
+                <div class="project-tags">
+                  <span class="project-tag">Enterprise</span>
+                  <span class="project-tag">CRM</span>
+                  <span class="project-tag">Custom Software</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 8 -->
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="project-card">
+              <div class="project-image">
+                <i class="fas fa-graduation-cap"></i>
+              </div>
+              <div class="project-content">
+                <h3 class="project-title">E-Learning Platform</h3>
+                <p class="project-description">
+                  Built a comprehensive e-learning platform with video courses, interactive quizzes, progress tracking, and certification system for online education.
+                </p>
+                <div class="project-tags">
+                  <span class="project-tag">E-Learning</span>
+                  <span class="project-tag">Education</span>
+                  <span class="project-tag">Platform</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 9 -->
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="project-card">
+              <div class="project-image">
+                <i class="fas fa-heartbeat"></i>
+              </div>
+              <div class="project-content">
+                <h3 class="project-title">Healthcare Management App</h3>
+                <p class="project-description">
+                  Created a healthcare management application for appointment scheduling, patient records, telemedicine consultations, and prescription management.
+                </p>
+                <div class="project-tags">
+                  <span class="project-tag">Healthcare</span>
+                  <span class="project-tag">Mobile App</span>
+                  <span class="project-tag">Telemedicine</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer id="contact-us" class="site-footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="footer-top-box">
+          <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+              <h2 class="footer-title">Let's talk about your<br>digital agency goals</h2>
+              <div class="footer-subscribe input-wrapper">
+                <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <g data-name="Layer 2">
+                    <g data-name="inbox">
+                      <rect width="24" height="24" transform="rotate(180 12 12)" opacity="0"></rect>
+                      <path d="M20.79 11.34l-3.34-6.68A3 3 0 0 0 14.76 3H9.24a3 3 0 0 0-2.69 1.66l-3.34 6.68a2 2 0 0 0-.21.9V18a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3v-5.76a2 2 0 0 0-.21-.9zM8.34 5.55a1 1 0 0 1 .9-.55h5.52a1 1 0 0 1 .9.55L18.38 11H16a1 1 0 0 0-1 1v2a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-2a1 1 0 0 0-1-1H5.62z"></path>
+                    </g>
+                  </g>
+                </svg>
+                <input type="email" class="footer-email-input input" placeholder="Your email address">
+                <button class="footer-subscribe-btn Subscribe-btn">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="10" viewBox="0 0 38 15" class="arrow">
+                    <path d="M10 7.519l-.939-.344h0l.939.344zm14.386-1.205l-.981-.192.981.192zm1.276 5.509l.537.843.148-.094.107-.139-.792-.611zm4.819-4.304l-.385-.923h0l.385.923zm7.227.707a1 1 0 0 0 0-1.414L31.343.448a1 1 0 0 0-1.414 0 1 1 0 0 0 0 1.414l5.657 5.657-5.657 5.657a1 1 0 0 0 1.414 1.414l6.364-6.364zM1 7.519l.554.833.029-.019.094-.061.361-.23 1.277-.77c1.054-.609 2.397-1.32 3.629-1.787.617-.234 1.17-.392 1.623-.455.477-.066.707-.008.788.034.025.013.031.021.039.034a.56.56 0 0 1 .058.235c.029.327-.047.906-.39 1.842l1.878.689c.383-1.044.571-1.949.505-2.705-.072-.815-.45-1.493-1.16-1.865-.627-.329-1.358-.332-1.993-.244-.659.092-1.367.305-2.056.566-1.381.523-2.833 1.297-3.921 1.925l-1.341.808-.385.245-.104.068-.028.018c-.011.007-.011.007.543.84zm8.061-.344c-.198.54-.328 1.038-.36 1.484-.032.441.024.94.325 1.364.319.45.786.64 1.21.697.403.054.824-.001 1.21-.09.775-.179 1.694-.566 2.633-1.014l3.023-1.554c2.115-1.122 4.107-2.168 5.476-2.524.329-.086.573-.117.742-.115s.195.038.161.014c-.15-.105.085-.139-.076.685l1.963.384c.192-.98.152-2.083-.74-2.707-.405-.283-.868-.37-1.28-.376s-.849.069-1.274.179c-1.65.43-3.888 1.621-5.909 2.693l-2.948 1.517c-.92.439-1.673.743-2.221.87-.276.064-.429.065-.492.057-.043-.006.066.003.155.127.07.099.024.131.038-.063.014-.187.078-.49.243-.94l-1.878-.689zm14.343-1.053c-.361 1.844-.474 3.185-.413 4.161.059.95.294 1.72.811 2.215.567.544 1.242.546 1.664.459a2.34 2.34 0 0 0 .502-.167l.15-.076.049-.028.018-.011c.013-.008.013-.008-.524-.852l-.536-.844.019-.012c-.038.018-.064.027-.084.032-.037.008.053-.013.125.056.021.02-.151-.135-.198-.895-.046-.734.034-1.887.38-3.652l-1.963-.384zm2.257 5.701l.791.611.024-.031.08-.101.311-.377 1.093-1.213c.922-.954 2.005-1.894 2.904-2.27l-.771-1.846c-1.31.547-2.637 1.758-3.572 2.725l-1.184 1.314-.341.414-.093.117-.025.032c-.01.013-.01.013.781.624zm5.204-3.381c.989-.413 1.791-.42 2.697-.307.871.108 2.083.385 3.437.385v-2c-1.197 0-2.041-.226-3.19-.369-1.114-.139-2.297-.146-3.715.447l.771 1.846z"></path>
+                  </svg>
+                  <span class="subscribe-text">Subscribe</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="row">
+                <div class="col-md-4 mb-3 mb-md-0">
+                  <div class="footer-contact-item">
+                    <span class="contact-icon"><i class="fas fa-phone"></i></span>
+                    <div class="contact-text">
+                      <h6>Call on:</h6>
+                      <p>91+9356917424</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 mb-3 mb-md-0">
+                  <div class="footer-contact-item">
+                    <span class="contact-icon"><i class="far fa-clock"></i></span>
+                    <div class="contact-text">
+                      <h6>Time:</h6>
+                      <p>9.30am to 6.30pm</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="footer-contact-item">
+                    <span class="contact-icon"><i class="fas fa-envelope"></i></span>
+                    <div class="contact-text">
+                      <h6>Email:</h6>
+                      <p>sales@damsole.com</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="text-end mt-3">
+                <p style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem; margin: 0;">(Sunday close)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-main">
+      <div class="container">
+        <div class="row gy-4">
+          <div class="col-lg-4 col-md-12">
+            <a href="#" class="footer-logo">
+              <img src="/assets/images/Damsole_Technology_Logo.png" alt="Damsole Technologies" class="footer-logo-img">
+            </a>
+            <p class="footer-desc">Damsole Technologies collaborate on a common strategy to alleviate consumer problems. As a digital agency focused on results, our procedures are open and honest</p>
+          </div>
+
+          <div class="col-lg-2 col-md-4">
+            <h5 class="footer-menu-title">Quick links</h5>
+            <ul class="footer-menu">
+              <li><a href="/about.html">About us</a></li>
+              <li><a href="/ContactUs.html">Contact us</a></li>
+              <li><a href="#">Sign in</a></li>
+              <li><a href="#">Sign up</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-2 col-md-4">
+            <h5 class="footer-menu-title">Community</h5>
+            <ul class="footer-menu">
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Terms of Service</a></li>
+              <li><a href="#">Supports ↗</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-4 col-md-4">
+            <h5 class="footer-menu-title" style="color: #d3d3d3;">
+              <i class="fas fa-map-marker-alt" style="margin-right: 8px;"></i>
+              Damsole Technologies<br>
+              Office No. 103, 104, Madhuban Complex<br>
+              1st Floor, Near Maxcare Hospital<br>
+              Manchar 410503
+            </h5>
+            <h6 class="social-title">Follow on</h6>
+            <div class="social-links"> 
+              <a href="https://www.facebook.com/damsoletechnologies/" class="social-link"><i class="fab fa-facebook-f"></i></a>
+              <a href="https://www.instagram.com/damsole_/" class="social-link"><i class="fab fa-instagram"></i></a>
+              <a href="https://x.com/DamsoleTech" class="social-link"><i class="fab fa-twitter"></i></a>
+              <a href="https://www.linkedin.com/company/damsole-technologies/" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+              <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+        <div class="d-flex justify-content-between align-items-center flex-wrap">
+          <p class="copyright">Copyright © 2025 Build by Damsole Technologies.</p>
+          <button class="language-btn">
+            <i class="fas fa-globe"></i> Language
+          </button>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <div class="back-to-top" id="backToTop">
+    <i class="fas fa-arrow-up"></i>
+  </div>
+
+  <!-- Bootstrap JS Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Back to top functionality
+    const backToTop = document.getElementById('backToTop');
+    
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 300) {
+        backToTop.classList.add('show');
+      } else {
+        backToTop.classList.remove('show');
+      }
+    });
+
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (href !== '#' && href.startsWith('#')) {
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) {
+            const headerOffset = 80;
+            const elementPosition = target.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            });
+          }
+        }
+      });
+    });
+
+    // Handle hash on page load
+    if (window.location.hash) {
+      setTimeout(() => {
+        const target = document.querySelector(window.location.hash);
+        if (target) {
+          const headerOffset = 80;
+          const elementPosition = target.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      }, 100);
+    }
+
+    // Intersection Observer for scroll animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    // Observe all service cards and project cards
+    document.querySelectorAll('.service-detail-card, .project-card').forEach(card => {
+      observer.observe(card);
+    });
+
+    // Add subtle parallax effect to hero section
+    let lastScroll = 0;
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const hero = document.querySelector('.portfolio-hero');
+      if (hero && scrolled < 500) {
+        const parallax = scrolled * 0.3;
+        hero.style.transform = `translateY(${parallax}px)`;
+      }
+    });
+  </script>
+</body>
+</html>
+

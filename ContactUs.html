@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact Us - Damsole Technologies</title>
+  <link rel="icon" type="image/x-icon" href="assets/images/Damsole_Technology_Logo.png">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+  <!-- font awesome link -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- custom css -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <style>
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    
+    .contact-section {
+      padding: 140px 0 80px;
+      margin-top: 70px;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .contact-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 20% 50%, rgba(0, 30, 142, 0.05) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 80%, rgba(0, 51, 204, 0.05) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .contact-section .container {
+      position: relative;
+      z-index: 1;
+    }
+    .contact-section-header {
+      text-align: center;
+      margin-bottom: 60px;
+      animation: fadeInUp 0.8s ease;
+    }
+    .contact-section-header h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #001E8E 0%, #0033cc 50%, #0055ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+      text-shadow: 0 2px 10px rgba(0, 30, 142, 0.1);
+    }
+    .contact-section-header p {
+      font-size: 1.25rem;
+      color: var(--muted);
+      animation: fadeIn 1s ease;
+    }
+    .contact-form-card {
+      background: var(--surface);
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(0, 30, 142, 0.1);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+      animation: fadeInUp 0.6s ease 0.2s both;
+    }
+    .contact-form-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 30, 142, 0.05), transparent);
+      transition: left 0.5s;
+    }
+    .contact-form-card:hover::before {
+      left: 100%;
+    }
+    .contact-form-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 60px rgba(0, 30, 142, 0.15);
+      border-color: rgba(0, 30, 142, 0.2);
+    }
+    .form-label {
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+    }
+    .form-label .required {
+      color: #ef4444;
+    }
+    .form-control,
+    .form-select {
+      border: 2px solid rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      padding: 14px 18px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      background: var(--surface);
+      color: var(--text);
+      position: relative;
+    }
+    .form-control:focus,
+    .form-select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(0, 30, 142, 0.1), 0 4px 12px rgba(0, 30, 142, 0.15);
+      outline: none;
+      transform: translateY(-2px);
+    }
+    .form-control:hover,
+    .form-select:hover {
+      border-color: rgba(0, 30, 142, 0.3);
+    }
+    .form-control::placeholder {
+      color: #9ca3af;
+    }
+    .phone-input-group {
+      display: flex;
+      gap: 8px;
+    }
+    .phone-input-group .form-select {
+      flex: 0 0 80px;
+    }
+    .phone-input-group .form-control {
+      flex: 1;
+    }
+    .services-section {
+      margin: 30px 0;
+      background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+      padding: 24px;
+      border-radius: 16px;
+      border: 2px solid rgba(0, 30, 142, 0.1);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+    }
+    .services-section:hover {
+      border-color: rgba(0, 30, 142, 0.2);
+      box-shadow: 0 8px 30px rgba(0, 30, 142, 0.1);
+    }
+    .services-title {
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 20px;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .services-title::before {
+      content: '✨';
+      font-size: 1.2rem;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      background: transparent;
+    }
+    .form-check {
+      margin: 0;
+      padding: 12px 16px;
+      background: #ffffff;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+      cursor: pointer;
+    }
+    .form-check:hover {
+      background: linear-gradient(135deg, rgba(0, 30, 142, 0.05) 0%, rgba(0, 51, 204, 0.05) 100%);
+      border-color: rgba(0, 30, 142, 0.2);
+      transform: translateX(5px);
+      box-shadow: 0 4px 12px rgba(0, 30, 142, 0.1);
+    }
+    .form-check-input {
+      width: 20px;
+      height: 20px;
+      margin-top: 0.25rem;
+      margin-right: 12px;
+      border: 2px solid rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      background-color: #ffffff;
+      transition: all 0.3s ease;
+    }
+    .form-check-input:hover {
+      border-color: var(--accent);
+      transform: scale(1.1);
+    }
+    .form-check-input:checked {
+      background-color: var(--accent);
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(0, 30, 142, 0.2);
+    }
+    .form-check-label {
+      font-size: 0.95rem;
+      color: var(--text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      background: transparent;
+    }
+    .btn-send {
+      width: 100%;
+      padding: 16px 24px;
+      background: linear-gradient(135deg, #001E8E 0%, #0033cc 100%);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      margin-top: 20px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 25px rgba(0, 30, 142, 0.3);
+    }
+    .btn-send::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+    .btn-send:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+    .btn-send:hover {
+      background: linear-gradient(135deg, #0033cc 0%, #0055ff 100%);
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 12px 35px rgba(0, 30, 142, 0.4);
+    }
+    .btn-send:active {
+      transform: translateY(-2px) scale(0.98);
+    }
+    .contact-methods-card {
+      background: var(--surface);
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(0, 30, 142, 0.1);
+      height: 100%;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+      animation: fadeInUp 0.6s ease 0.4s both;
+    }
+    .contact-methods-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(0, 30, 142, 0.1) 0%, transparent 70%);
+      border-radius: 50%;
+      transform: translate(30%, -30%);
+    }
+    .contact-methods-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 60px rgba(0, 30, 142, 0.15);
+      border-color: rgba(0, 30, 142, 0.2);
+    }
+    .contact-method-section {
+      margin-bottom: 40px;
+    }
+    .contact-method-section:last-child {
+      margin-bottom: 0;
+    }
+    .contact-method-title {
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .contact-method-title::before {
+      content: '';
+      width: 4px;
+      height: 20px;
+      background: linear-gradient(135deg, #001E8E 0%, #0033cc 100%);
+      border-radius: 2px;
+    }
+    .contact-method-description {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 16px;
+    }
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border-radius: 10px;
+      background: rgba(0, 30, 142, 0.05);
+      margin-bottom: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+    .contact-link::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 4px;
+      background: var(--accent);
+      transform: scaleY(0);
+      transition: transform 0.3s ease;
+    }
+    .contact-link:hover {
+      color: #0033cc;
+      padding-left: 24px;
+      background: rgba(0, 30, 142, 0.1);
+      transform: translateX(5px);
+      box-shadow: 0 4px 12px rgba(0, 30, 142, 0.15);
+    }
+    .contact-link:hover::before {
+      transform: scaleY(1);
+    }
+    .contact-link i {
+      font-size: 1.2rem;
+      transition: transform 0.3s ease;
+    }
+    .contact-link:hover i {
+      transform: scale(1.2) rotate(5deg);
+    }
+    .phone-number {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      color: var(--text);
+      font-weight: 600;
+      font-size: 1rem;
+      background: rgba(0, 30, 142, 0.05);
+      border-radius: 10px;
+      margin-bottom: 8px;
+      transition: all 0.3s ease;
+    }
+    .phone-number:hover {
+      background: rgba(0, 30, 142, 0.1);
+      transform: translateX(5px);
+      box-shadow: 0 4px 12px rgba(0, 30, 142, 0.1);
+    }
+    .phone-number i {
+      color: var(--accent);
+      font-size: 1.2rem;
+      transition: transform 0.3s ease;
+    }
+    .phone-number:hover i {
+      transform: scale(1.2) rotate(15deg);
+    }
+    .trusted-section {
+      margin-top: 40px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(0, 0, 0, 0.06);
+    }
+    .trusted-text {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+    }
+    .company-logos {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+    }
+    .company-logo {
+      opacity: 0.6;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+      color: var(--muted);
+      font-weight: 600;
+      padding: 8px 16px;
+      background: rgba(0, 0, 0, 0.03);
+      border-radius: 8px;
+      border: 1px solid transparent;
+    }
+    .company-logo:hover {
+      opacity: 1;
+      color: var(--accent);
+      background: rgba(0, 30, 142, 0.05);
+      border-color: rgba(0, 30, 142, 0.2);
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(0, 30, 142, 0.1);
+    }
+    .form-group-animated {
+      position: relative;
+      margin-bottom: 24px;
+    }
+    .form-group-animated .form-label {
+      position: relative;
+      display: inline-block;
+    }
+    .form-group-animated .form-label::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+    .form-group-animated:focus-within .form-label::after {
+      width: 100%;
+    }
+    
+    @media (max-width: 768px) {
+      .contact-section-header h1 {
+        font-size: 2.5rem;
+      }
+      .contact-section-header p {
+        font-size: 1.1rem;
+      }
+      .contact-form-card,
+      .contact-methods-card {
+        padding: 30px 20px;
+      }
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+      .contact-section {
+        padding: 120px 0 60px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">
+          <img class="logo" src="/assets/images/Damsole_Technology_Logo.png" alt="Damsole Technologies">
+        </a>
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav mx-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html#home">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/about.html">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="index.html#service">Service</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/portfolio.html">Portfolio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="index.html#pricing">Pricing</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="/ContactUs.html">Contact Us</a>
+            </li>
+          </ul>
+          
+          <div class="d-flex align-items-center">
+            <button class="btn btn-ghost me-2 d-none d-md-inline-block"><i class="fa-regular fa-user" style="color: #001e8e;"></i> Sign up</button>
+            <button class="btn btn-primary-custom"><span>LET'S TALK</span></button>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Contact Section -->
+    <section class="contact-section">
+      <div class="container">
+        <div class="contact-section-header">
+          <h1>Talk to our friendly sales team</h1>
+          <p>We'll help you find the perfect plan, no matter your business size.</p>
+        </div>
+        <div class="row g-4">
+          <!-- Left Column - Contact Form -->
+          <div class="col-lg-7">
+            <div class="contact-form-card">
+              <form id="contactForm">
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label for="firstName" class="form-label">
+                      First Name <span class="required">*</span>
+                    </label>
+                    <input type="text" class="form-control" id="firstName" placeholder="First name" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="lastName" class="form-label">
+                      Last Name <span class="required">*</span>
+                    </label>
+                    <input type="text" class="form-control" id="lastName" placeholder="Last name" required>
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <label for="email" class="form-label">
+                    Email <span class="required">*</span>
+                  </label>
+                  <input type="email" class="form-control" id="email" placeholder="you@company.com" required>
+                </div>
+
+                <div class="mb-3">
+                  <label for="phone" class="form-label">Phone number</label>
+                  <div class="phone-input-group">
+                    <select class="form-select" id="countryCode">
+                      <option value="US" selected>US</option>
+                      <option value="IN">IN</option>
+                      <option value="UK">UK</option>
+                      <option value="CA">CA</option>
+                      <option value="AU">AU</option>
+                    </select>
+                    <input type="tel" class="form-control" id="phone" placeholder="+1 (555) 000-0000">
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <label for="message" class="form-label">
+                    Message <span class="required">*</span>
+                  </label>
+                  <textarea class="form-control" id="message" rows="5" placeholder="Leave us a message..." required></textarea>
+                </div>
+
+                <div class="services-section">
+                  <div class="services-title">Services</div>
+                  <div class="services-grid">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="service1" value="Website design">
+                      <label class="form-check-label" for="service1">
+                        Website design
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="service2" value="Content creation">
+                      <label class="form-check-label" for="service2">
+                        Content creation
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="service3" value="UX design">
+                      <label class="form-check-label" for="service3">
+                        UX design
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="service4" value="Strategy & consulting">
+                      <label class="form-check-label" for="service4">
+                        Strategy & consulting
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="service5" value="User research">
+                      <label class="form-check-label" for="service5">
+                        User research
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="service6" value="Other">
+                      <label class="form-check-label" for="service6">
+                        Other
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <button type="submit" class="btn btn-send">
+                  Send message
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Right Column - Contact Methods -->
+          <div class="col-lg-5">
+            <div class="contact-methods-card">
+              <!-- Chat Section -->
+              <div class="contact-method-section">
+                <div class="contact-method-title">Chat with us</div>
+                <div class="contact-method-description">Speak to our friendly team via live chat.</div>
+                <a href="#" class="contact-link">
+                  <i class="fas fa-comment-dots"></i>
+                  <span>Start a live chat</span>
+                </a>
+                <a href="mailto:sales@damsole.com" class="contact-link">
+                  <i class="fas fa-paper-plane"></i>
+                  <span>Shoot us an email</span>
+                </a>
+                <a href="https://x.com/DamsoleTech" target="_blank" class="contact-link">
+                  <i class="fab fa-x-twitter"></i>
+                  <span>Message us on X</span>
+                </a>
+              </div>
+
+              <!-- Call Section -->
+              <div class="contact-method-section">
+                <div class="contact-method-title">Call us</div>
+                <div class="contact-method-description">Call our team Mon-Fri from 8am to 5pm.</div>
+                <div class="phone-number">
+                  <i class="fas fa-phone"></i>
+                  <span>+91 9356917424</span>
+                </div>
+                <div class="phone-number">
+                  <i class="fas fa-phone"></i>
+                  <span>+91 9356917424</span>
+                </div>
+              </div>
+
+              <!-- Trusted Section -->
+              <div class="trusted-section">
+                <div class="contact-method-title">Trusted by 10,000+ companies</div>
+                <div class="trusted-text">Chat to us in person at our Melbourne HQ.</div>
+                <div class="company-logos">
+                  <span class="company-logo">attentive</span>
+                  <span class="company-logo">loom</span>
+                  <span class="company-logo">databricks</span>
+                  <span class="company-logo">Square</span>
+                  <span class="company-logo">splunk</span>
+                  <span class="company-logo">ghost</span>
+                  <span class="company-logo">Uber</span>
+                  <span class="company-logo">twitch</span>
+                  <span class="company-logo">upwork</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+
+
+    <div class="footer-main">
+      <div class="container">
+        <div class="row gy-4">
+          <div class="col-lg-4 col-md-12">
+            <a href="#" class="footer-logo">
+              <img src="/assets/images/Damsole_Technology_Logo.png" alt="Damsole Technologies" class="footer-logo-img">
+            </a>
+            <p class="footer-desc">Damsole Technologies collaborate on a common strategy to alleviate consumer problems. As a digital agency focused on results, our procedures are open and honest</p>
+          </div>
+
+          <div class="col-lg-2 col-md-4">
+            <h5 class="footer-menu-title">Quick links</h5>
+            <ul class="footer-menu">
+              <li><a href="/about.html">About us</a></li>
+              <li><a href="/ContactUs.html">Contact us</a></li>
+              <li><a href="#">Sign in</a></li>
+              <li><a href="#">Sign up</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-2 col-md-4">
+            <h5 class="footer-menu-title">Community</h5>
+            <ul class="footer-menu">
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Terms of Service</a></li>
+              <li><a href="#">Supports ↗</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-4 col-md-4">
+            <h5 class="footer-menu-title" style="color: #d3d3d3;">
+              <i class="fas fa-map-marker-alt" style="margin-right: 8px;"></i>
+              Damsole Technologies<br>
+              Office No. 103, 104, Madhuban Complex<br>
+              1st Floor, Near Maxcare Hospital<br>
+              Manchar 410503
+            </h5>
+            <h6 class="social-title">Follow on</h6>
+            <div class="social-links"> 
+              <a href="https://www.facebook.com/damsoletechnologies/" class="social-link"><i class="fab fa-facebook-f"></i></a>
+              <a href="https://www.instagram.com/damsole_/" class="social-link"><i class="fab fa-instagram"></i></a>
+              <a href="https://x.com/DamsoleTech" class="social-link"><i class="fab fa-twitter"></i></a>
+              <a href="https://www.linkedin.com/company/damsole-technologies/" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+              <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+        <div class="d-flex justify-content-between align-items-center flex-wrap">
+          <p class="copyright">Copyright © 2025 Build by Damsole Technologies.</p>
+          <button class="language-btn">
+            <i class="fas fa-globe"></i> Language
+          </button>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Form submission handler
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Get form data
+      const formData = {
+        firstName: document.getElementById('firstName').value,
+        lastName: document.getElementById('lastName').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        countryCode: document.getElementById('countryCode').value,
+        message: document.getElementById('message').value,
+        services: []
+      };
+
+      // Get selected services
+      document.querySelectorAll('input[type="checkbox"]:checked').forEach(checkbox => {
+        formData.services.push(checkbox.value);
+      });
+
+      // Here you would typically send the data to a server
+      console.log('Form submitted:', formData);
+      
+      // Show success message (you can replace this with actual form submission)
+      alert('Thank you for your message! We will get back to you soon.');
+      
+      // Reset form
+      this.reset();
+    });
+  </script>
+</body>
+</html>
+
