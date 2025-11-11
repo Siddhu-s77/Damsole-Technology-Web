@@ -1745,7 +1745,7 @@
         box-sizing: content-box;
         display: flex;
         align-items: center;
-        background-color: rgba(0, 0, 0, 0.2);
+        background-color: #000000;
         margin-top: 25px;
         gap: 0;
         border: 1px solid rgba(255, 255, 255, 0.1);
@@ -1818,8 +1818,8 @@
     }
 
     .footer-subscribe-btn.Subscribe-btn:hover {
-        color: white;
-        background-color: #001E8E;
+        color: #000000;
+        background-color: #ffffff;
     }
 
     .footer-subscribe-btn.Subscribe-btn:hover .subscribe-text {
@@ -1833,7 +1833,7 @@
         margin-right: 0;
         animation: jello-vertical 0.9s both;
         transform-origin: right;
-        fill: white;
+        fill: #000000;
     }
 
     @keyframes jello-vertical {
