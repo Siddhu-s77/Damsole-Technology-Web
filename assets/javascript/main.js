@@ -359,108 +359,62 @@
       // ================== Random Visitor Avatars ==================
       function getRandomAvatars() {
         const avatarIds = ['avatar1', 'avatar2', 'avatar3', 'avatar4'];
-        const usedIds = new Set();
-        
-        // Generate unique random IDs for each avatar (1-70 range)
-        function getUniqueRandomId() {
-          let randomId;
-          let attempts = 0;
-          do {
-            randomId = Math.floor(Math.random() * 70) + 1;
-            attempts++;
-            if (attempts > 100) break; // Prevent infinite loop
-          } while (usedIds.has(randomId));
-          usedIds.add(randomId);
-          return randomId;
-        }
+        const usedImageIds = new Set();
         
         avatarIds.forEach((avatarId, index) => {
           const avatarElement = document.getElementById(avatarId);
           if (avatarElement) {
-            const randomId = getUniqueRandomId();
-            const timestamp = Date.now();
+            let imageUrl;
+            let attempts = 0;
             
-            // Primary service: Pravatar (most reliable)
-            const primaryUrl = `https://i.pravatar.cc/150?img=${randomId}&t=${timestamp}`;
+            // Use reliable avatar service with unique IDs
+            do {
+              // Use different avatar services for better reliability
+              const randomId = Math.floor(Math.random() * 70) + 1;
+              const imageKey = `avatar-${randomId}`;
+              
+              if (!usedImageIds.has(imageKey)) {
+                usedImageIds.add(imageKey);
+                // Primary: Use pravatar.cc (more reliable)
+                imageUrl = `https://i.pravatar.cc/150?img=${randomId}`;
+                break;
+              }
+              attempts++;
+            } while (attempts < 50);
             
-            // Set image attributes
+            // Fallback if we can't find unique image
+            if (!imageUrl) {
+              const fallbackId = Math.floor(Math.random() * 70) + 1;
+              imageUrl = `https://i.pravatar.cc/150?img=${fallbackId}`;
+            }
+            
+            // Set image source
+            avatarElement.src = imageUrl;
             avatarElement.alt = 'Visitor avatar';
-            avatarElement.loading = 'eager';
             
-            // Fallback chain if image fails to load
-            let fallbackAttempt = 0;
-            const fallbacks = [
-              () => {
-                // Fallback 1: Try different pravatar ID
-                const newId = Math.floor(Math.random() * 70) + 1;
-                return `https://i.pravatar.cc/150?img=${newId}&t=${Date.now()}`;
-              },
-              () => {
-                // Fallback 2: Use DiceBear Avataaars
-                return `https://api.dicebear.com/7.x/avataaars/svg?seed=${randomId}${index}`;
-              },
-              () => {
-                // Fallback 3: Use DiceBear Personas
-                return `https://api.dicebear.com/7.x/personas/svg?seed=${randomId}${index}${timestamp}`;
-              },
-              () => {
-                // Fallback 4: Use UI Avatars
-                return `https://ui-avatars.com/api/?name=User${randomId}&background=random&size=150&rounded=true`;
-              },
-              () => {
-                // Final fallback: Colored SVG avatar
-                const colors = ['#667eea', '#764ba2', '#f093fb', '#4facfe'];
-                const initials = ['A', 'B', 'C', 'D'];
-                return `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Crect fill='${encodeURIComponent(colors[index])}' width='150' height='150' rx='75'/%3E%3Ctext fill='white' font-family='Arial' font-size='60' font-weight='bold' x='50%25' y='50%25' text-anchor='middle' dominant-baseline='central'%3E${initials[index]}%3C/text%3E%3C/svg%3E`;
-              }
-            ];
-            
-            // Error handler with fallback chain
-            function handleError() {
-              if (fallbackAttempt < fallbacks.length) {
-                avatarElement.src = fallbacks[fallbackAttempt]();
-                fallbackAttempt++;
-              }
-            }
-            
-            // Success handler
-            function handleLoad() {
-              // Image loaded successfully, remove error handler
-              avatarElement.onerror = null;
-            }
-            
-            // Set up event handlers
-            avatarElement.onerror = handleError;
-            avatarElement.onload = handleLoad;
-            
-            // Set image source (this will trigger load/error)
-            avatarElement.src = primaryUrl;
+            // Multiple fallback options if primary fails
+            avatarElement.onerror = function() {
+              // Fallback 1: Try different pravatar ID
+              const fallbackId1 = Math.floor(Math.random() * 70) + 1;
+              this.src = `https://i.pravatar.cc/150?img=${fallbackId1}`;
+              
+              // Fallback 2: If still fails, use UI Avatars
+              this.onerror = function() {
+                const fallbackId2 = Math.floor(Math.random() * 70) + 1;
+                this.src = `https://ui-avatars.com/api/?name=User${fallbackId2}&background=random&size=150&rounded=true`;
+                
+                // Fallback 3: Use placeholder
+                this.onerror = function() {
+                  this.src = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Crect fill='%23ddd' width='150' height='150'/%3E%3Ctext fill='%23999' font-family='sans-serif' font-size='50' dy='10.5' font-weight='bold' x='50%25' y='50%25' text-anchor='middle'%3E${index + 1}%3C/text%3E%3C/svg%3E`;
+                };
+              };
+            };
           }
         });
       }
 
-      // Load random avatars - ensure DOM is ready
-      function initAvatars() {
-        const avatars = document.querySelectorAll('.avatar');
-        if (avatars.length === 4) {
-          getRandomAvatars();
-        } else {
-          // Retry if elements not found yet
-          setTimeout(initAvatars, 100);
-        }
-      }
-      
-      // Initialize avatars when DOM is ready
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initAvatars);
-      } else {
-        initAvatars();
-      }
-      
-      // Backup initialization after page load
-      window.addEventListener('load', function() {
-        setTimeout(getRandomAvatars, 200);
-      });
+      // Load random avatars on page load
+      getRandomAvatars();
 
       // ================== Smooth Scroll Navigation ==================
       // Handle all navlink clicks for smooth scrolling
@@ -546,7 +500,7 @@
               typingTimer = setTimeout(erasePhraseText, 1500);
             }
           }
-  
+
           function erasePhraseText() {
             if (charIndex > 0) {
               typedSpan.textContent = typedSpan.textContent.substring(0, charIndex - 1);
