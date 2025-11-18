@@ -546,7 +546,7 @@
               typingTimer = setTimeout(erasePhraseText, 1500);
             }
           }
-
+  
           function erasePhraseText() {
             if (charIndex > 0) {
               typedSpan.textContent = typedSpan.textContent.substring(0, charIndex - 1);
