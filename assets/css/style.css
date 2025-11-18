@@ -607,8 +607,8 @@
     }
 
     .carousel-logo {
-        height: 60px;
-        width: 120px;
+        height: 40px;
+        width: 80px;
         object-fit: contain;
         filter: grayscale(1) brightness(0.7);
         opacity: 0.7;
@@ -635,16 +635,16 @@
     /* Mobile responsive for carousel logos */
     @media (max-width: 768px) {
         .carousel-logo {
-            height: 50px;
-            width: 100px;
+            height: 35px;
+            width: 70px;
             object-fit: contain;
         }
     }
 
     @media (max-width: 576px) {
         .carousel-logo {
-            height: 40px;
-            width: 80px;
+            height: 30px;
+            width: 60px;
             object-fit: contain;
         }
     }
@@ -2455,8 +2455,8 @@
         }
 
         .carousel-logo {
-            height: 50px;
-            width: 100px;
+            height: 35px;
+            width: 70px;
             object-fit: contain;
         }
 

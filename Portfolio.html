@@ -110,7 +110,7 @@
       box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     }
     .service-detail-section {
-      padding: 100px 0;
+      padding: 60px 0;
       background: var(--bg);
       position: relative;
     }
@@ -131,9 +131,9 @@
     .service-detail-card {
       background: var(--surface);
       border-radius: 24px;
-      padding: 50px;
+      padding: 20px;
       box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-      margin-bottom: 50px;
+      margin-bottom: 20px;
       transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       border: 1px solid rgba(0, 30, 142, 0.1);
       position: relative;
@@ -210,25 +210,25 @@
       transform: scale(1.2);
     }
     .service-detail-title {
-      font-size: 2.5rem;
+      font-size: 2rem;
       font-weight: 700;
       color: var(--text);
       margin-bottom: 20px;
     }
     .service-detail-description {
-      font-size: 1.1rem;
+      font-size: 1rem;
       color: var(--muted);
-      line-height: 1.8;
-      margin-bottom: 30px;
+      line-height: 1.6;
+      margin-bottom: 20px;
     }
     .service-features {
       list-style: none;
       padding: 0;
-      margin: 30px 0;
+      margin: 20px 0;
     }
     .service-features li {
-      padding: 15px 0;
-      font-size: 1rem;
+      padding: 8px 0;
+      font-size: 0.95rem;
       color: var(--text);
       display: flex;
       align-items: center;
@@ -459,15 +459,42 @@
     .back-to-top:hover i {
       transform: translateY(-3px);
     }
+    .service-detail-image {
+      margin-bottom: 20px;
+    }
+    .service-detail-image img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+    @media (min-width: 992px) and (max-width: 1199px) {
+      .service-detail-image img {
+        max-width: 450px !important;
+      }
+    }
+    @media (min-width: 1200px) and (max-width: 1440px) {
+      .service-detail-image img {
+        max-width: 500px !important;
+      }
+    }
+    @media (min-width: 1441px) {
+      .service-detail-image img {
+        max-width: 550px !important;
+      }
+    }
     @media (max-width: 768px) {
       .service-detail-title {
-        font-size: 2rem;
+        font-size: 1.75rem;
       }
       .section-title {
         font-size: 2rem;
       }
       .service-detail-card {
-        padding: 30px 20px;
+        padding: 25px 15px;
+        max-width: 100%;
+      }
+      .service-detail-image img {
+        max-width: 100% !important;
       }
     }
   </style>
@@ -547,14 +574,14 @@
 
         <!-- Digital Marketing -->
         <div id="digital-marketing" class="service-detail-card">
-          <div class="row align-items-center">
-            <div class="col-lg-2">
-              <div class="service-detail-icon">
-                <i class="fas fa-chart-line"></i>
+          <div class="row">
+            <div class="col-12 mb-3">
+              <div class="service-detail-image text-center">
+                <img src="https://api.edoxi.com/assets/studyhub/Digital_marketing1.webp" alt="Digital Marketing" class="img-fluid" style="border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
               </div>
             </div>
-            <div class="col-lg-10">
-              <h2 class="service-detail-title">Digital Marketing</h2>
+            <div class="col-12">
+              <h2 class="service-detail-title text-center">Digital Marketing</h2>
               <p class="service-detail-description">
                 Growing brands online through strategic digital channels and marketing campaigns. We help businesses reach their target audience, increase brand visibility, and drive conversions through data-driven marketing strategies.
               </p>
@@ -564,9 +591,6 @@
                 <li><i class="fas fa-check-circle"></i> Social Media Marketing across all major platforms</li>
                 <li><i class="fas fa-check-circle"></i> Content Marketing and strategy development</li>
                 <li><i class="fas fa-check-circle"></i> Email Marketing campaigns and automation</li>
-                <li><i class="fas fa-check-circle"></i> Analytics and performance tracking</li>
-                <li><i class="fas fa-check-circle"></i> Conversion rate optimization</li>
-                <li><i class="fas fa-check-circle"></i> Brand reputation management</li>
               </ul>
             </div>
           </div>
@@ -574,14 +598,14 @@
 
         <!-- Product Design -->
         <div id="product-design" class="service-detail-card">
-          <div class="row align-items-center">
-            <div class="col-lg-2">
-              <div class="service-detail-icon">
-                <i class="fas fa-pencil-ruler"></i>
+          <div class="row">
+            <div class="col-12 mb-3">
+              <div class="service-detail-image text-center">
+                <img src="/assets/images/Business Development.png" alt="Product Design" class="img-fluid">
               </div>
             </div>
-            <div class="col-lg-10">
-              <h2 class="service-detail-title">Product Design</h2>
+            <div class="col-12">
+              <h2 class="service-detail-title text-center">Product Design</h2>
               <p class="service-detail-description">
                 Creating innovative products that users love and businesses need for success. We combine user-centered design principles with cutting-edge technology to deliver products that are both functional and delightful.
               </p>
@@ -591,9 +615,6 @@
                 <li><i class="fas fa-check-circle"></i> Wireframing and Information Architecture</li>
                 <li><i class="fas fa-check-circle"></i> Interactive Prototypes and Mockups</li>
                 <li><i class="fas fa-check-circle"></i> Design Systems and Style Guides</li>
-                <li><i class="fas fa-check-circle"></i> Usability Testing and User Feedback</li>
-                <li><i class="fas fa-check-circle"></i> Mobile and Responsive Design</li>
-                <li><i class="fas fa-check-circle"></i> Design-to-Development Handoff</li>
               </ul>
             </div>
           </div>
@@ -601,14 +622,14 @@
 
         <!-- Web Design -->
         <div id="web-design" class="service-detail-card">
-          <div class="row align-items-center">
-            <div class="col-lg-2">
-              <div class="service-detail-icon">
-                <i class="fas fa-laptop-code"></i>
+          <div class="row">
+            <div class="col-12 mb-3">
+              <div class="service-detail-image text-center">
+                <img src="/assets/images/Business Development.png" alt="Web Design" class="img-fluid" style="border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 300px;">
               </div>
             </div>
-            <div class="col-lg-10">
-              <h2 class="service-detail-title">Web Design</h2>
+            <div class="col-12">
+              <h2 class="service-detail-title text-center">Web Design</h2>
               <p class="service-detail-description">
                 Designing beautiful websites that are visually appealing and user-friendly. We create responsive, modern websites that provide exceptional user experiences and drive business results.
               </p>
@@ -618,9 +639,6 @@
                 <li><i class="fas fa-check-circle"></i> E-Commerce Website Development</li>
                 <li><i class="fas fa-check-circle"></i> WordPress and CMS Development</li>
                 <li><i class="fas fa-check-circle"></i> Landing Page Design and Optimization</li>
-                <li><i class="fas fa-check-circle"></i> Website Redesign and Modernization</li>
-                <li><i class="fas fa-check-circle"></i> Performance Optimization and Speed Enhancement</li>
-                <li><i class="fas fa-check-circle"></i> Website Maintenance and Support</li>
               </ul>
             </div>
           </div>
@@ -628,14 +646,14 @@
 
         <!-- Software Development -->
         <div id="software-development" class="service-detail-card">
-          <div class="row align-items-center">
-            <div class="col-lg-2">
-              <div class="service-detail-icon">
-                <i class="fas fa-mobile-alt"></i>
+          <div class="row">
+            <div class="col-12 mb-3">
+              <div class="service-detail-image text-center">
+                <img src="/assets/images/Business Development.png" alt="Software Development" class="img-fluid" style="border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 300px;">
               </div>
             </div>
-            <div class="col-lg-10">
-              <h2 class="service-detail-title">Software Development</h2>
+            <div class="col-12">
+              <h2 class="service-detail-title text-center">Software Development</h2>
               <p class="service-detail-description">
                 Creating powerful software solutions that are both efficient and enjoyable. We develop custom software applications tailored to your business needs, from web applications to mobile apps.
               </p>
@@ -645,9 +663,6 @@
                 <li><i class="fas fa-check-circle"></i> Enterprise Software Solutions</li>
                 <li><i class="fas fa-check-circle"></i> API Development and Integration</li>
                 <li><i class="fas fa-check-circle"></i> Cloud-Based Solutions and Migration</li>
-                <li><i class="fas fa-check-circle"></i> Database Design and Management</li>
-                <li><i class="fas fa-check-circle"></i> Software Testing and Quality Assurance</li>
-                <li><i class="fas fa-check-circle"></i> DevOps and CI/CD Pipeline Setup</li>
               </ul>
             </div>
           </div>
@@ -655,14 +670,14 @@
 
         <!-- Business Strategy -->
         <div id="business-strategy" class="service-detail-card">
-          <div class="row align-items-center">
-            <div class="col-lg-2">
-              <div class="service-detail-icon">
-                <i class="fas fa-chess-board"></i>
+          <div class="row">
+            <div class="col-12 mb-3">
+              <div class="service-detail-image text-center">
+                <img src="/assets/images/Business Development.png" alt="Business Strategy" class="img-fluid" style="border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 300px;">
               </div>
             </div>
-            <div class="col-lg-10">
-              <h2 class="service-detail-title">Business Strategy</h2>
+            <div class="col-12">
+              <h2 class="service-detail-title text-center">Business Strategy</h2>
               <p class="service-detail-description">
                 Developing strategic plans and executing them to achieve business goals effectively. We help businesses navigate digital transformation and create sustainable growth strategies.
               </p>
@@ -672,9 +687,6 @@
                 <li><i class="fas fa-check-circle"></i> Market Analysis and Competitive Research</li>
                 <li><i class="fas fa-check-circle"></i> Strategic Planning and Roadmap Development</li>
                 <li><i class="fas fa-check-circle"></i> Technology Stack Recommendations</li>
-                <li><i class="fas fa-check-circle"></i> ROI Analysis and Business Metrics</li>
-                <li><i class="fas fa-check-circle"></i> Change Management and Implementation</li>
-                <li><i class="fas fa-check-circle"></i> Ongoing Strategic Support and Advisory</li>
               </ul>
             </div>
           </div>
@@ -682,14 +694,14 @@
 
         <!-- Research -->
         <div id="research" class="service-detail-card">
-          <div class="row align-items-center">
-            <div class="col-lg-2">
-              <div class="service-detail-icon">
-                <i class="fas fa-search"></i>
+          <div class="row">
+            <div class="col-12 mb-3">
+              <div class="service-detail-image text-center">
+                <img src="/assets/images/Business Development.png" alt="Research" class="img-fluid" style="border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 300px;">
               </div>
             </div>
-            <div class="col-lg-10">
-              <h2 class="service-detail-title">Research</h2>
+            <div class="col-12">
+              <h2 class="service-detail-title text-center">Research</h2>
               <p class="service-detail-description">
                 Gathering and analyzing valuable data to inform strategic decision-making processes. Our research services provide actionable insights to drive your business forward.
               </p>
@@ -699,9 +711,6 @@
                 <li><i class="fas fa-check-circle"></i> Competitive Analysis and Benchmarking</li>
                 <li><i class="fas fa-check-circle"></i> Data Analytics and Business Intelligence</li>
                 <li><i class="fas fa-check-circle"></i> Customer Surveys and Feedback Analysis</li>
-                <li><i class="fas fa-check-circle"></i> Industry Trend Analysis</li>
-                <li><i class="fas fa-check-circle"></i> A/B Testing and Experimentation</li>
-                <li><i class="fas fa-check-circle"></i> Custom Research Reports and Insights</li>
               </ul>
             </div>
           </div>
@@ -709,14 +718,14 @@
 
         <!-- Chatbot Development -->
         <div id="chatbot-development" class="service-detail-card">
-          <div class="row align-items-center">
-            <div class="col-lg-2">
-              <div class="service-detail-icon">
-                <i class="fas fa-code"></i>
+          <div class="row">
+            <div class="col-12 mb-3">
+              <div class="service-detail-image text-center">
+                <img src="/assets/images/Business Development.png" alt="Chatbot Development" class="img-fluid" style="border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 300px;">
               </div>
             </div>
-            <div class="col-lg-10">
-              <h2 class="service-detail-title">Chatbot Development</h2>
+            <div class="col-12">
+              <h2 class="service-detail-title text-center">Chatbot Development</h2>
               <p class="service-detail-description">
                 Building intelligent chatbots that are unique, memorable, and meaningful for users. We create AI-powered chatbots that enhance customer experience and automate business processes.
               </p>
@@ -726,9 +735,6 @@
                 <li><i class="fas fa-check-circle"></i> Multi-Channel Bot Deployment (Web, Mobile, Social)</li>
                 <li><i class="fas fa-check-circle"></i> Custom Bot Training and Learning Systems</li>
                 <li><i class="fas fa-check-circle"></i> Integration with CRM and Business Systems</li>
-                <li><i class="fas fa-check-circle"></i> 24/7 Customer Support Automation</li>
-                <li><i class="fas fa-check-circle"></i> Analytics and Performance Monitoring</li>
-                <li><i class="fas fa-check-circle"></i> Voice Bot Development and Integration</li>
               </ul>
             </div>
           </div>
@@ -736,14 +742,14 @@
 
         <!-- Brand Design Logo -->
         <div id="brand-design-logo" class="service-detail-card">
-          <div class="row align-items-center">
-            <div class="col-lg-2">
-              <div class="service-detail-icon">
-                <i class="fas fa-palette"></i>
+          <div class="row">
+            <div class="col-12 mb-3">
+              <div class="service-detail-image text-center">
+                <img src="/assets/images/Business Development.png" alt="Brand Design & Logo" class="img-fluid" style="border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 300px;">
               </div>
             </div>
-            <div class="col-lg-10">
-              <h2 class="service-detail-title">Brand Design & Logo</h2>
+            <div class="col-12">
+              <h2 class="service-detail-title text-center">Brand Design & Logo</h2>
               <p class="service-detail-description">
                 Creating distinctive logos that are unique, memorable, and meaningful for brands. We develop comprehensive brand identities that resonate with your target audience and stand out in the market.
               </p>
@@ -753,9 +759,6 @@
                 <li><i class="fas fa-check-circle"></i> Color Palette and Typography Selection</li>
                 <li><i class="fas fa-check-circle"></i> Business Card and Stationery Design</li>
                 <li><i class="fas fa-check-circle"></i> Packaging Design and Branding</li>
-                <li><i class="fas fa-check-circle"></i> Social Media Branding and Templates</li>
-                <li><i class="fas fa-check-circle"></i> Brand Strategy and Positioning</li>
-                <li><i class="fas fa-check-circle"></i> Rebranding and Brand Refresh Services</li>
               </ul>
             </div>
           </div>

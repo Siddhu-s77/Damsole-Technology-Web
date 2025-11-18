@@ -336,7 +336,7 @@
             <div class="video-label">-Our Video-</div>
             <h2 class="video-section-title">Our Company Activities</h2>
             <p class="video-section-desc">
-              Get the most of reduction in your teams operating costs for the whole product which creates amazing UI/UX experiences.
+              Discover how we transform businesses through innovative digital solutions, strategic marketing, and cutting-edge technology services that drive real results.
             </p>
             
             <div class="video-container" onclick="window.open('https://www.instagram.com/damsole_/', '_blank')">
@@ -356,7 +356,7 @@
         <div class="row">
           <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
             <div class="stat-item">
-              <div class="stat-number" data-target="450">0</div>
+              <div class="stat-number" data-target="20000">0</div>
               <div class="stat-label">Happy Customer</div>
             </div>
           </div>
@@ -368,7 +368,7 @@
           </div>
           <div class="col-lg-4 col-md-6">
             <div class="stat-item">
-              <div class="stat-number" data-target="150">0</div>
+              <div class="stat-number" data-target="100">0</div>
               <div class="stat-label">Team Member</div>
             </div>
           </div>
@@ -581,16 +581,23 @@
   <script src="/assets/javascript/main.js"></script>
   <script>
     // Counter Animation
+    function formatNumber(num) {
+      if (num >= 1000) {
+        return (num / 1000).toFixed(0) + 'K';
+      }
+      return num.toString();
+    }
+
     function animateCounter(element, target, duration = 2000) {
       let start = 0;
       const increment = target / (duration / 16);
       const timer = setInterval(() => {
         start += increment;
         if (start >= target) {
-          element.textContent = target + ' +';
+          element.textContent = formatNumber(target) + ' +';
           clearInterval(timer);
         } else {
-          element.textContent = Math.floor(start) + ' +';
+          element.textContent = formatNumber(Math.floor(start)) + ' +';
         }
       }, 16);
     }
