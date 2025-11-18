@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact Us - Damsole Technologies</title>
+  <link rel="icon" type="image/x-icon" href="assets/images/Damsole_Technology_Logo.png">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+  <!-- font awesome link -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- custom css -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <style>
+    /* Ensure navbar and navlinks are visible */
+    .site-header {
+      background: linear-gradient(90deg, #fff, #fbfdff) !important;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
+      position: fixed !important;
+      width: 100% !important;
+      top: 0 !important;
+      z-index: 1000 !important;
+    }
+    
+    .navbar {
+      background: transparent !important;
+    }
+    
+    .navbar-nav .nav-link {
+      color: #6b7280 !important;
+      font-weight: 500 !important;
+      padding: 8px 12px !important;
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+    }
+    
+    .navbar-nav .nav-link:hover,
+    .navbar-nav .nav-link.active {
+      color: #001E8E !important;
+    }
+    
+    .btn-primary-custom {
+      display: inline-block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+    }
+    
+    .navbar-toggler {
+      border-color: rgba(0, 0, 0, 0.1) !important;
+      visibility: visible !important;
+    }
+    
+    .navbar-toggler-icon {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2833, 37, 41, 0.75%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    
+    .contact-section {
+      padding: 140px 0 80px;
+      margin-top: 70px;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .contact-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 20% 50%, rgba(0, 30, 142, 0.05) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 80%, rgba(0, 51, 204, 0.05) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .contact-section .container {
+      position: relative;
+      z-index: 1;
+    }
+    .contact-section-header {
+      text-align: center;
+      margin-bottom: 60px;
+      animation: fadeInUp 0.8s ease;
+    }
+    .contact-section-header h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #001E8E 0%, #0033cc 50%, #0055ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+      text-shadow: 0 2px 10px rgba(0, 30, 142, 0.1);
+    }
+    .contact-section-header p {
+      font-size: 1.25rem;
+      color: var(--muted);
+      animation: fadeIn 1s ease;
+    }
+    .contact-form-card {
+      background: var(--surface);
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(0, 30, 142, 0.1);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+      animation: fadeInUp 0.6s ease 0.2s both;
+    }
+    .contact-form-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 30, 142, 0.05), transparent);
+      transition: left 0.5s;
+    }
+    .contact-form-card:hover::before {
+      left: 100%;
+    }
+    .contact-form-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 60px rgba(0, 30, 142, 0.15);
+      border-color: rgba(0, 30, 142, 0.2);
+    }
+    .form-label {
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+    }
+    .form-label .required {
+      color: #ef4444;
+    }
+    .form-control,
+    .form-select {
+      border: 2px solid rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      padding: 14px 18px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      background: var(--surface);
+      color: var(--text);
+      position: relative;
+    }
+    .form-control:focus,
+    .form-select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(0, 30, 142, 0.1), 0 4px 12px rgba(0, 30, 142, 0.15);
+      outline: none;
+      transform: translateY(-2px);
+    }
+    .form-control:hover,
+    .form-select:hover {
+      border-color: rgba(0, 30, 142, 0.3);
+    }
+    .form-control::placeholder {
+      color: #9ca3af;
+    }
+    .phone-input-group {
+      display: flex;
+      gap: 8px;
+    }
+    .phone-input-group .form-select {
+      flex: 0 0 140px;
+      min-width: 140px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      font-weight: 500;
+      padding-right: 35px;
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      background-size: 16px 12px;
+      appearance: none;
+    }
+    .phone-input-group .form-select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(0, 30, 142, 0.1), 0 4px 12px rgba(0, 30, 142, 0.15);
+      outline: none;
+    }
+    .phone-input-group .form-control {
+      flex: 1;
+    }
+    .services-section {
+      margin: 30px 0;
+      background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+      padding: 24px;
+      border-radius: 16px;
+      border: 2px solid rgba(0, 30, 142, 0.1);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+    }
+    .services-section:hover {
+      border-color: rgba(0, 30, 142, 0.2);
+      box-shadow: 0 8px 30px rgba(0, 30, 142, 0.1);
+    }
+    .services-title {
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 20px;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .services-title::before {
+      content: '✨';
+      font-size: 1.2rem;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      background: transparent;
+    }
+    .form-check {
+      margin: 0;
+      padding: 12px 16px;
+      background: #ffffff;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+      cursor: pointer;
+    }
+    .form-check:hover {
+      background: linear-gradient(135deg, rgba(0, 30, 142, 0.05) 0%, rgba(0, 51, 204, 0.05) 100%);
+      border-color: rgba(0, 30, 142, 0.2);
+      transform: translateX(5px);
+      box-shadow: 0 4px 12px rgba(0, 30, 142, 0.1);
+    }
+    .form-check-input {
+      width: 20px;
+      height: 20px;
+      margin-top: 0.25rem;
+      margin-right: 12px;
+      border: 2px solid rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      background-color: #ffffff;
+      transition: all 0.3s ease;
+    }
+    .form-check-input:hover {
+      border-color: var(--accent);
+      transform: scale(1.1);
+    }
+    .form-check-input:checked {
+      background-color: var(--accent);
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(0, 30, 142, 0.2);
+    }
+    .form-check-label {
+      font-size: 0.95rem;
+      color: var(--text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      background: transparent;
+    }
+    .btn-send {
+      width: 100%;
+      padding: 16px 24px;
+      background: linear-gradient(135deg, #001E8E 0%, #0033cc 100%);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      margin-top: 20px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 25px rgba(0, 30, 142, 0.3);
+    }
+    .btn-send::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+    .btn-send:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+    .btn-send:hover {
+      background: linear-gradient(135deg, #0033cc 0%, #0055ff 100%);
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 12px 35px rgba(0, 30, 142, 0.4);
+    }
+    .btn-send:active {
+      transform: translateY(-2px) scale(0.98);
+    }
+    .contact-methods-card {
+      background: var(--surface);
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(0, 30, 142, 0.1);
+      height: 100%;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+      animation: fadeInUp 0.6s ease 0.4s both;
+    }
+    .contact-methods-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(0, 30, 142, 0.1) 0%, transparent 70%);
+      border-radius: 50%;
+      transform: translate(30%, -30%);
+    }
+    .contact-methods-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 60px rgba(0, 30, 142, 0.15);
+      border-color: rgba(0, 30, 142, 0.2);
+    }
+    .contact-method-section {
+      margin-bottom: 40px;
+    }
+    .contact-method-section:last-child {
+      margin-bottom: 0;
+    }
+    .contact-method-title {
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .contact-method-title::before {
+      content: '';
+      width: 4px;
+      height: 20px;
+      background: linear-gradient(135deg, #001E8E 0%, #0033cc 100%);
+      border-radius: 2px;
+    }
+    .contact-method-description {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 16px;
+    }
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border-radius: 10px;
+      background: rgba(0, 30, 142, 0.05);
+      margin-bottom: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+    .contact-link::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 4px;
+      background: var(--accent);
+      transform: scaleY(0);
+      transition: transform 0.3s ease;
+    }
+    .contact-link:hover {
+      color: #0033cc;
+      padding-left: 24px;
+      background: rgba(0, 30, 142, 0.1);
+      transform: translateX(5px);
+      box-shadow: 0 4px 12px rgba(0, 30, 142, 0.15);
+    }
+    .contact-link:hover::before {
+      transform: scaleY(1);
+    }
+    .contact-link i {
+      font-size: 1.2rem;
+      transition: transform 0.3s ease;
+    }
+    .contact-link:hover i {
+      transform: scale(1.2) rotate(5deg);
+    }
+    .phone-number {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      color: var(--text);
+      font-weight: 600;
+      font-size: 1rem;
+      background: rgba(0, 30, 142, 0.05);
+      border-radius: 10px;
+      margin-bottom: 8px;
+      transition: all 0.3s ease;
+    }
+    .phone-number:hover {
+      background: rgba(0, 30, 142, 0.1);
+      transform: translateX(5px);
+      box-shadow: 0 4px 12px rgba(0, 30, 142, 0.1);
+    }
+    .phone-number i {
+      color: var(--accent);
+      font-size: 1.2rem;
+      transition: transform 0.3s ease;
+    }
+    .phone-number:hover i {
+      transform: scale(1.2) rotate(15deg);
+    }
+    .trusted-section {
+      margin-top: 40px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(0, 0, 0, 0.06);
+    }
+    .trusted-text {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+    }
+    .company-logos {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+    }
+    .company-logo {
+      opacity: 0.6;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+      color: var(--muted);
+      font-weight: 600;
+      padding: 8px 16px;
+      background: rgba(0, 0, 0, 0.03);
+      border-radius: 8px;
+      border: 1px solid transparent;
+    }
+    .company-logo:hover {
+      opacity: 1;
+      color: var(--accent);
+      background: rgba(0, 30, 142, 0.05);
+      border-color: rgba(0, 30, 142, 0.2);
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(0, 30, 142, 0.1);
+    }
+    .form-group-animated {
+      position: relative;
+      margin-bottom: 24px;
+    }
+    .form-group-animated .form-label {
+      position: relative;
+      display: inline-block;
+    }
+    .form-group-animated .form-label::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+    .form-group-animated:focus-within .form-label::after {
+      width: 100%;
+    }
+    
+    @media (max-width: 768px) {
+      .contact-section-header h1 {
+        font-size: 2.5rem;
+      }
+      .contact-section-header p {
+        font-size: 1.1rem;
+      }
+      .contact-form-card,
+      .contact-methods-card {
+        padding: 30px 20px;
+      }
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+      .contact-section {
+        padding: 120px 0 60px;
+      }
+    }
+    
+    /* Custom Popup Notification Styles */
+    .notification-container {
+      position: fixed;
+      right: 20px;
+      top: 20px;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    
+    .notification-popup {
+      min-width: 320px;
+      max-width: 400px;
+      background: white;
+      border-radius: 12px;
+      padding: 20px 24px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      opacity: 0;
+      transform: translateX(100px);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      pointer-events: auto;
+      border-right: 4px solid;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .notification-popup.show {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    
+    .notification-popup.success {
+      border-right-color: #10b981;
+      background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
+    }
+    
+    .notification-popup.error {
+      border-right-color: #ef4444;
+      background: linear-gradient(135deg, #ffffff 0%, #fef2f2 100%);
+    }
+    
+    .notification-popup::before {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: currentColor;
+    }
+    
+    .notification-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 24px;
+    }
+    
+    .notification-popup.success .notification-icon {
+      background: #10b981;
+      color: white;
+    }
+    
+    .notification-popup.error .notification-icon {
+      background: #ef4444;
+      color: white;
+    }
+    
+    .notification-content {
+      flex: 1;
+    }
+    
+    .notification-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 4px;
+      color: #1f2937;
+    }
+    
+    .notification-message {
+      font-size: 0.9rem;
+      color: #6b7280;
+      line-height: 1.5;
+    }
+    
+    .notification-close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 14px;
+      color: #6b7280;
+    }
+    
+    .notification-close:hover {
+      background: rgba(0, 0, 0, 0.1);
+      color: #1f2937;
+    }
+    
+    @media (max-width: 768px) {
+      .notification-container {
+        right: 10px;
+        left: 10px;
+        top: 20px;
+      }
+      
+      .notification-popup {
+        min-width: auto;
+        width: 100%;
+        max-width: none;
+        transform: translateX(0) translateY(-20px);
+      }
+      
+      .notification-popup.show {
+        transform: translateX(0) translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Notification Popup Container -->
+  <div id="notificationContainer" class="notification-container"></div>
+  <!-- Header -->
+  <header class="site-header">
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">
+          <img class="logo" src="/assets/images/Damsole_Technology_Logo.png" alt="Damsole Technologies">
+        </a>
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav mx-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html#home">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/about.html">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="index.html#service">Service</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/portfolio.html">Portfolio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="/ContactUs.html">Contact Us</a>
+            </li>
+          </ul>
+          
+          <div class="d-flex align-items-center">
+            <a href="/ContactUs.html" class="btn btn-primary-custom"><span>LET'S TALK</span></a>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Contact Section -->
+    <section class="contact-section">
+      <div class="container">
+        <div class="contact-section-header">
+          <h1>Talk to our friendly sales team</h1>
+          <p>We'll help you find the perfect plan, no matter your business size.</p>
+        </div>
+        <div class="row g-4">
+          <!-- Left Column - Contact Form -->
+          <div class="col-lg-7">
+            <div class="contact-form-card">
+              <form id="contactForm">
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label for="firstName" class="form-label">
+                      First Name <span class="required">*</span>
+                    </label>
+                    <input type="text" class="form-control" id="firstName" placeholder="First name" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="lastName" class="form-label">
+                      Last Name <span class="required">*</span>
+                    </label>
+                    <input type="text" class="form-control" id="lastName" placeholder="Last name" required>
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <label for="email" class="form-label">
+                    Email <span class="required">*</span>
+                  </label>
+                  <input type="email" class="form-control" id="email" placeholder="you@company.com" required>
+                </div>
+
+                <div class="mb-3">
+                  <label for="phone" class="form-label">
+                    Phone number <span class="required">*</span>
+                  </label>
+                  <div class="phone-input-group">
+                    <select class="form-select" id="countryCode">
+                      <option value="US" selected>US (+1)</option>
+                      <option value="IN">IN (+91)</option>
+                      <option value="GB">UK (+44)</option>
+                      <option value="CA">CA (+1)</option>
+                      <option value="AU">AU (+61)</option>
+                      <option value="DE">DE (+49)</option>
+                      <option value="FR">FR (+33)</option>
+                      <option value="IT">IT (+39)</option>
+                      <option value="ES">ES (+34)</option>
+                      <option value="NL">NL (+31)</option>
+                      <option value="BE">BE (+32)</option>
+                      <option value="CH">CH (+41)</option>
+                      <option value="AT">AT (+43)</option>
+                      <option value="SE">SE (+46)</option>
+                      <option value="NO">NO (+47)</option>
+                      <option value="DK">DK (+45)</option>
+                      <option value="FI">FI (+358)</option>
+                      <option value="PL">PL (+48)</option>
+                      <option value="CZ">CZ (+420)</option>
+                      <option value="GR">GR (+30)</option>
+                      <option value="PT">PT (+351)</option>
+                      <option value="IE">IE (+353)</option>
+                      <option value="RU">RU (+7)</option>
+                      <option value="JP">JP (+81)</option>
+                      <option value="CN">CN (+86)</option>
+                      <option value="KR">KR (+82)</option>
+                      <option value="SG">SG (+65)</option>
+                      <option value="MY">MY (+60)</option>
+                      <option value="TH">TH (+66)</option>
+                      <option value="ID">ID (+62)</option>
+                      <option value="PH">PH (+63)</option>
+                      <option value="VN">VN (+84)</option>
+                      <option value="PK">PK (+92)</option>
+                      <option value="BD">BD (+880)</option>
+                      <option value="LK">LK (+94)</option>
+                      <option value="NP">NP (+977)</option>
+                      <option value="AE">AE (+971)</option>
+                      <option value="SA">SA (+966)</option>
+                      <option value="IL">IL (+972)</option>
+                      <option value="TR">TR (+90)</option>
+                      <option value="EG">EG (+20)</option>
+                      <option value="ZA">ZA (+27)</option>
+                      <option value="NG">NG (+234)</option>
+                      <option value="KE">KE (+254)</option>
+                      <option value="GH">GH (+233)</option>
+                      <option value="TZ">TZ (+255)</option>
+                      <option value="UG">UG (+256)</option>
+                      <option value="ZW">ZW (+263)</option>
+                      <option value="ZM">ZM (+260)</option>
+                      <option value="BR">BR (+55)</option>
+                      <option value="MX">MX (+52)</option>
+                      <option value="AR">AR (+54)</option>
+                      <option value="CL">CL (+56)</option>
+                      <option value="CO">CO (+57)</option>
+                      <option value="PE">PE (+51)</option>
+                      <option value="VE">VE (+58)</option>
+                      <option value="NZ">NZ (+64)</option>
+                      <option value="FJ">FJ (+679)</option>
+                      <option value="PG">PG (+675)</option>
+                    </select>
+                    <input type="tel" class="form-control" id="phone" placeholder="(555) 000-0000" required>
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <label for="message" class="form-label">
+                    Message <span class="required">*</span>
+                  </label>
+                  <textarea class="form-control" id="message" rows="5" placeholder="Leave us a message..." required></textarea>
+                </div>
+
+                <div class="services-section">
+                  <div class="services-title">Services <span class="required">*</span></div>
+                  <div class="services-grid">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="service1" value="Website design">
+                      <label class="form-check-label" for="service1">
+                        Website design
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="service2" value="Content creation">
+                      <label class="form-check-label" for="service2">
+                        Content creation
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="service3" value="UX design">
+                      <label class="form-check-label" for="service3">
+                        UX design
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="service4" value="Strategy & consulting">
+                      <label class="form-check-label" for="service4">
+                        Strategy & consulting
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="service5" value="User research">
+                      <label class="form-check-label" for="service5">
+                        User research
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="service6" value="Other">
+                      <label class="form-check-label" for="service6">
+                        Other
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <button type="submit" class="btn btn-send">
+                  Send message
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Right Column - Contact Methods -->
+          <div class="col-lg-5">
+            <div class="contact-methods-card">
+              <!-- Chat Section -->
+              <div class="contact-method-section">
+                <div class="contact-method-title">Chat with us</div>
+                <div class="contact-method-description">Speak to our friendly team via live chat.</div>
+                <a href="#" class="contact-link">
+                  <i class="fas fa-comment-dots"></i>
+                  <span>Start a live chat</span>
+                </a>
+                <a href="mailto:sales@damsole.com" class="contact-link">
+                  <i class="fas fa-paper-plane"></i>
+                  <span>Shoot us an email</span>
+                </a>
+                <a href="https://x.com/DamsoleTech" target="_blank" class="contact-link">
+                  <i class="fab fa-x-twitter"></i>
+                  <span>Message us on X</span>
+                </a>
+              </div>
+
+              <!-- Call Section -->
+              <div class="contact-method-section">
+                <div class="contact-method-title">Call us</div>
+                <div class="contact-method-description">Call our team Mon-Fri from 8am to 5pm.</div>
+                <div class="phone-number">
+                  <i class="fas fa-phone"></i>
+                  <span>+91 9356917424</span>
+                </div>
+                <div class="phone-number">
+                  <i class="fas fa-phone"></i>
+                  <span>+91 9356917424</span>
+                </div>
+              </div>
+
+              <!-- Trusted Section -->
+              <div class="trusted-section">
+                <div class="contact-method-title">Trusted by 10,000+ companies</div>
+                <div class="trusted-text">Chat to us in person at our Melbourne HQ.</div>
+                <div class="company-logos">
+                  <span class="company-logo">attentive</span>
+                  <span class="company-logo">loom</span>
+                  <span class="company-logo">databricks</span>
+                  <span class="company-logo">Square</span>
+                  <span class="company-logo">splunk</span>
+                  <span class="company-logo">ghost</span>
+                  <span class="company-logo">Uber</span>
+                  <span class="company-logo">twitch</span>
+                  <span class="company-logo">upwork</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+
+
+    <div class="footer-main">
+      <div class="container">
+        <div class="row gy-4">
+          <div class="col-lg-4 col-md-12">
+            <a href="#" class="footer-logo">
+              <img src="/assets/images/Damsole_Technology_Logo.png" alt="Damsole Technologies" class="footer-logo-img">
+            </a>
+            <p class="footer-desc">Damsole Technologies collaborate on a common strategy to alleviate consumer problems. As a digital agency focused on results, our procedures are open and honest</p>
+          </div>
+
+          <div class="col-lg-2 col-md-4">
+            <h5 class="footer-menu-title">Quick links</h5>
+            <ul class="footer-menu">
+              <li><a href="/about.html">About us</a></li>
+              <li><a href="/ContactUs.html">Contact us</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-2 col-md-4">
+            <h5 class="footer-menu-title">Community</h5>
+            <ul class="footer-menu">
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Terms of Service</a></li>
+              <li><a href="#">Supports ↗</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-4 col-md-4">
+            <h5 class="footer-menu-title" style="color: #d3d3d3;">
+              <i class="fas fa-map-marker-alt" style="margin-right: 8px;"></i>
+              Damsole Technologies<br>
+              Office No. 103, 104, Madhuban Complex<br>
+              1st Floor, Near Maxcare Hospital<br>
+              Manchar 410503
+            </h5>
+            <h6 class="social-title">Follow on</h6>
+            <div class="social-links"> 
+              <a href="https://www.facebook.com/damsoletechnologies/" class="social-link"><i class="fab fa-facebook-f"></i></a>
+              <a href="https://www.instagram.com/damsole_/" class="social-link"><i class="fab fa-instagram"></i></a>
+              <a href="https://x.com/DamsoleTech" class="social-link"><i class="fab fa-twitter"></i></a>
+              <a href="https://www.linkedin.com/company/damsole-technologies/" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+              <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+        <div class="d-flex justify-content-between align-items-center flex-wrap">
+          <p class="copyright">Copyright © 2025 Build by Damsole Technologies.</p>
+          <button class="language-btn">
+            <i class="fas fa-globe"></i> Language
+          </button>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/assets/javascript/translations.js"></script>
+  <script src="/assets/javascript/main.js"></script>
+  <script>
+    // Country code to placeholder mapping
+    const countryPlaceholders = {
+      'US': '(555) 000-0000',
+      'IN': '98765 43210',
+      'GB': '7700 000000',
+      'CA': '(555) 000-0000',
+      'AU': '0400 000 000',
+      'DE': '030 00000000',
+      'FR': '01 23 45 67 89',
+      'IT': '02 1234 5678',
+      'ES': '612 34 56 78',
+      'NL': '06 12345678',
+      'BE': '0471 23 45 67',
+      'CH': '078 123 45 67',
+      'AT': '0664 123456',
+      'SE': '070-123 45 67',
+      'NO': '412 34 567',
+      'DK': '20 12 34 56',
+      'FI': '050 123 4567',
+      'PL': '512 345 678',
+      'CZ': '601 123 456',
+      'GR': '694 123 4567',
+      'PT': '912 345 678',
+      'IE': '085 123 4567',
+      'RU': '912 345-67-89',
+      'JP': '90-1234-5678',
+      'CN': '138 0013 8000',
+      'KR': '010-1234-5678',
+      'SG': '8123 4567',
+      'MY': '012-345 6789',
+      'TH': '081 234 5678',
+      'ID': '0812-3456-7890',
+      'PH': '0917 123 4567',
+      'VN': '091 234 5678',
+      'PK': '0300 1234567',
+      'BD': '01712 345678',
+      'LK': '071 234 5678',
+      'NP': '9841 234567',
+      'AE': '050 123 4567',
+      'SA': '050 123 4567',
+      'IL': '050-123-4567',
+      'TR': '0532 123 45 67',
+      'EG': '0100 123 4567',
+      'ZA': '082 123 4567',
+      'NG': '0803 123 4567',
+      'KE': '0712 123456',
+      'GH': '0244 123456',
+      'TZ': '0712 345 678',
+      'UG': '0701 234567',
+      'ZW': '0712 345 678',
+      'ZM': '0977 123456',
+      'BR': '(11) 91234-5678',
+      'MX': '55 1234 5678',
+      'AR': '11 1234-5678',
+      'CL': '9 1234 5678',
+      'CO': '321 123 4567',
+      'PE': '987 654 321',
+      'VE': '0412-1234567',
+      'NZ': '021 123 4567',
+      'FJ': '701 2345',
+      'PG': '7123 4567'
+    };
+
+    // Update placeholder when country code changes
+    const countryCodeSelect = document.getElementById('countryCode');
+    const phoneInput = document.getElementById('phone');
+    
+    if (countryCodeSelect && phoneInput) {
+      countryCodeSelect.addEventListener('change', function() {
+        const selectedCountry = this.value;
+        const placeholder = countryPlaceholders[selectedCountry] || 'Enter phone number';
+        phoneInput.placeholder = placeholder;
+      });
+      
+      // Set initial placeholder
+      const initialCountry = countryCodeSelect.value;
+      phoneInput.placeholder = countryPlaceholders[initialCountry] || 'Enter phone number';
+    }
+
+    // Custom Popup Notification Function
+    function showNotification(type, title, message) {
+      const container = document.getElementById('notificationContainer');
+      
+      // Remove existing notification if any
+      const existing = container.querySelector('.notification-popup');
+      if (existing) {
+        existing.remove();
+      }
+      
+      // Create notification element
+      const notification = document.createElement('div');
+      notification.className = `notification-popup ${type}`;
+      
+      const icon = type === 'success' 
+        ? '<i class="fas fa-check-circle"></i>' 
+        : '<i class="fas fa-exclamation-circle"></i>';
+      
+      notification.innerHTML = `
+        <div class="notification-icon">${icon}</div>
+        <div class="notification-content">
+          <div class="notification-title">${title}</div>
+          <div class="notification-message">${message}</div>
+        </div>
+        <div class="notification-close" onclick="this.parentElement.remove()">
+          <i class="fas fa-times"></i>
+        </div>
+      `;
+      
+      container.appendChild(notification);
+      
+      // Trigger animation
+      setTimeout(() => {
+        notification.classList.add('show');
+      }, 10);
+      
+      // Auto remove after 5 seconds
+      setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => {
+          if (notification.parentElement) {
+            notification.remove();
+          }
+        }, 400);
+      }, 5000);
+    }
+
+    // Form submission handler
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Validate services - at least one must be selected
+      const selectedServices = document.querySelectorAll('input[type="checkbox"]:checked');
+      if (selectedServices.length === 0) {
+        showNotification('error', 'Service Required', 'Please select at least one service.');
+        return;
+      }
+      
+      // Get form data
+      const formData = {
+        firstName: document.getElementById('firstName').value,
+        lastName: document.getElementById('lastName').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        countryCode: document.getElementById('countryCode').value,
+        message: document.getElementById('message').value,
+        services: []
+      };
+
+      // Get selected services
+      selectedServices.forEach(checkbox => {
+        formData.services.push(checkbox.value);
+      });
+
+      // Here you would typically send the data to a server
+      console.log('Form submitted:', formData);
+      
+      // Show success notification
+      showNotification('success', 'Message Sent!', 'Thank you for your message! We will get back to you soon.');
+      
+      // Reset form
+      this.reset();
+      
+      // Reset placeholder after form reset
+      const initialCountry = countryCodeSelect.value;
+      phoneInput.placeholder = countryPlaceholders[initialCountry] || 'Enter phone number';
+    });
+  </script>
+</body>
+</html>
+
