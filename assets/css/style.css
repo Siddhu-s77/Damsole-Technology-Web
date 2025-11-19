@@ -1267,14 +1267,24 @@
     .btn-contact {
         display: block;
         width: 100%;
-        background: #ffffff;
-        color: #0b1220;
+        background: transparent;
+        color: #ffffff;
+        border: 2px solid #ffffff;
         padding: 12px 18px;
         border-radius: 6px;
         text-align: center;
         font-weight: 700;
         text-decoration: none;
         margin-top: auto;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-contact:hover {
+        background: #ffffff;
+        color: #001E8E;
+        border-color: #ffffff;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
     }
 
     .plan-note {
