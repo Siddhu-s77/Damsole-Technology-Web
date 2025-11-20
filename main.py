@@ -154,16 +154,22 @@ def chat():
                 # Find first missing field
                 if "Full Name" not in data:
                     current_field = "Full Name"
+                    session["current_field"] = current_field
                 elif "Email" not in data:
                     current_field = "Email"
+                    session["current_field"] = current_field
                 elif "Phone Number" not in data:
                     current_field = "Phone Number"
+                    session["current_field"] = current_field
                 elif "Address" not in data:
                     current_field = "Address"
+                    session["current_field"] = current_field
                 elif "Project Requirement" not in data:
                     current_field = "Project Requirement"
+                    session["current_field"] = current_field
                 elif "Deadline" not in data:
                     current_field = "Deadline"
+                    session["current_field"] = current_field
                 else:
                     # All fields collected!
                     # Save to database and send email
