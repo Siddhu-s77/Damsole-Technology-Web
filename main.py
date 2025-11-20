@@ -11,7 +11,14 @@ import os
 import sys
 
 # Add chatbot directory to path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'Damsole Tech Chat Bot', 'DamsoleAIChatbot'))
+chatbot_path = os.path.join(os.path.dirname(__file__), 'DamsoleAIChatbot')
+if os.path.exists(chatbot_path):
+    sys.path.insert(0, chatbot_path)
+else:
+    # Fallback to nested path
+    nested_path = os.path.join(os.path.dirname(__file__), 'Damsole Tech Chat Bot', 'DamsoleAIChatbot')
+    if os.path.exists(nested_path):
+        sys.path.insert(0, nested_path)
 
 # Load environment variables
 load_dotenv()
