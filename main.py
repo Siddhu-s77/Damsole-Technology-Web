@@ -68,7 +68,7 @@ def contact():
 def serve_static(filename):
     """Serve static files (CSS, JS, images)"""
     return send_from_directory('Damsole_Frentend', filename)
-
+ 
 # ========== CHATBOT ROUTES ==========
 
 @app.route('/health', methods=['GET'])
