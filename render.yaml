@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: damsole-tech-website
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn main:app --bind 0.0.0.0:$PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.0
+      - key: PORT
+        value: 10000
+      - key: FLASK_ENV
+        value: production
+
