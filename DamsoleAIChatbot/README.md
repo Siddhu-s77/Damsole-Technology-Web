@@ -51,12 +51,20 @@ An intelligent chatbot for Damsole Technologies that helps collect and manage cu
    ADMIN_EMAIL=your_email@gmail.com
    ADMIN_PASSWORD=your_app_password
    ADMIN_USERNAME=Damsole Chatbot
+
+   # Optional: restrict which frontends can call /chat (comma separated)
+   CHATBOT_ALLOWED_ORIGINS=https://www.example.com,https://app.example.com
    ```
 
 4. **Setup MySQL Database**
    - Install MySQL Server if not already installed
    - Create a new database named `damsole_chatbot`
    - The tables will be automatically created when you run the app
+
+5. **Expose the chatbot endpoint to your website**
+   - In the website project, open `assets/javascript/chatbot-config.js`
+   - Set `DEFAULT_ENDPOINT` (or override `window.DamsoleChatbotConfig.endpoint` before loading the widget) to the publicly reachable URL of your Flask `/chat` route, e.g. `https://api.example.com/chat`
+   - Make sure the same origin is whitelisted in `CHATBOT_ALLOWED_ORIGINS`
 
 ## Running the Application 🌐
 
