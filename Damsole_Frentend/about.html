@@ -356,19 +356,19 @@
         <div class="row">
           <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
             <div class="stat-item">
-              <div class="stat-number" data-target="20000">0</div>
+              <div class="stat-number">20K +</div>
               <div class="stat-label">Happy Customer</div>
             </div>
           </div>
           <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
             <div class="stat-item">
-              <div class="stat-number" data-target="500">0</div>
+              <div class="stat-number">500 +</div>
               <div class="stat-label">Project Completed</div>
             </div>
           </div>
           <div class="col-lg-4 col-md-6">
             <div class="stat-item">
-              <div class="stat-number" data-target="100">0</div>
+              <div class="stat-number">100 +</div>
               <div class="stat-label">Team Member</div>
             </div>
           </div>
@@ -580,56 +580,7 @@
   <script src="assets/javascript/chatbot-config.js"></script>
   <script src="assets/javascript/chatbot-widget.js"></script>
   <script>
-    // Counter Animation
-    function formatNumber(num) {
-      if (num >= 1000) {
-        return (num / 1000).toFixed(0) + 'K';
-      }
-      return num.toString();
-    }
-
-    function animateCounter(element, target, duration = 2000) {
-      let start = 0;
-      const increment = target / (duration / 16);
-      const timer = setInterval(() => {
-        start += increment;
-        if (start >= target) {
-          element.textContent = formatNumber(target) + ' +';
-          clearInterval(timer);
-        } else {
-          element.textContent = formatNumber(Math.floor(start)) + ' +';
-        }
-      }, 16);
-    }
-
-    // Intersection Observer for counter animation
-    const observerOptions = {
-      threshold: 0.5,
-      rootMargin: '0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const statNumbers = entry.target.querySelectorAll('.stat-number');
-          statNumbers.forEach(stat => {
-            const target = parseInt(stat.getAttribute('data-target'));
-            if (target && stat.textContent === '0') {
-              animateCounter(stat, target);
-            }
-          });
-          observer.unobserve(entry.target);
-        }
-      });
-    }, observerOptions);
-
-    // Observe stats section when page loads
-    document.addEventListener('DOMContentLoaded', function() {
-      const statsSection = document.querySelector('.stats-section');
-      if (statsSection) {
-        observer.observe(statsSection);
-      }
-    });
+    // Counter animation removed - numbers are now static
   </script>
 </body>
 </html>
