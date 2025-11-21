@@ -603,26 +603,8 @@ class WebsiteManager {
         return;
       }
 
-      // Check if domain is trusted
-      if (domain && !isTrustedDomain(domain)) {
-        // Add warning for untrusted external links
-        link.setAttribute('target', '_blank');
-        link.setAttribute('rel', 'noopener noreferrer');
-        link.addEventListener('click', (e) => {
-          const confirmed = confirm(
-            `⚠️ Security Warning\n\n` +
-            `You are about to visit: ${domain}\n\n` +
-            `This is an external website. Make sure you trust this link before proceeding.\n\n` +
-            `Do you want to continue?`
-          );
-          if (!confirmed) {
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-          }
-        });
-        console.warn('⚠️ Untrusted external link detected:', href);
-      }
+      // Allow all other links to work normally without warnings
+      // Only suspicious links are blocked above
     };
 
     // Secure all links on page load
