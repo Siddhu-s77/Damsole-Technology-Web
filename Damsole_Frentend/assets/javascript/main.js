@@ -8,6 +8,8 @@ class WebsiteManager {
 
   init() {
     this.setupLoadingState();
+    this.ensureSocialLinksClickable();
+    this.initLinkSecurity();
     this.detectUserLanguage();
     this.initLanguageSwitcher();
     this.initTypingAnimation();
@@ -471,6 +473,174 @@ class WebsiteManager {
         }, limit);
       }
     };
+  }
+
+  ensureSocialLinksClickable() {
+    // Ensure all social media links are clickable
+    const socialLinks = document.querySelectorAll('.social-link');
+    socialLinks.forEach(link => {
+      // Remove any event listeners that might prevent default
+      link.style.pointerEvents = 'auto';
+      link.style.cursor = 'pointer';
+      link.style.zIndex = '1000';
+      
+      // Ensure the link works
+      link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+        if (href && href !== '#' && !href.startsWith('#')) {
+          // Allow the default behavior for external links
+          // Don't prevent default
+          console.log('Social link clicked:', href);
+        }
+      }, { passive: true });
+    });
+  }
+
+  initLinkSecurity() {
+    // List of trusted domains (whitelist)
+    const trustedDomains = [
+      'damsole.com',
+      'damsoletechnologies.com',
+      'facebook.com',
+      'instagram.com',
+      'twitter.com',
+      'x.com',
+      'linkedin.com',
+      'youtube.com',
+      'github.com',
+      'cdn.jsdelivr.net',
+      'cdnjs.cloudflare.com',
+      'cdn.tailwindcss.com',
+      'bootstrap.com',
+      'fontawesome.com',
+      'google.com',
+      'googleapis.com',
+      'gstatic.com'
+    ];
+
+    // Suspicious patterns to block (URL shorteners and known phishing domains)
+    const suspiciousPatterns = [
+      /bit\.ly/i,
+      /tinyurl\.com/i,
+      /t\.co/i,
+      /goo\.gl/i,
+      /ow\.ly/i,
+      /is\.gd/i,
+      /v\.gd/i,
+      /short\.link/i,
+      /cutt\.ly/i,
+      /rebrand\.ly/i,
+      /shorte\.st/i,
+      /adf\.ly/i,
+      /ad\.fly/i,
+      /bc\.vc/i,
+      /ouo\.io/i,
+      /linkbucks\.com/i,
+      /adfoc\.us/i,
+      /sh\.st/i,
+      /adfocus\.me/i
+    ];
+
+    // Function to extract domain from URL
+    const extractDomain = (url) => {
+      try {
+        if (!url || url === '#' || url.startsWith('#')) return null;
+        if (url.startsWith('mailto:') || url.startsWith('tel:')) return null;
+        const urlObj = new URL(url, window.location.origin);
+        return urlObj.hostname.replace('www.', '');
+      } catch (e) {
+        return null;
+      }
+    };
+
+    // Function to check if domain is trusted
+    const isTrustedDomain = (domain) => {
+      if (!domain) return true; // Allow relative links and mailto/tel
+      return trustedDomains.some(trusted => 
+        domain === trusted || domain.endsWith('.' + trusted)
+      );
+    };
+
+    // Function to check for suspicious patterns
+    const isSuspicious = (url) => {
+      if (!url) return false;
+      return suspiciousPatterns.some(pattern => pattern.test(url));
+    };
+
+    // Function to validate and secure a link
+    const secureLink = (link) => {
+      const href = link.getAttribute('href');
+      if (!href || href === '#' || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) {
+        return; // Allow internal links, mailto, and tel links
+      }
+
+      const domain = extractDomain(href);
+      
+      // Check for suspicious patterns
+      if (isSuspicious(href)) {
+        link.setAttribute('data-original-href', href);
+        link.removeAttribute('href');
+        link.style.cursor = 'not-allowed';
+        link.style.opacity = '0.5';
+        link.title = '⚠️ This link has been blocked for security reasons';
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          alert('⚠️ This link has been blocked for security reasons. Suspicious URL detected.');
+          return false;
+        }, true);
+        console.warn('🚫 Blocked suspicious link:', href);
+        return;
+      }
+
+      // Check if domain is trusted
+      if (domain && !isTrustedDomain(domain)) {
+        // Add warning for untrusted external links
+        link.setAttribute('target', '_blank');
+        link.setAttribute('rel', 'noopener noreferrer');
+        link.addEventListener('click', (e) => {
+          const confirmed = confirm(
+            `⚠️ Security Warning\n\n` +
+            `You are about to visit: ${domain}\n\n` +
+            `This is an external website. Make sure you trust this link before proceeding.\n\n` +
+            `Do you want to continue?`
+          );
+          if (!confirmed) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+          }
+        });
+        console.warn('⚠️ Untrusted external link detected:', href);
+      }
+    };
+
+    // Secure all links on page load
+    const allLinks = document.querySelectorAll('a[href]');
+    allLinks.forEach(secureLink);
+
+    // Secure dynamically added links (MutationObserver)
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+          if (node.nodeType === 1) { // Element node
+            if (node.tagName === 'A' && node.hasAttribute('href')) {
+              secureLink(node);
+            }
+            // Also check for links inside added nodes
+            const links = node.querySelectorAll?.('a[href]');
+            if (links) {
+              links.forEach(secureLink);
+            }
+          }
+        });
+      });
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
   }
 }
 

@@ -322,6 +322,8 @@
     const config = mergeConfig();
     const widget = new DamsoleChatbotWidget(config);
     widget.mount();
+    // Expose widget globally so it can be accessed from other scripts
+    window.DamsoleChatbotWidgetInstance = widget;
   });
 })();
 

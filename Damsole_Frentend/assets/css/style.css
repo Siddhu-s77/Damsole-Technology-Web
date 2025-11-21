@@ -1948,6 +1948,8 @@
     .footer-main {
         background-color: #111;
         padding: 80px 0 40px;
+        position: relative;
+        z-index: 1;
     }
 
     .footer-logo {
@@ -2036,6 +2038,9 @@
     .social-links {
         display: flex;
         gap: 15px;
+        position: relative;
+        z-index: 10;
+        pointer-events: auto !important;
     }
 
     .social-link {
@@ -2047,13 +2052,39 @@
         align-items: center;
         justify-content: center;
         color: #fff;
-        text-decoration: none;
+        text-decoration: none !important;
         transition: background-color 0.2s;
+        cursor: pointer !important;
+        pointer-events: auto !important;
+        position: relative;
+        z-index: 100 !important;
+        user-select: none;
     }
 
     .social-link:hover {
         background-color: #001E8E;
         color: #fff;
+    }
+
+    .social-link:active {
+        transform: scale(0.95);
+    }
+
+    .social-link i {
+        pointer-events: none;
+        z-index: 101;
+        position: relative;
+    }
+
+    /* Ensure footer social section is clickable */
+    .footer-main .social-links,
+    .footer-main .social-links * {
+        pointer-events: auto !important;
+    }
+
+    .footer-main .social-link {
+        display: inline-flex !important;
+        text-decoration: none !important;
     }
 
     .footer-bottom {

@@ -873,7 +873,7 @@
               <div class="contact-method-section">
                 <div class="contact-method-title">Chat with us</div>
                 <div class="contact-method-description">Speak to our friendly team via live chat.</div>
-                <a href="#" class="contact-link">
+                <a href="#" class="contact-link" id="openLiveChat">
                   <i class="fas fa-comment-dots"></i>
                   <span>Start a live chat</span>
                 </a>
@@ -966,11 +966,11 @@
             </h5>
             <h6 class="social-title">Follow on</h6>
             <div class="social-links"> 
-              <a href="https://www.facebook.com/damsoletechnologies/" class="social-link"><i class="fab fa-facebook-f"></i></a>
-              <a href="https://www.instagram.com/damsole_/" class="social-link"><i class="fab fa-instagram"></i></a>
-              <a href="https://x.com/DamsoleTech" class="social-link"><i class="fab fa-twitter"></i></a>
-              <a href="https://www.linkedin.com/company/damsole-technologies/" class="social-link"><i class="fab fa-linkedin-in"></i></a>
-              <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+              <a href="https://www.facebook.com/damsoletechnologies/" class="social-link" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+              <a href="https://www.instagram.com/damsole_/" class="social-link" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+              <a href="https://x.com/DamsoleTech" class="social-link" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
+              <a href="https://www.linkedin.com/company/damsole-technologies/" class="social-link" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
+              <a href="https://www.youtube.com/@damsole_family" class="social-link" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
             </div>
           </div>
         </div>
@@ -1188,6 +1188,21 @@
         submitBtn.disabled = false;
         submitBtn.innerHTML = originalText;
       }
+    });
+
+    // Open chatbot when "Start a live chat" is clicked
+    document.getElementById('openLiveChat')?.addEventListener('click', function(e) {
+      e.preventDefault();
+      // Wait for chatbot widget to be ready
+      const openChatbot = () => {
+        if (window.DamsoleChatbotWidgetInstance) {
+          window.DamsoleChatbotWidgetInstance.togglePanel(true);
+        } else {
+          // Retry after a short delay if widget not ready yet
+          setTimeout(openChatbot, 100);
+        }
+      };
+      openChatbot();
     });
   </script>
 </body>
