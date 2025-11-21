@@ -15,6 +15,7 @@ class WebsiteManager {
     this.initRandomAvatars();
     this.initSmoothScroll();
     this.initFormHandlers();
+    this.initButtonRedirects();
     this.initPerformanceMonitoring();
     this.setupIntersectionObserver();
     this.setupErrorHandling();
@@ -332,6 +333,38 @@ class WebsiteManager {
           footerForm.reset();
         } else {
           this.showNotification('error', 'Invalid Email', 'Please enter a valid email.');
+        }
+      });
+    }
+  }
+
+  initButtonRedirects() {
+    // Handle "Start trial!" button click
+    const startTrialButton = document.querySelector('.cta-button');
+    if (startTrialButton) {
+      startTrialButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.location.href = 'ContactUs.html';
+      });
+    }
+
+    // Handle Subscribe button click in footer
+    const subscribeButton = document.querySelector('.footer-subscribe-btn, .Subscribe-btn');
+    if (subscribeButton) {
+      subscribeButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        // Check if email is valid before redirecting
+        const emailInput = document.querySelector('.footer-email-input');
+        if (emailInput && emailInput.value.trim()) {
+          const email = emailInput.value.trim();
+          if (this.validateEmail(email)) {
+            window.location.href = 'ContactUs.html';
+          } else {
+            this.showNotification('error', 'Invalid Email', 'Please enter a valid email.');
+          }
+        } else {
+          // Redirect even if email is empty (optional validation)
+          window.location.href = 'ContactUs.html';
         }
       });
     }

@@ -1950,9 +1950,27 @@
         padding: 80px 0 40px;
     }
 
-    .footer-logo-img {
-        height: 40px;
+    .footer-logo {
+        display: inline-block;
         margin-bottom: 20px;
+    }
+
+    .footer-logo-circle {
+        width: 100px;
+        height: 100px;
+        background-color: #ffffff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 15px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .footer-logo-img {
+        height: 70px;
+        width: auto;
+        object-fit: contain;
     }
 
     .footer-desc {
@@ -2147,6 +2165,17 @@
         .social-title {
             text-align: center;
         }
+
+        .footer-logo-circle {
+            width: 80px;
+            height: 80px;
+            padding: 12px;
+        }
+
+        .footer-logo-img {
+            height: 56px;
+        }
+
         .footer-top-box {
             margin: 0 16px;
             padding: 18px 14px;

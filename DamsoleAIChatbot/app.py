@@ -7,11 +7,24 @@ Collects: Name, Email, Phone, Address, Project Requirement, Deadline
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 from dotenv import load_dotenv
-import os, smtplib, datetime, mysql.connector, re
+import os, smtplib, datetime, re
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import openai
 import requests
+
+# Database imports - support both MySQL and PostgreSQL
+try:
+    import mysql.connector
+    MYSQL_AVAILABLE = True
+except ImportError:
+    MYSQL_AVAILABLE = False
+
+try:
+    import psycopg2
+    POSTGRES_AVAILABLE = True
+except ImportError:
+    POSTGRES_AVAILABLE = False
 
 # Load environment
 load_dotenv()
@@ -35,24 +48,82 @@ def _env_str(key: str, default: str = "") -> str:
 
 openai.api_key = _env_str("OPENAI_API_KEY")
 
-DB_SETTINGS = {
-    "host": _env_str("MYSQL_HOST"),
-    "user": _env_str("MYSQL_USER"),
-    "password": _env_str("MYSQL_PASSWORD"),
-    "database": _env_str("MYSQL_DB")
-}
+# Database configuration - support both MySQL and PostgreSQL
+DB_TYPE = _env_str("DB_TYPE", "").lower()  # "mysql" or "postgres" or auto-detect
+
+# Check for DATABASE_URL (Render PostgreSQL format)
+DATABASE_URL = _env_str("DATABASE_URL", "")
+if DATABASE_URL and not DB_TYPE:
+    # Parse DATABASE_URL: postgresql://user:password@host:port/database
+    import re
+    match = re.match(r'postgres(ql)?://([^:]+):([^@]+)@([^:]+):(\d+)/(.+)', DATABASE_URL)
+    if match:
+        DB_TYPE = "postgres"
+        DB_SETTINGS = {
+            "host": match.group(4),
+            "user": match.group(2),
+            "password": match.group(3),
+            "database": match.group(6)
+        }
+    else:
+        DB_SETTINGS = {
+            "host": _env_str("MYSQL_HOST") or _env_str("POSTGRES_HOST") or _env_str("DB_HOST"),
+            "user": _env_str("MYSQL_USER") or _env_str("POSTGRES_USER") or _env_str("DB_USER"),
+            "password": _env_str("MYSQL_PASSWORD") or _env_str("POSTGRES_PASSWORD") or _env_str("DB_PASSWORD"),
+            "database": _env_str("MYSQL_DB") or _env_str("POSTGRES_DB") or _env_str("DB_NAME")
+        }
+else:
+    DB_SETTINGS = {
+        "host": _env_str("MYSQL_HOST") or _env_str("POSTGRES_HOST") or _env_str("DB_HOST"),
+        "user": _env_str("MYSQL_USER") or _env_str("POSTGRES_USER") or _env_str("DB_USER"),
+        "password": _env_str("MYSQL_PASSWORD") or _env_str("POSTGRES_PASSWORD") or _env_str("DB_PASSWORD"),
+        "database": _env_str("MYSQL_DB") or _env_str("POSTGRES_DB") or _env_str("DB_NAME")
+    }
+
+# Auto-detect database type if not specified
+if not DB_TYPE:
+    if DB_SETTINGS["host"] and "postgres" in DB_SETTINGS["host"].lower():
+        DB_TYPE = "postgres"
+    elif _env_str("POSTGRES_HOST") or DATABASE_URL:
+        DB_TYPE = "postgres"
+    else:
+        DB_TYPE = "mysql"  # Default to MySQL for local development
 
 ADMIN_EMAIL = _env_str("ADMIN_EMAIL")
 ADMIN_PASSWORD = _env_str("ADMIN_PASSWORD")
 
-# Check if database is configured (and not localhost, which won't work on Render)
+# Check if database is configured
+# For local: allow localhost, for Render: require non-localhost
+IS_LOCAL = DB_SETTINGS["host"].strip().lower() in ["localhost", "127.0.0.1", ""]
 DB_CONFIGURED = all([
     DB_SETTINGS["host"],
     DB_SETTINGS["user"],
     DB_SETTINGS["password"],
-    DB_SETTINGS["database"],
-    DB_SETTINGS["host"].strip().lower() not in ["localhost", "127.0.0.1", ""]  # Ignore localhost
-])
+    DB_SETTINGS["database"]
+]) and (IS_LOCAL or DB_SETTINGS["host"].strip().lower() not in ["localhost", "127.0.0.1", ""])
+
+# --- Database Connection Helper ---
+def get_db_connection():
+    """Get database connection based on DB_TYPE"""
+    if not DB_CONFIGURED:
+        return None
+    
+    try:
+        if DB_TYPE == "postgres" and POSTGRES_AVAILABLE:
+            return psycopg2.connect(
+                host=DB_SETTINGS["host"],
+                user=DB_SETTINGS["user"],
+                password=DB_SETTINGS["password"],
+                database=DB_SETTINGS["database"]
+            )
+        elif DB_TYPE == "mysql" and MYSQL_AVAILABLE:
+            return mysql.connector.connect(**DB_SETTINGS)
+        else:
+            print(f"⚠️ Database type '{DB_TYPE}' not available. Install required package.")
+            return None
+    except Exception as e:
+        print(f"⚠️ Database connection failed: {e}")
+        return None
 
 # --- Database Setup ---
 def init_db():
@@ -62,50 +133,86 @@ def init_db():
         print("ℹ️ Only email notifications will be sent (if email is configured).")
         return
     
+    conn = get_db_connection()
+    if not conn:
+        print(f"⚠️ Could not connect to {DB_TYPE} database.")
+        return
+    
     try:
-        conn = mysql.connector.connect(**DB_SETTINGS)
         cur = conn.cursor()
         
-        # Check if table exists
-        cur.execute("SHOW TABLES LIKE 'leads'")
-        table_exists = cur.fetchone()
-        
-        if table_exists:
-            # Table exists - check if it has old schema
-            cur.execute("DESCRIBE leads")
-            columns = [col[0] for col in cur.fetchall()]
+        # Check if table exists (different syntax for MySQL vs PostgreSQL)
+        if DB_TYPE == "postgres":
+            cur.execute("""
+                SELECT EXISTS (
+                    SELECT FROM information_schema.tables 
+                    WHERE table_name = 'leads'
+                );
+            """)
+            table_exists = cur.fetchone()[0]
             
-            # If old schema exists (has customer_name), migrate to new schema
-            if 'customer_name' in columns and 'full_name' not in columns:
-                print("🔄 Migrating database schema from old to new format...")
-                try:
-                    # Drop old table and create new one
+            if table_exists:
+                # Check columns
+                cur.execute("""
+                    SELECT column_name FROM information_schema.columns 
+                    WHERE table_name = 'leads';
+                """)
+                columns = [col[0] for col in cur.fetchall()]
+                
+                if 'customer_name' in columns and 'full_name' not in columns:
+                    print("🔄 Migrating database schema from old to new format...")
                     cur.execute("DROP TABLE IF EXISTS leads")
                     conn.commit()
                     print("✅ Old table dropped")
-                except Exception as e:
-                    print(f"⚠️ Error dropping old table: {e}")
+            
+            # Create table with PostgreSQL syntax
+            cur.execute("""
+                CREATE TABLE IF NOT EXISTS leads (
+                    id SERIAL PRIMARY KEY,
+                    full_name VARCHAR(255),
+                    email VARCHAR(255),
+                    phone_number VARCHAR(20),
+                    address TEXT,
+                    project_requirement TEXT,
+                    deadline VARCHAR(255),
+                    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+            """)
+        else:  # MySQL
+            cur.execute("SHOW TABLES LIKE 'leads'")
+            table_exists = cur.fetchone()
+            
+            if table_exists:
+                cur.execute("DESCRIBE leads")
+                columns = [col[0] for col in cur.fetchall()]
+                
+                if 'customer_name' in columns and 'full_name' not in columns:
+                    print("🔄 Migrating database schema from old to new format...")
+                    cur.execute("DROP TABLE IF EXISTS leads")
+                    conn.commit()
+                    print("✅ Old table dropped")
+            
+            # Create table with MySQL syntax
+            cur.execute("""
+                CREATE TABLE IF NOT EXISTS leads (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    full_name VARCHAR(255),
+                    email VARCHAR(255),
+                    phone_number VARCHAR(20),
+                    address TEXT,
+                    project_requirement TEXT,
+                    deadline VARCHAR(255),
+                    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+                )
+            """)
         
-        # Create table with new schema
-        cur.execute("""
-            CREATE TABLE IF NOT EXISTS leads (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                full_name VARCHAR(255),
-                email VARCHAR(255),
-                phone_number VARCHAR(20),
-                address TEXT,
-                project_requirement TEXT,
-                deadline VARCHAR(255),
-                timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
-            )
-        """)
         conn.commit()
         cur.close()
         conn.close()
-        print("✅ Database initialized successfully!")
+        print(f"✅ {DB_TYPE.upper()} database initialized successfully!")
     except Exception as e:
         print(f"⚠️ Database initialization failed: {e}")
-        print("⚠️ Make sure MySQL is running and credentials in .env are correct.")
+        print(f"⚠️ Make sure {DB_TYPE} is running and credentials in .env are correct.")
 
 init_db()
 
@@ -163,8 +270,12 @@ def save_to_db(data):
         print("ℹ️ Database not configured. Skipping database save.")
         return False
     
+    conn = get_db_connection()
+    if not conn:
+        print("⚠️ Could not connect to database. Skipping save.")
+        return False
+    
     try:
-        conn = mysql.connector.connect(**DB_SETTINGS)
         cur = conn.cursor()
         cur.execute("""
             INSERT INTO leads (full_name, email, phone_number, address, project_requirement, deadline)
