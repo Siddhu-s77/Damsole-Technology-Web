@@ -50,7 +50,8 @@
       this.elements.sendBtn = wrapper.querySelector('.chatbot-send-btn');
       this.elements.typing = wrapper.querySelector('.chatbot-typing');
 
-      this.addMessage(this.config.initialMessage, 'bot');
+      // Don't show suggestions on initial greeting
+      this.addMessage(this.config.initialMessage, 'bot', false);
       this.attachEvents();
     }
 
@@ -160,7 +161,7 @@
       textarea.style.height = `${Math.min(textarea.scrollHeight, 130)}px`;
     }
 
-    addMessage(text, sender = 'bot') {
+    addMessage(text, sender = 'bot', showSuggestions = false) {
       if (!text) return;
       const message = document.createElement('div');
       message.className = `chatbot-message ${sender === 'user' ? 'user' : 'bot'}`;
@@ -169,14 +170,67 @@
       avatar.className = 'chatbot-avatar';
       avatar.innerHTML = sender === 'user' ? '<i class="fas fa-user"></i>' : '<i class="fas fa-robot"></i>';
 
+      // Create content wrapper for bubble and suggestions
+      const contentWrapper = document.createElement('div');
+      contentWrapper.className = 'chatbot-message-content';
+
       const bubble = document.createElement('div');
       bubble.className = 'chatbot-bubble';
       bubble.textContent = text;
 
+      contentWrapper.appendChild(bubble);
+      
+      // Add suggestions if this is a bot message with the fallback text
+      if (sender === 'bot' && (showSuggestions || this.shouldShowSuggestions(text))) {
+        const suggestions = this.createSuggestions();
+        contentWrapper.appendChild(suggestions);
+      }
+
       message.appendChild(avatar);
-      message.appendChild(bubble);
+      message.appendChild(contentWrapper);
+      
       this.elements.messages.appendChild(message);
       this.scrollMessagesToBottom();
+    }
+
+    shouldShowSuggestions(text, responseData = {}) {
+      // Show suggestions if explicitly flagged in response
+      if (responseData.showSuggestions === true) {
+        return true;
+      }
+      // Check if the message contains the fallback text pattern
+      const fallbackPattern = /I'd be happy to help! You can ask me about:/i;
+      return fallbackPattern.test(text);
+    }
+
+    createSuggestions() {
+      const suggestionsContainer = document.createElement('div');
+      suggestionsContainer.className = 'chatbot-suggestions';
+      
+      const suggestions = [
+        'I want to create website',
+        'I want to create logo',
+        'I want to create app',
+        'I want marketing services',
+        'Our services'
+      ];
+
+      suggestions.forEach(suggestion => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'chatbot-suggestion-btn';
+        btn.textContent = suggestion;
+        btn.addEventListener('click', () => {
+          // Remove all suggestions when one is clicked
+          const allSuggestions = this.elements.messages.querySelectorAll('.chatbot-suggestions');
+          allSuggestions.forEach(s => s.remove());
+          // Send the suggestion as a message
+          this.requestReply(suggestion);
+        });
+        suggestionsContainer.appendChild(btn);
+      });
+
+      return suggestionsContainer;
     }
 
     scrollMessagesToBottom() {
@@ -236,7 +290,9 @@
         // If reply is empty (like for auto-start), don't add message
         // Widget already shows initial greeting
         if (reply && reply.trim()) {
-          this.addMessage(reply, 'bot');
+          // Check if we should show suggestions for this reply
+          const showSuggestions = this.shouldShowSuggestions(reply, data);
+          this.addMessage(reply, 'bot', showSuggestions);
         }
       } catch (error) {
         console.error('❌ Damsole chatbot error:', error);

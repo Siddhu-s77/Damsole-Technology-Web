@@ -15,10 +15,7 @@ chatbot_path = os.path.join(os.path.dirname(__file__), 'DamsoleAIChatbot')
 if os.path.exists(chatbot_path):
     sys.path.insert(0, chatbot_path)
 else:
-    # Fallback to nested path
-    nested_path = os.path.join(os.path.dirname(__file__), 'Damsole Tech Chat Bot', 'DamsoleAIChatbot')
-    if os.path.exists(nested_path):
-        sys.path.insert(0, nested_path)
+    print("⚠️ Warning: DamsoleAIChatbot folder not found!")
 
 # Load environment variables
 load_dotenv()
@@ -36,7 +33,7 @@ try:
     from app import (
         init_db, send_email, save_to_db, 
         user_sessions,
-        get_support_response, wants_to_create_project, get_next_question,
+        get_support_response, wants_to_create_project, is_greeting, get_next_question,
         validate_name, validate_email, validate_phone, validate_address, validate_project, validate_deadline
     )
     CHATBOT_AVAILABLE = True
@@ -142,6 +139,14 @@ def chat():
                 # Start with first question
                 first_question = get_next_question(session)
                 return jsonify({"reply": f"Perfect! I'd be happy to help you with that. Let me collect a few details from you.\n\n{first_question}"})
+            
+            # Check if user sent a greeting - show suggestions
+            if is_greeting(user_message):
+                greeting_response = "Hello! How can I help you today?"
+                session["conversation_history"].append({"role": "user", "content": user_message})
+                session["conversation_history"].append({"role": "assistant", "content": greeting_response})
+                # Return response with showSuggestions flag
+                return jsonify({"reply": greeting_response, "showSuggestions": True})
             
             # Otherwise, answer as support agent
             session["conversation_history"].append({"role": "user", "content": user_message})

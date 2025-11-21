@@ -11,12 +11,15 @@ import os, smtplib, datetime, mysql.connector, re
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import openai
+import requests
 
 # Load environment
 load_dotenv()
 
 app = Flask(__name__)
 
+google_api_key = os.getenv("GOOGLE_API_KEY")
+google_cse_id = os.getenv("GOOGLE_CSE_ID")
 allowed_origins = os.getenv("CHATBOT_ALLOWED_ORIGINS", "*")
 if allowed_origins.strip() == "*":
     cors_origins = "*"
@@ -224,7 +227,7 @@ REQUIRED_FIELDS = [
 KNOWLEDGE_BASE = {
     "about": "Damsole Technologies is a leading digital agency specializing in web development, design, and digital marketing. We offer comprehensive digital solutions including Web Development, UI/UX Design, Digital Marketing, Software Development, Chatbot Development, Brand Logo Design, Product Design, Business Strategy, and Research services. We focus on ROI-driven solutions with an expert team and proven track record. Contact us at sales@damsole.com or call 91+9356917424.",
     
-    "services": "We offer a wide range of services:\n\n• Web Development - Custom websites and web applications\n• UI/UX Design - Beautiful and user-friendly designs\n• Digital Marketing - SEO, social media, and online advertising\n• Software Development - Custom software solutions\n• Chatbot Development - AI-powered chatbots\n• Brand Logo Design - Professional logo and branding\n• Product Design - Innovative product designs\n• Business Strategy - Strategic planning and consulting\n• Research - Market research and data analysis",
+    "services": "We offer: Web Development, UI/UX Design, Digital Marketing, Software Development, Chatbot Development, Brand Logo Design, Product Design, Business Strategy, and Research services. What would you like to know more about?",
     
     "pricing": "Our pricing depends on your specific requirements. We offer:\n\n• Basic Website: Starting from affordable packages\n• E-commerce Website: Custom pricing based on features\n• Custom Web Applications: Tailored to your needs\n• Ongoing Maintenance: Flexible plans available\n\nFor detailed pricing, please share your project requirements and we'll provide a custom quote!",
     
@@ -265,6 +268,38 @@ def get_hardcoded_response(user_message):
         return KNOWLEDGE_BASE["time"]
     
     return None
+
+# --- Google Custom Search API Fallback ---
+def get_google_search_response(query):
+    """Get response using Google Custom Search API as fallback"""
+    if not google_api_key or not google_cse_id:
+        return None
+    
+    try:
+        # Search for Damsole Technologies related information
+        search_query = f"Damsole Technologies {query}"
+        url = "https://www.googleapis.com/customsearch/v1"
+        params = {
+            "key": google_api_key,
+            "cx": google_cse_id,
+            "q": search_query,
+            "num": 3  # Get top 3 results
+        }
+        
+        response = requests.get(url, params=params, timeout=5)
+        if response.status_code == 200:
+            data = response.json()
+            items = data.get("items", [])
+            if items:
+                # Extract snippets from search results
+                snippets = [item.get("snippet", "") for item in items[:2]]
+                combined_info = " ".join(snippets)
+                # Return a helpful response based on search results
+                return f"Based on available information: {combined_info[:200]}...\n\nFor more specific details about Damsole Technologies, please contact us at sales@damsole.com or call 91+9356917424."
+        return None
+    except Exception as e:
+        print(f"⚠️ Google Search API error: {e}")
+        return None
 
 # --- AI Response for Support Questions ---
 def get_support_response(user_message, conversation_history=None):
@@ -319,8 +354,18 @@ Always reply in a simple, friendly, and professional tone. Behave like a real hu
             )
             return response.choices[0].message.content.strip()
     except Exception as e:
+        error_str = str(e)
         print(f"❌ AI API error: {e}")
-        # Fallback to helpful message when OpenAI is unavailable
+        
+        # Check if it's a quota/429 error
+        if "429" in error_str or "quota" in error_str.lower() or "exceeded" in error_str.lower():
+            print("⚠️ OpenAI quota exceeded. Trying Google Search API fallback...")
+            # Try Google Search API as fallback
+            google_response = get_google_search_response(user_message)
+            if google_response:
+                return google_response
+        
+        # Final fallback to helpful message
         return "I'd be happy to help! You can ask me about:\n\n• Our services (web development, design, marketing, etc.)\n• Pricing information\n• Project timelines\n• How to get started with your project\n\nOr just tell me what you'd like to build, and I'll collect your details!"
 
 # --- Intent Detection: Does user want to create something? ---
@@ -346,6 +391,16 @@ def wants_to_create_project(message):
     ]
     
     return any(keyword in message_lower for keyword in create_keywords)
+
+def is_greeting(message):
+    """Detect if user message is a greeting"""
+    message_lower = message.lower().strip()
+    greeting_keywords = [
+        "hello", "hi", "hey", "hii", "hiii", "hiiii",
+        "namaste", "namaskar", "good morning", "good afternoon", "good evening",
+        "gm", "gn", "morning", "evening"
+    ]
+    return any(keyword in message_lower for keyword in greeting_keywords)
 
 # --- User Sessions ---
 user_sessions = {}
@@ -451,6 +506,14 @@ def chat():
                 # Start with first question
                 first_question = get_next_question(session)
                 return jsonify({"reply": f"Perfect! I'd be happy to help you with that. Let me collect a few details from you.\n\n{first_question}"})
+            
+            # Check if user sent a greeting - show suggestions
+            if is_greeting(user_message):
+                greeting_response = "Hello! How can I help you today?"
+                session["conversation_history"].append({"role": "user", "content": user_message})
+                session["conversation_history"].append({"role": "assistant", "content": greeting_response})
+                # Return response with showSuggestions flag
+                return jsonify({"reply": greeting_response, "showSuggestions": True})
             
             # Otherwise, answer as support agent
             session["conversation_history"].append({"role": "user", "content": user_message})
