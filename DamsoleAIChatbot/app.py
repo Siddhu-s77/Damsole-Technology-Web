@@ -45,8 +45,23 @@ DB_SETTINGS = {
 ADMIN_EMAIL = _env_str("ADMIN_EMAIL")
 ADMIN_PASSWORD = _env_str("ADMIN_PASSWORD")
 
+# Check if database is configured (and not localhost, which won't work on Render)
+DB_CONFIGURED = all([
+    DB_SETTINGS["host"],
+    DB_SETTINGS["user"],
+    DB_SETTINGS["password"],
+    DB_SETTINGS["database"],
+    DB_SETTINGS["host"].strip().lower() not in ["localhost", "127.0.0.1", ""]  # Ignore localhost
+])
+
 # --- Database Setup ---
 def init_db():
+    """Initialize database if credentials are provided"""
+    if not DB_CONFIGURED:
+        print("ℹ️ Database not configured. App will work without database storage.")
+        print("ℹ️ Only email notifications will be sent (if email is configured).")
+        return
+    
     try:
         conn = mysql.connector.connect(**DB_SETTINGS)
         cur = conn.cursor()
@@ -143,6 +158,11 @@ This is an automated email from Damsole Technologies Support Chatbot.
 
 # --- Save to DB ---
 def save_to_db(data):
+    """Save data to database if configured, otherwise skip silently"""
+    if not DB_CONFIGURED:
+        print("ℹ️ Database not configured. Skipping database save.")
+        return False
+    
     try:
         conn = mysql.connector.connect(**DB_SETTINGS)
         cur = conn.cursor()
@@ -164,6 +184,7 @@ def save_to_db(data):
         return True
     except Exception as e:
         print(f"❌ Database save failed: {e}")
+        print("ℹ️ Continuing without database storage.")
         return False
 
 # --- Validation Functions ---
