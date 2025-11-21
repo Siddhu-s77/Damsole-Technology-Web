@@ -501,6 +501,9 @@ class WebsiteManager {
     const trustedDomains = [
       'damsole.com',
       'damsoletechnologies.com',
+      'damsole-technology-website.onrender.com',
+      'render.com',
+      'onrender.com',
       'facebook.com',
       'instagram.com',
       'twitter.com',
@@ -556,6 +559,13 @@ class WebsiteManager {
     // Function to check if domain is trusted
     const isTrustedDomain = (domain) => {
       if (!domain) return true; // Allow relative links and mailto/tel
+      
+      // Always trust the current domain (same origin)
+      const currentDomain = window.location.hostname.replace('www.', '');
+      if (domain === currentDomain || domain.endsWith('.' + currentDomain)) {
+        return true;
+      }
+      
       return trustedDomains.some(trusted => 
         domain === trusted || domain.endsWith('.' + trusted)
       );
