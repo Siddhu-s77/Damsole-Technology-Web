@@ -370,6 +370,26 @@ class WebsiteManager {
         }
       });
     }
+
+    // Handle "Discover more" button click - ensure it works on mobile
+    const discoverMoreBtn = document.querySelector('.about-feature-btn');
+    if (discoverMoreBtn) {
+      // Ensure the button is clickable
+      discoverMoreBtn.style.pointerEvents = 'auto';
+      discoverMoreBtn.style.cursor = 'pointer';
+      discoverMoreBtn.style.zIndex = '100';
+      
+      // Add both click and touchstart events for mobile compatibility
+      const handleRedirect = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        window.location.href = 'about.html';
+        return false;
+      };
+      
+      discoverMoreBtn.addEventListener('click', handleRedirect, { passive: false });
+      discoverMoreBtn.addEventListener('touchend', handleRedirect, { passive: false });
+    }
   }
 
   validateEmail(email) {

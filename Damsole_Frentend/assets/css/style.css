@@ -878,12 +878,22 @@
         transition: background 0.2s;
         text-decoration: none;
         display: inline-block;
+        position: relative;
+        z-index: 10;
+        pointer-events: auto !important;
+        -webkit-tap-highlight-color: rgba(0, 30, 142, 0.3);
+        touch-action: manipulation;
     }
 
     .about-feature-btn:hover {
         background: #001E8E;
         color: #fff;
         text-decoration: none;
+    }
+
+    .about-feature-btn:active {
+        background: #001E8E;
+        transform: scale(0.98);
     }
 
     /* ========== SERVICES SECTION (redesigned dark cards) ========== */
@@ -2344,6 +2354,17 @@
 
         .about-feature-desc {
             font-size: 1rem;
+        }
+
+        .about-feature-btn {
+            width: 100%;
+            max-width: 300px;
+            text-align: center;
+            padding: 14px 32px;
+            font-size: 1rem;
+            z-index: 100;
+            position: relative;
+            pointer-events: auto !important;
         }
 
         /* Services Section */
