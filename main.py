@@ -34,12 +34,15 @@ try:
         init_db, send_email, save_to_db, 
         user_sessions,
         get_support_response, wants_to_create_project, is_greeting, get_next_question,
-        validate_name, validate_email, validate_phone, validate_address, validate_project, validate_deadline
+        validate_name, validate_email, validate_phone, validate_address, validate_project, validate_deadline,
+        ADMIN_EMAIL, ADMIN_PASSWORD
     )
     CHATBOT_AVAILABLE = True
 except ImportError as e:
     print(f"⚠️ Warning: Could not import chatbot functions: {e}")
     CHATBOT_AVAILABLE = False
+    ADMIN_EMAIL = None
+    ADMIN_PASSWORD = None
 
 # ========== FRONTEND ROUTES ==========
 
@@ -247,6 +250,125 @@ def chat():
         import traceback
         traceback.print_exc()
         return jsonify({"reply": "I apologize, but I encountered an error. Could you please try again?"}), 500
+
+# ========== CONTACT FORM ENDPOINT ==========
+
+def send_contact_email(form_data):
+    """Send email with contact form data to admin"""
+    if not ADMIN_EMAIL or not ADMIN_PASSWORD:
+        print("⚠️ Email credentials not configured. Skipping email send.")
+        return False
+    
+    try:
+        from email.mime.text import MIMEText
+        from email.mime.multipart import MIMEMultipart
+        import smtplib
+        import datetime
+        
+        subject = "📧 New Contact Form Submission - Damsole Technologies"
+        
+        # Format phone number with country code
+        country_code_map = {
+            "US": "+1", "CA": "+1", "IN": "+91", "GB": "+44", "AU": "+61",
+            "DE": "+49", "FR": "+33", "IT": "+39", "ES": "+34", "NL": "+31"
+        }
+        country_code = country_code_map.get(form_data.get("countryCode", ""), "")
+        full_phone = f"{country_code} {form_data.get('phone', '')}" if country_code else form_data.get('phone', '')
+        
+        body = f"""
+New Contact Form Submission from Damsole Technologies Website
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+CONTACT DETAILS:
+
+👤 Name: {form_data.get('firstName', '')} {form_data.get('lastName', '')}
+📧 Email: {form_data.get('email', 'N/A')}
+📱 Phone: {full_phone}
+🌍 Country Code: {form_data.get('countryCode', 'N/A')}
+
+💼 Services Interested In:
+{', '.join(form_data.get('services', [])) if form_data.get('services') else 'None selected'}
+
+📝 Message:
+{form_data.get('message', 'N/A')}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Timestamp: {datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+
+This is an automated email from Damsole Technologies Contact Form.
+        """.strip()
+
+        msg = MIMEMultipart()
+        msg["From"] = ADMIN_EMAIL
+        msg["To"] = ADMIN_EMAIL
+        msg["Subject"] = subject
+        msg.attach(MIMEText(body, "plain"))
+
+        with smtplib.SMTP("smtp.gmail.com", 587) as s:
+            s.starttls()
+            s.login(ADMIN_EMAIL, ADMIN_PASSWORD)
+            s.send_message(msg)
+        print("✅ Contact form email sent successfully to admin!")
+        return True
+    except Exception as e:
+        print(f"❌ Contact form email send failed: {e}")
+        return False
+
+@app.route('/contact', methods=['POST'])
+def contact_form():
+    """Handle contact form submission"""
+    try:
+        data = request.get_json()
+        
+        # Validate required fields
+        required_fields = ['firstName', 'lastName', 'email', 'phone', 'message']
+        for field in required_fields:
+            if not data.get(field):
+                return jsonify({
+                    "success": False,
+                    "message": f"Please fill in the {field} field."
+                }), 400
+        
+        # Validate services
+        if not data.get('services') or len(data.get('services', [])) == 0:
+            return jsonify({
+                "success": False,
+                "message": "Please select at least one service."
+            }), 400
+        
+        # Validate email format
+        import re
+        email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+        if not re.match(email_pattern, data.get('email', '')):
+            return jsonify({
+                "success": False,
+                "message": "Please enter a valid email address."
+            }), 400
+        
+        # Send email
+        email_sent = send_contact_email(data)
+        
+        if email_sent:
+            return jsonify({
+                "success": True,
+                "message": "Thank you for your message! We will get back to you soon."
+            })
+        else:
+            return jsonify({
+                "success": False,
+                "message": "Failed to send email. Please try again later or contact us directly."
+            }), 500
+            
+    except Exception as e:
+        print(f"❌ Contact form error: {e}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({
+            "success": False,
+            "message": "An error occurred. Please try again later."
+        }), 500
 
 # ========== INITIALIZATION ==========
 

@@ -1122,7 +1122,7 @@
     }
 
     // Form submission handler
-    document.getElementById('contactForm').addEventListener('submit', function(e) {
+    document.getElementById('contactForm').addEventListener('submit', async function(e) {
       e.preventDefault();
       
       // Validate services - at least one must be selected
@@ -1134,12 +1134,12 @@
       
       // Get form data
       const formData = {
-        firstName: document.getElementById('firstName').value,
-        lastName: document.getElementById('lastName').value,
-        email: document.getElementById('email').value,
-        phone: document.getElementById('phone').value,
+        firstName: document.getElementById('firstName').value.trim(),
+        lastName: document.getElementById('lastName').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        phone: document.getElementById('phone').value.trim(),
         countryCode: document.getElementById('countryCode').value,
-        message: document.getElementById('message').value,
+        message: document.getElementById('message').value.trim(),
         services: []
       };
 
@@ -1148,18 +1148,46 @@
         formData.services.push(checkbox.value);
       });
 
-      // Here you would typically send the data to a server
-      console.log('Form submitted:', formData);
-      
-      // Show success notification
-      showNotification('success', 'Message Sent!', 'Thank you for your message! We will get back to you soon.');
-      
-      // Reset form
-      this.reset();
-      
-      // Reset placeholder after form reset
-      const initialCountry = countryCodeSelect.value;
-      phoneInput.placeholder = countryPlaceholders[initialCountry] || 'Enter phone number';
+      // Disable submit button
+      const submitBtn = this.querySelector('.btn-send');
+      const originalText = submitBtn.innerHTML;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = 'Sending...';
+
+      try {
+        // Send data to server
+        const response = await fetch('/contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData)
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          // Show success notification
+          showNotification('success', 'Message Sent!', result.message || 'Thank you for your message! We will get back to you soon.');
+          
+          // Reset form
+          this.reset();
+          
+          // Reset placeholder after form reset
+          const initialCountry = countryCodeSelect.value;
+          phoneInput.placeholder = countryPlaceholders[initialCountry] || 'Enter phone number';
+        } else {
+          // Show error notification
+          showNotification('error', 'Error', result.message || 'Failed to send message. Please try again.');
+        }
+      } catch (error) {
+        console.error('Form submission error:', error);
+        showNotification('error', 'Error', 'Failed to send message. Please check your connection and try again.');
+      } finally {
+        // Re-enable submit button
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+      }
     });
   </script>
 </body>
