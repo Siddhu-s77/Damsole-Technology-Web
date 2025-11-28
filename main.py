@@ -32,7 +32,7 @@ CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 try:
     from app import (
         init_db, send_email, save_to_db, 
-        user_sessions,
+        user_sessions, app as chatbot_app, db,
         get_support_response, wants_to_create_project, is_greeting, get_next_question,
         validate_name, validate_email, validate_phone, validate_address, validate_project, validate_deadline,
         ADMIN_EMAIL, ADMIN_PASSWORD
@@ -43,6 +43,8 @@ except ImportError as e:
     CHATBOT_AVAILABLE = False
     ADMIN_EMAIL = None
     ADMIN_PASSWORD = None
+    db = None
+    chatbot_app = None
 
 # ========== FRONTEND ROUTES ==========
 
