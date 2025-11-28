@@ -164,7 +164,7 @@ def chat():
         if mode == "collecting":
             current_field = session.get("current_field")
             
-            # Determine which field we're collecting
+            # Determine which field we're collecting if not already set
             if not current_field:
                 # Find first missing field
                 if "Full Name" not in data:
@@ -218,18 +218,19 @@ def chat():
                 is_valid, error_msg = validate_deadline(user_message)
             
             if not is_valid:
-                # Invalid answer, ask again politely
+                # Invalid answer, ask again politely - keep current_field set
                 question = get_next_question(session)
                 return jsonify({"reply": f"I'm sorry, but that doesn't seem right. {error_msg}\n\n{question}"})
             
-            # Valid answer - store it
+            # Valid answer - store it and clear current_field
             data[current_field] = user_message.strip()
             session["data"] = data
-            session["current_field"] = None
+            session["current_field"] = None  # Clear current field so get_next_question finds the next one
             
-            # Get next question
+            # Get next question - this will find the next missing field and set current_field
             next_question = get_next_question(session)
             if next_question:
+                # Next question found and current_field is now set for the next input
                 return jsonify({"reply": next_question})
             else:
                 # All fields collected!
