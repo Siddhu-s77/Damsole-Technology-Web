@@ -6,7 +6,6 @@ Collects: Name, Email, Phone, Address, Project Requirement, Deadline
 
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
-from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
 import os, smtplib, datetime, re
 from email.mime.text import MIMEText
@@ -14,11 +13,23 @@ from email.mime.multipart import MIMEMultipart
 import openai
 import requests
 
+# Database imports - support both MySQL and PostgreSQL
+try:
+    import mysql.connector
+    MYSQL_AVAILABLE = True
+except ImportError:
+    MYSQL_AVAILABLE = False
+
+try:
+    import psycopg2
+    POSTGRES_AVAILABLE = True
+except ImportError:
+    POSTGRES_AVAILABLE = False
+
 # Load environment
 load_dotenv()
 
 app = Flask(__name__)
-db = SQLAlchemy()
 
 google_api_key = os.getenv("GOOGLE_API_KEY")
 google_cse_id = os.getenv("GOOGLE_CSE_ID")
@@ -37,44 +48,82 @@ def _env_str(key: str, default: str = "") -> str:
 
 openai.api_key = _env_str("OPENAI_API_KEY")
 
+# Database configuration - support both MySQL and PostgreSQL
+DB_TYPE = _env_str("DB_TYPE", "").lower()  # "mysql" or "postgres" or auto-detect
+
+# Check for DATABASE_URL (Render PostgreSQL format)
+DATABASE_URL = _env_str("DATABASE_URL", "")
+if DATABASE_URL and not DB_TYPE:
+    # Parse DATABASE_URL: postgresql://user:password@host:port/database
+    import re
+    match = re.match(r'postgres(ql)?://([^:]+):([^@]+)@([^:]+):(\d+)/(.+)', DATABASE_URL)
+    if match:
+        DB_TYPE = "postgres"
+        DB_SETTINGS = {
+            "host": match.group(4),
+            "user": match.group(2),
+            "password": match.group(3),
+            "database": match.group(6)
+        }
+    else:
+        DB_SETTINGS = {
+            "host": _env_str("MYSQL_HOST") or _env_str("POSTGRES_HOST") or _env_str("DB_HOST"),
+            "user": _env_str("MYSQL_USER") or _env_str("POSTGRES_USER") or _env_str("DB_USER"),
+            "password": _env_str("MYSQL_PASSWORD") or _env_str("POSTGRES_PASSWORD") or _env_str("DB_PASSWORD"),
+            "database": _env_str("MYSQL_DB") or _env_str("POSTGRES_DB") or _env_str("DB_NAME")
+        }
+else:
+    DB_SETTINGS = {
+        "host": _env_str("MYSQL_HOST") or _env_str("POSTGRES_HOST") or _env_str("DB_HOST"),
+        "user": _env_str("MYSQL_USER") or _env_str("POSTGRES_USER") or _env_str("DB_USER"),
+        "password": _env_str("MYSQL_PASSWORD") or _env_str("POSTGRES_PASSWORD") or _env_str("DB_PASSWORD"),
+        "database": _env_str("MYSQL_DB") or _env_str("POSTGRES_DB") or _env_str("DB_NAME")
+    }
+
+# Auto-detect database type if not specified
+if not DB_TYPE:
+    if DB_SETTINGS["host"] and "postgres" in DB_SETTINGS["host"].lower():
+        DB_TYPE = "postgres"
+    elif _env_str("POSTGRES_HOST") or DATABASE_URL:
+        DB_TYPE = "postgres"
+    else:
+        DB_TYPE = "mysql"  # Default to MySQL for local development
+
 ADMIN_EMAIL = _env_str("ADMIN_EMAIL")
 ADMIN_PASSWORD = _env_str("ADMIN_PASSWORD")
 
-# Database configuration - SQLAlchemy with MySQL using pymysql
-MYSQL_HOST = _env_str("MYSQL_HOST", "localhost")
-MYSQL_USER = _env_str("MYSQL_USER", "root")
-MYSQL_PASSWORD = _env_str("MYSQL_PASSWORD", "")
-MYSQL_DB = _env_str("MYSQL_DB", "damsole_chatbot")
-
 # Check if database is configured
-DB_CONFIGURED = all([MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DB])
+# For local: allow localhost, for Render: require non-localhost
+IS_LOCAL = DB_SETTINGS["host"].strip().lower() in ["localhost", "127.0.0.1", ""]
+DB_CONFIGURED = all([
+    DB_SETTINGS["host"],
+    DB_SETTINGS["user"],
+    DB_SETTINGS["password"],
+    DB_SETTINGS["database"]
+]) and (IS_LOCAL or DB_SETTINGS["host"].strip().lower() not in ["localhost", "127.0.0.1", ""])
 
-# Configure SQLAlchemy database URI
-if DB_CONFIGURED:
-    # Use pymysql for MySQL connection
-    app.config["SQLALCHEMY_DATABASE_URI"] = f"mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}/{MYSQL_DB}"
-    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-    db.init_app(app)
-else:
-    print("ℹ️ Database not configured. App will work without database storage.")
-    print("ℹ️ Only email notifications will be sent (if email is configured).")
-
-# --- SQLAlchemy Model ---
-class Lead(db.Model):
-    """Lead model for storing chatbot leads"""
-    __tablename__ = 'leads'
+# --- Database Connection Helper ---
+def get_db_connection():
+    """Get database connection based on DB_TYPE"""
+    if not DB_CONFIGURED:
+        return None
     
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    full_name = db.Column(db.String(255), nullable=True)
-    email = db.Column(db.String(255), nullable=True)
-    phone_number = db.Column(db.String(20), nullable=True)
-    address = db.Column(db.Text, nullable=True)
-    project_requirement = db.Column(db.Text, nullable=True)
-    deadline = db.Column(db.String(255), nullable=True)
-    timestamp = db.Column(db.DateTime, default=datetime.datetime.now, nullable=False)
-    
-    def __repr__(self):
-        return f'<Lead {self.id}: {self.full_name}>'
+    try:
+        if DB_TYPE == "postgres" and POSTGRES_AVAILABLE:
+            return psycopg2.connect(
+                host=DB_SETTINGS["host"],
+                user=DB_SETTINGS["user"],
+                password=DB_SETTINGS["password"],
+                database=DB_SETTINGS["database"]
+            )
+        elif DB_TYPE == "mysql" and MYSQL_AVAILABLE:
+            return mysql.connector.connect(**DB_SETTINGS)
+        else:
+            print(f"⚠️ Database type '{DB_TYPE}' not available. Install required package.")
+            return None
+    except Exception as e:
+        print(f"⚠️ Database connection failed: {e}")
+        return None
 
 # --- Database Setup ---
 def init_db():
@@ -84,14 +133,86 @@ def init_db():
         print("ℹ️ Only email notifications will be sent (if email is configured).")
         return
     
+    conn = get_db_connection()
+    if not conn:
+        print(f"⚠️ Could not connect to {DB_TYPE} database.")
+        return
+    
     try:
-        with app.app_context():
-            # Create all tables
-            db.create_all()
-            print("✅ MySQL database initialized successfully with SQLAlchemy!")
+        cur = conn.cursor()
+        
+        # Check if table exists (different syntax for MySQL vs PostgreSQL)
+        if DB_TYPE == "postgres":
+            cur.execute("""
+                SELECT EXISTS (
+                    SELECT FROM information_schema.tables 
+                    WHERE table_name = 'leads'
+                );
+            """)
+            table_exists = cur.fetchone()[0]
+            
+            if table_exists:
+                # Check columns
+                cur.execute("""
+                    SELECT column_name FROM information_schema.columns 
+                    WHERE table_name = 'leads';
+                """)
+                columns = [col[0] for col in cur.fetchall()]
+                
+                if 'customer_name' in columns and 'full_name' not in columns:
+                    print("🔄 Migrating database schema from old to new format...")
+                    cur.execute("DROP TABLE IF EXISTS leads")
+                    conn.commit()
+                    print("✅ Old table dropped")
+            
+            # Create table with PostgreSQL syntax
+            cur.execute("""
+                CREATE TABLE IF NOT EXISTS leads (
+                    id SERIAL PRIMARY KEY,
+                    full_name VARCHAR(255),
+                    email VARCHAR(255),
+                    phone_number VARCHAR(20),
+                    address TEXT,
+                    project_requirement TEXT,
+                    deadline VARCHAR(255),
+                    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+            """)
+        else:  # MySQL
+            cur.execute("SHOW TABLES LIKE 'leads'")
+            table_exists = cur.fetchone()
+            
+            if table_exists:
+                cur.execute("DESCRIBE leads")
+                columns = [col[0] for col in cur.fetchall()]
+                
+                if 'customer_name' in columns and 'full_name' not in columns:
+                    print("🔄 Migrating database schema from old to new format...")
+                    cur.execute("DROP TABLE IF EXISTS leads")
+                    conn.commit()
+                    print("✅ Old table dropped")
+            
+            # Create table with MySQL syntax
+            cur.execute("""
+                CREATE TABLE IF NOT EXISTS leads (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    full_name VARCHAR(255),
+                    email VARCHAR(255),
+                    phone_number VARCHAR(20),
+                    address TEXT,
+                    project_requirement TEXT,
+                    deadline VARCHAR(255),
+                    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+                )
+            """)
+        
+        conn.commit()
+        cur.close()
+        conn.close()
+        print(f"✅ {DB_TYPE.upper()} database initialized successfully!")
     except Exception as e:
         print(f"⚠️ Database initialization failed: {e}")
-        print(f"⚠️ Make sure MySQL is running and credentials in .env are correct.")
+        print(f"⚠️ Make sure {DB_TYPE} is running and credentials in .env are correct.")
 
 init_db()
 
@@ -149,27 +270,32 @@ def save_to_db(data):
         print("ℹ️ Database not configured. Skipping database save.")
         return False
     
+    conn = get_db_connection()
+    if not conn:
+        print("⚠️ Could not connect to database. Skipping save.")
+        return False
+    
     try:
-        with app.app_context():
-            # Create new Lead instance
-            new_lead = Lead(
-                full_name=data.get("Full Name", ""),
-                email=data.get("Email", ""),
-                phone_number=data.get("Phone Number", ""),
-                address=data.get("Address", ""),
-                project_requirement=data.get("Project Requirement", ""),
-                deadline=data.get("Deadline", "")
-            )
-            
-            # Add and commit to database
-            db.session.add(new_lead)
-            db.session.commit()
-            print("✅ Data saved to database successfully!")
-            return True
+        cur = conn.cursor()
+        cur.execute("""
+            INSERT INTO leads (full_name, email, phone_number, address, project_requirement, deadline)
+            VALUES (%s, %s, %s, %s, %s, %s)
+        """, (
+            data.get("Full Name", ""),
+            data.get("Email", ""),
+            data.get("Phone Number", ""),
+            data.get("Address", ""),
+            data.get("Project Requirement", ""),
+            data.get("Deadline", "")
+        ))
+        conn.commit()
+        cur.close()
+        conn.close()
+        print("✅ Data saved to database successfully!")
+        return True
     except Exception as e:
         print(f"❌ Database save failed: {e}")
         print("ℹ️ Continuing without database storage.")
-        db.session.rollback()
         return False
 
 # --- Validation Functions ---
