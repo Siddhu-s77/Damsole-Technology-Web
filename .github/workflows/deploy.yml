@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout code
         uses: actions/checkout@v3
 
       - name: SSH Deploy to VPS
@@ -21,21 +21,8 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            cd /root/Damsole-Technology-Web
-
-            echo "Pulling latest changes..."
+            cd ~/Damsole-Technology-Web
             git pull origin main
-
-            echo "Activating virtual environment..."
             source venv/bin/activate
-
-            echo "Installing requirements..."
             pip install -r requirements.txt
-
-            echo "Restarting Flask (Gunicorn)..."
             sudo systemctl restart flaskapp
-
-            echo "Restarting Nginx..."
-            sudo systemctl restart nginx
-
-            echo "🚀 Deployment Completed Successfully!"
