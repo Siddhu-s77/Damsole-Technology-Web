@@ -2143,6 +2143,144 @@
         background: rgba(255, 255, 255, 0.1);
     }
 
+    /* Footer Social Media Section */
+    .footer-social-section {
+        background-color: #111;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 30px 0;
+        text-align: center;
+    }
+
+    .footer-follow-title {
+        color: #fff;
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .footer-social-links {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    /* Social Media Button Styles */
+    .footer-social-button {
+        background-color: #1877F2;
+        border: none;
+        border-radius: 50%;
+        box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.4);
+        width: 45px;
+        height: 45px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        perspective: 500px;
+        transition: transform 0.5s, box-shadow 0.5s;
+        cursor: pointer;
+        padding: 0;
+        margin: 0;
+    }
+
+    .footer-social-button:hover {
+        transform: rotate(-360deg);
+        box-shadow: 0 0 20px 0 rgba(0, 0, 255, 0.5);
+    }
+
+    /* Individual Social Media Colors */
+    .footer-facebook {
+        background-color: #1877F2;
+    }
+
+    .footer-facebook:hover {
+        box-shadow: 0 0 20px 0 rgba(24, 119, 242, 0.5);
+    }
+
+    .footer-instagram {
+        background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    }
+
+    .footer-instagram:hover {
+        box-shadow: 0 0 20px 0 rgba(225, 48, 108, 0.5);
+    }
+
+    .footer-twitter {
+        background-color: #1DA1F2;
+    }
+
+    .footer-twitter:hover {
+        box-shadow: 0 0 20px 0 rgba(29, 161, 242, 0.5);
+    }
+
+    .footer-youtube {
+        background-color: #FF0000;
+    }
+
+    .footer-youtube:hover {
+        box-shadow: 0 0 20px 0 rgba(255, 0, 0, 0.5);
+    }
+
+    .footer-linkedin {
+        background-color: #0077B5;
+    }
+
+    .footer-linkedin:hover {
+        box-shadow: 0 0 20px 0 rgba(0, 119, 181, 0.5);
+    }
+
+    /* No Link Style */
+    .no-link-style {
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+    }
+
+    /* Social Icon SVG */
+    .footer-social-icon {
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
+        transition: transform 0.5s;
+        width: 32px;
+        height: 32px;
+    }
+
+    .footer-social-button:hover .footer-social-icon {
+        transform: scale(1.5);
+        filter: drop-shadow(1px 2px 4px rgba(0, 0, 0, 0.9));
+    }
+
+    /* Mobile responsive */
+    @media (max-width: 576px) {
+        .footer-social-section {
+            padding: 25px 0;
+        }
+
+        .footer-follow-title {
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .footer-social-button {
+            width: 40px;
+            height: 40px;
+        }
+
+        .footer-social-icon {
+            width: 28px;
+            height: 28px;
+        }
+
+        .footer-social-links {
+            gap: 12px;
+        }
+    }
+
     @media (max-width: 991px) {
         .footer-title {
             font-size: 2rem;

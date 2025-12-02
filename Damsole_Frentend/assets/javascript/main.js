@@ -8,7 +8,6 @@ class WebsiteManager {
 
   init() {
     this.setupLoadingState();
-    this.ensureSocialLinksClickable();
     this.initLinkSecurity();
     this.detectUserLanguage();
     this.initLanguageSwitcher();
@@ -195,7 +194,9 @@ class WebsiteManager {
     const companies = [
       'company-1.png', 'company-2.png', 'company-3.png',
       'company-4.png', 'company-5.png', 'company-6.png',
-      'company-7.png', 'company-8.png', 'company-9.png'
+      'company-7.png', 'company-8.png', 'company-9.png',
+      'company-10.png', 'company-11.png', 'company-12.png',
+      'company-13.png', 'company-14.png'
     ];
 
     companies.forEach(logo => {
@@ -495,26 +496,6 @@ class WebsiteManager {
     };
   }
 
-  ensureSocialLinksClickable() {
-    // Ensure all social media links are clickable
-    const socialLinks = document.querySelectorAll('.social-link');
-    socialLinks.forEach(link => {
-      // Remove any event listeners that might prevent default
-      link.style.pointerEvents = 'auto';
-      link.style.cursor = 'pointer';
-      link.style.zIndex = '1000';
-      
-      // Ensure the link works
-      link.addEventListener('click', (e) => {
-        const href = link.getAttribute('href');
-        if (href && href !== '#' && !href.startsWith('#')) {
-          // Allow the default behavior for external links
-          // Don't prevent default
-          console.log('Social link clicked:', href);
-        }
-      }, { passive: true });
-    });
-  }
 
   initLinkSecurity() {
     // List of trusted domains (whitelist)
