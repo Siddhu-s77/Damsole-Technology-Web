@@ -1,28 +1,25 @@
-name: Deploy to VPS
+name: Deploy to Hostinger VPS
 
 on:
   push:
-    branches:
-      - main
+    branches: ["master"]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: SSH Deploy to VPS
-        uses: appleboy/ssh-action@v0.1.6
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22
+          key: ${{ secrets.SSH_KEY }}
           script: |
-            cd ~/Damsole-Technology-Web
-            git pull origin main
-            source venv/bin/activate
-            pip install -r requirements.txt
-            sudo systemctl restart flaskapp
+            cd /var/www/Damsole-Technology-Web
+            git pull
+            npm install
+            pm2 restart all
