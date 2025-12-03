@@ -483,7 +483,7 @@ Always reply in a simple, friendly, and professional tone. Behave like a real hu
                 messages=messages,
                 temperature=0.7,
                 max_tokens=250
-            )
+            ) 
             return response.choices[0].message.content.strip()
     except Exception as e:
         error_str = str(e)
