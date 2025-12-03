@@ -6,7 +6,7 @@ A modern, responsive, and feature-rich website for Damsole Technologies - a prem
 
 Damsole Technologies is a leading digital agency that collaborates on a common strategy to alleviate consumer problems. As a digital agency focused on results, our procedures are open and honest. This website showcases our services, portfolio, client testimonials, and company information.
 
-## ✨ Features
+## ✨ Features  
 
 ### Core Features
 - **Fully Responsive Design**: Optimized for all devices (Desktop, Tablet, Mobile, iPad Mini)
